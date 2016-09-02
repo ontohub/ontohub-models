@@ -1,8 +1,7 @@
 class Repository < Sequel::Model
   plugin :timestamps
 
-  def before_create
-    self.slug = name.parameterize
-    super
-  end
+	include Slug
+  slug_base :name
+  slug_condition :new?
 end
