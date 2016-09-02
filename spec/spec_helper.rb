@@ -1,4 +1,5 @@
 require 'rspec'
+require 'rspec_sequel_matchers'
 require 'database_cleaner'
 require 'factory_girl_rails'
 
@@ -71,4 +72,7 @@ RSpec.configure do |config|
 
   # Allow to find all factories
   config.include FactoryGirl::Syntax::Methods
+
+  # Use Sequel Matchers
+  config.include RspecSequel::Matchers
 end
