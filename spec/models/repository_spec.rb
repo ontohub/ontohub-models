@@ -1,6 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe Repository, type: :model do
+  context 'columns' do
+    it { is_expected.to have_column(:name, type: :string) }
+    it { is_expected.to have_column(:slug, type: :string) }
+    it { is_expected.to have_column(:description, type: :string) }
+    it { is_expected.to have_column(:created_at, type: :datetime) }
+    it { is_expected.to have_column(:updated_at, type: :datetime) }
+  end
+
   context 'validations' do
     let(:repository) { build :repository }
     context 'name' do
