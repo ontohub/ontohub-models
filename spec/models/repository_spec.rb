@@ -1,6 +1,18 @@
 require 'rails_helper'
 
 RSpec.describe Repository, type: :model do
+  context 'validations' do
+    let(:repository) { build :repository }
+    context 'name' do
+      it { is_expected.to validate_presence(:name) }
+      it { is_expected.to validate_length_range((3..100), :name) }
+    end
+    context 'slug' do
+      it { is_expected.to validate_unique(:slug) }
+      it { is_expected.to validate_format(/\A[a-z0-9-]+\z/, :slug) }
+    end
+  end
+
   context 'slug' do
     let(:repository) { create :repository, name: Faker::Lorem.words(2).join(' ') }
     context 'on create' do
