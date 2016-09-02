@@ -68,4 +68,7 @@ RSpec.configure do |config|
       example.run
     end
   end
+
+  # Allow to find all factories
+  config.include FactoryGirl::Syntax::Methods
 end
