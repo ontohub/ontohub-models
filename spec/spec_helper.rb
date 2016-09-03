@@ -1,3 +1,5 @@
+require_relative 'support/simplecov'
+
 require 'rspec'
 require 'rspec_sequel_matchers'
 require 'database_cleaner'
