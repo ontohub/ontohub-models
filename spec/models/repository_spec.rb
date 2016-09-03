@@ -40,5 +40,9 @@ RSpec.describe Repository, type: :model do
         expect(repository.slug).to eq(old_slug)
       end
     end
+
+    it 'exposes to_param correctly' do
+      expect(repository.to_param).to eq(repository.slug)
+    end
   end
 end
