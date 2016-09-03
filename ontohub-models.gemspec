@@ -5,7 +5,7 @@ require 'ontohub_models/version'
 
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
-  s.name          = 'ontohub_models'
+  s.name          = 'ontohub-models'
   s.version       = OntohubModels::VERSION
   s.authors       = ['Ontohub Core Developers']
   s.email         = ['ontohub-dev-l@ovgu.de']

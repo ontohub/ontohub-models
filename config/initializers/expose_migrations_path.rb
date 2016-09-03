@@ -5,7 +5,7 @@ module SequelRails
   class Migrations
     class << self
       def migrations_dir
-        File.join(Gem::Specification.find_by_name('ontohub_models').gem_dir,
+        File.join(Gem::Specification.find_by_name('ontohub-models').gem_dir,
                   'db/migrate')
       end
     end

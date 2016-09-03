@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    ontohub_models (0.1.0)
+    ontohub-models (0.1.0)
       awesome_print (~> 1.7.0)
       chewy (~> 0.8.4)
       pry (~> 0.10.4)
@@ -226,7 +226,7 @@ DEPENDENCIES
   database_cleaner (~> 1.5.3)
   factory_girl_rails (~> 4.7.0)
   faker (~> 1.6.6)
-  ontohub_models!
+  ontohub-models!
   rake (~> 11.2.2)
   rspec (~> 3.5.0)
   rspec-rails (~> 3.5.2)

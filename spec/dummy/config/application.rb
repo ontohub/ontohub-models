@@ -12,7 +12,7 @@ require 'active_model/railtie'
 # require 'rails/test_unit/railtie'
 
 Bundler.require(*Rails.groups)
-require "ontohub_models"
+require 'ontohub-models'
 
 module Dummy
   class Application < Rails::Application
