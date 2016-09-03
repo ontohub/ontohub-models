@@ -1,4 +1,4 @@
-require "ontohub_models/engine"
+require 'ontohub_models/engine'
 
 module OntohubModels
   # Your code goes here...

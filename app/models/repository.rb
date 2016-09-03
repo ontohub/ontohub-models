@@ -2,7 +2,7 @@ class Repository < Sequel::Model
   plugin :timestamps
   plugin :validation_helpers
 
-	include Slug
+  include Slug
   slug_base :name
   slug_condition :new?
 

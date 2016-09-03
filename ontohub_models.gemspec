@@ -1,5 +1,4 @@
-# coding: utf-8
-$:.push File.expand_path("../lib", __FILE__)
+$LOAD_PATH.push File.expand_path('../lib', __FILE__)
 
 # Maintain your gem's version:
 require 'ontohub_models/version'
@@ -10,8 +9,8 @@ Gem::Specification.new do |s|
   s.version       = OntohubModels::VERSION
   s.authors       = ['Ontohub Core Developers']
   s.email         = ['ontohub-dev-l@ovgu.de']
-  s.summary       = %q{Shared models for Ontohub}
-  s.description   = %q{Shared models for Ontohub}
+  s.summary       = 'Shared models for Ontohub'
+  s.description   = 'Shared models for Ontohub'
   s.homepage      = 'https://github.com/ontohub/ontohub-models'
   s.license       = 'GNU AFFERO GPL'
 
