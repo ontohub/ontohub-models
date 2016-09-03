@@ -25,15 +25,18 @@ Gem::Specification.new do |s|
     raise "We don't want to publish this outside of the Ontohub project."
   end
 
+  # Runtime dependencies
   s.add_dependency 'rails', '~> 5.0.0', '>= 5.0.0.1'
   s.add_dependency 'sequel', '~> 4.38.0'
   s.add_dependency 'sequel_pg', '~> 1.6.17'
   s.add_dependency 'sequel-rails', '~> 0.9.14'
   s.add_dependency 'chewy', '~> 0.8.4'
 
+  # General Development
   s.add_development_dependency 'bundler', '~> 1.12'
   s.add_development_dependency 'rake', '~> 11.2.2'
 
+  # Testing
   s.add_development_dependency 'rspec', '~> 3.5.0'
   s.add_development_dependency 'rspec-rails', '~> 3.5.2'
   s.add_development_dependency 'rspec_sequel_matchers', '~> 0.4.0'
