@@ -128,6 +128,20 @@ RSpec.shared_examples 'an ActiveModelSerializer compatible object' do
     it 'is a Hash' do
       expect(subject.errors).to be_a(Hash)
     end
+
+    describe '#messages' do
+      it 'responds to the method' do
+        expect(subject.errors).to respond_to(:messages)
+      end
+
+      it 'takes the correct number of arguments' do
+        expect(subject.errors.method(:messages).arity).to eq(0)
+      end
+
+      it 'is a Hash' do
+        expect(subject.errors.messages).to be_a(Hash)
+      end
+    end
   end
 
   describe '.human_attribute_name' do
