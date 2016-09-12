@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 FactoryGirl.define do
   factory :repository do
-    name Faker::Name.last_name
-    description Faker::Lorem.sentence
-    created_at Time.now
-    updated_at Time.now
+    name { Faker::Name.last_name }
+    description { Faker::Lorem.sentence }
+    created_at { Time.current }
+    updated_at { Time.current }
   end
 end
