@@ -34,6 +34,7 @@ AllCops:
     - 'bin/spring'
     - 'bin/update'
     - 'db/schema.rb'
+    - 'spec/dummy/**/*'
     - 'vendor/**/*'
   # Default formatter will be used if no -f/--format option is given.
   DefaultFormatter: progress
@@ -355,6 +356,8 @@ Style/FileName:
   Description: 'Use snake_case for source file names.'
   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#snake-case-files'
   Enabled: true
+  Exclude:
+    - 'lib/ontohub-models.rb'
 
 Style/FrozenStringLiteralComment:
   Description: >-
@@ -924,6 +927,9 @@ Style/SymbolLiteral:
 Style/SymbolProc:
   Description: 'Use symbols as procs instead of blocks when possible.'
   Enabled: true
+  Exclude:
+    - 'spec/factories/factory_helper.rb'
+    - 'spec/factories/**/*_factory.rb'
 
 Style/Tab:
   Description: 'No hard tabs.'
