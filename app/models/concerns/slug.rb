@@ -1,3 +1,22 @@
+# frozen_string_literal: true
+
+# The Slug module allows a model to have a slug for routing. To use it in a
+# model, which induces the slug from the `name` attribute, the model needs to
+# call `slug_base :name` (required). It can optionally call
+# `slug_condition :condition_method` which determines whether or not to change
+# the slug.
+# The model must have a `slug` column in the database.
+#
+# Usage:
+#   class MyModel
+#     include Slug
+#
+#     slug_base :name
+#
+#     slug_condition :new?
+#     # OR
+#     slug_condition ->() { name.changed? }
+#   end
 module Slug
   extend ActiveSupport::Concern
 

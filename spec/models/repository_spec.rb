@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Repository, type: :model do
@@ -22,7 +24,10 @@ RSpec.describe Repository, type: :model do
   end
 
   context 'slug' do
-    let(:repository) { create :repository, name: Faker::Lorem.words(2).join(' ') }
+    let(:repository) do
+      create :repository, name: Faker::Lorem.words(2).join(' ')
+    end
+
     context 'on create' do
       it 'the slug is set correctly' do
         expect(repository.slug).to eq(repository.name.parameterize)

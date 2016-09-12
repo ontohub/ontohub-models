@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 begin
   require 'bundler/setup'
 rescue LoadError
@@ -27,4 +29,5 @@ begin
   RSpec::Core::RakeTask.new(:spec)
   task default: :spec
 rescue LoadError
+  $stderr.puts 'RSpec not available. Not running specs.'
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 $LOAD_PATH.push File.expand_path('../lib', __FILE__)
 
 # Maintain your gem's version:
@@ -17,7 +19,7 @@ Gem::Specification.new do |s|
   s.files         = `git ls-files -z`.split("\x0").reject do |f|
     f.match(%r{^(test|s|features)/})
   end
-  s.test_files    = Dir['spec/**/*']
+  s.test_files = Dir['spec/**/*']
 
   # Prevent pushing this gem to RubyGems.org.
   unless s.respond_to?(:metadata)

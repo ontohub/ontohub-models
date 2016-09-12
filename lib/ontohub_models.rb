@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 require 'ontohub_models/engine'
 
+# Namespace module
 module OntohubModels
-  # Your code goes here...
 end
