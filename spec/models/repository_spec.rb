@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
+require 'shared_examples/active_model'
+require 'shared_examples/active_model_serializer'
 
 RSpec.describe Repository, type: :model do
   context 'columns' do
@@ -12,7 +14,6 @@ RSpec.describe Repository, type: :model do
   end
 
   context 'validations' do
-    let(:repository) { build :repository }
     context 'name' do
       it { is_expected.to validate_presence(:name) }
       it { is_expected.to validate_length_range((3..100), :name) }
@@ -23,31 +24,38 @@ RSpec.describe Repository, type: :model do
     end
   end
 
+  context 'compatibility' do
+    subject { build :repository, name: Faker::Lorem.words(2).join(' ') }
+    it_behaves_like 'an ActiveModel compatible object'
+    it_behaves_like 'an ActiveModelSerializer compatible object'
+  end
+
   context 'slug' do
     let(:repository) do
       create :repository, name: Faker::Lorem.words(2).join(' ')
     end
+    subject { repository }
 
     context 'on create' do
       it 'the slug is set correctly' do
-        expect(repository.slug).to eq(repository.name.parameterize)
+        expect(subject.slug).to eq(subject.name.parameterize)
       end
     end
 
     context 'on update' do
-      let!(:old_slug) { repository.slug }
+      let!(:old_slug) { subject.slug }
       before do
-        repository.name = "#{repository.name}_changed"
-        repository.save
+        subject.name = "#{subject.name}_changed"
+        subject.save
       end
 
       it 'the slug is not changed' do
-        expect(repository.slug).to eq(old_slug)
+        expect(subject.slug).to eq(old_slug)
       end
     end
 
     it 'exposes to_param correctly' do
-      expect(repository.to_param).to eq(repository.slug)
+      expect(subject.to_param).to eq(subject.slug)
     end
   end
 end
