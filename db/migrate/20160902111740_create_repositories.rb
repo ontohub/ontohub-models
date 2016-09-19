@@ -5,10 +5,11 @@ Sequel.migration do
     create_table :repositories do
       primary_key :id
       String :name
-      String :slug, index: :unique
+      String :slug
       Text :description
       DateTime :created_at
       DateTime :updated_at
+      index :slug
     end
   end
 end

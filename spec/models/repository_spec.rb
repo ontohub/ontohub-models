@@ -11,6 +11,7 @@ RSpec.describe Repository, type: :model do
     it { is_expected.to have_column(:description, type: :string) }
     it { is_expected.to have_column(:created_at, type: :datetime) }
     it { is_expected.to have_column(:updated_at, type: :datetime) }
+    it { is_expected.to have_column(:namespace_id, type: :integer) }
   end
 
   context 'validations' do
@@ -18,9 +19,14 @@ RSpec.describe Repository, type: :model do
       it { is_expected.to validate_presence(:name) }
       it { is_expected.to validate_length_range((3..100), :name) }
     end
+
     context 'slug' do
       it { is_expected.to validate_unique(:slug) }
       it { is_expected.to validate_format(/\A[a-z0-9\-_]+\z/, :slug) }
+    end
+
+    context 'namespace' do
+      it { is_expected.to validate_presence(:namespace_id) }
     end
   end
 
