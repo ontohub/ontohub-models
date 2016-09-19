@@ -39,6 +39,13 @@ module Slug
     super
   end
 
+  def validate
+    validates_presence slug_base
+    validates_unique :slug
+    validates_format(/\A[a-z0-9\-_]+\z/, :slug)
+    super
+  end
+
   private
 
   def set_slug?

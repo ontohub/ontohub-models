@@ -18,7 +18,7 @@ RSpec.describe OrganizationalUnit, type: :model do
     end
     context 'slug' do
       it { is_expected.to validate_unique(:slug) }
-      it { is_expected.to validate_format(/\A[a-z0-9-]+\z/, :slug) }
+      it { is_expected.to validate_format(/\A[a-z0-9\-_]+\z/, :slug) }
     end
   end
 
