@@ -50,4 +50,16 @@ RSpec.describe OrganizationalUnit, type: :model do
       expect(organizational_unit.to_param).to eq(organizational_unit.slug)
     end
   end
+
+  context 'deletion' do
+    subject { create :organizational_unit }
+
+    before do
+      subject.destroy
+    end
+
+    it 'removes the namespace' do
+      expect(Namespace.all).to be_empty
+    end
+  end
 end

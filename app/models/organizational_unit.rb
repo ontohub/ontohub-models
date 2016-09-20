@@ -11,6 +11,7 @@ class OrganizationalUnit < Sequel::Model
   slug_condition :new?
 
   one_to_one :namespace
+  plugin :association_dependencies, namespace: :delete
 
   def validate
     validates_length_range (3..100), :name

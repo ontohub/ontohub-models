@@ -7,6 +7,7 @@ class Namespace < Sequel::Model
 
   many_to_one :organizational_unit
   one_to_many :repositories
+  plugin :association_dependencies, repositories: :destroy
 
   delegate :slug, to: :organizational_unit
 end
