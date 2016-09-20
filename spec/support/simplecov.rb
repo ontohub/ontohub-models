@@ -15,5 +15,8 @@ unless defined?(Coveralls)
     add_filter 'lib/ontohub_models/version.rb'
     # Ignore the dummy application that is used for the spec.
     add_filter 'spec/dummy'
+    # Ignore the RSpec configuration files.
+    add_filter 'spec/spec_helper.rb'
+    add_filter 'spec/rails_helper.rb'
   end
 end

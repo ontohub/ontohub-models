@@ -9,11 +9,11 @@ class Repository < Sequel::Model
   slug_base :name
   slug_condition :new?
 
+  many_to_one :namespace
+
   def validate
-    validates_presence :name
     validates_length_range (3..100), :name
-    validates_unique :slug
-    validates_format(/\A[a-z0-9-]+\z/, :slug)
+    validates_presence :namespace_id
     super
   end
 end

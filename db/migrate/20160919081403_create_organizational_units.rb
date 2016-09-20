@@ -2,14 +2,16 @@
 
 Sequel.migration do
   change do
-    create_table :repositories do
+    create_table :organizational_units do
       primary_key :id
+      # Kind of record - for class table inheritance
+      String :kind
+
       String :name
-      String :slug
-      Text :description
+      String :slug, index: :unique
+
       DateTime :created_at
       DateTime :updated_at
-      index :slug
     end
   end
 end
