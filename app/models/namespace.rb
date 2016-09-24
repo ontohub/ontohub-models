@@ -10,4 +10,5 @@ class Namespace < Sequel::Model
   plugin :association_dependencies, repositories: :destroy
 
   delegate :slug, to: :organizational_unit
+  delegate :name, to: :organizational_unit
 end

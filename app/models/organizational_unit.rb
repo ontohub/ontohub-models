@@ -4,7 +4,7 @@
 class OrganizationalUnit < Sequel::Model
   plugin :timestamps
   plugin :validation_helpers
-  plugin :class_table_inheritance
+  plugin :class_table_inheritance, key: :kind
 
   include Slug
   slug_base :name
