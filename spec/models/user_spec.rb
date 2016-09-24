@@ -33,12 +33,12 @@ RSpec.describe User, type: :model do
     subject { create :user }
 
     before do
-      2.times { create :repository, namespace: subject.namespace }
+      5.times { create :repository, namespace: subject.namespace }
       2.times { create :repository, namespace: create(:user).namespace }
     end
 
     it 'lists all personal repositories' do
-      expect(subject.personal_repositories.count).to be(2)
+      expect(subject.personal_repositories.count).to be(5)
     end
   end
 end

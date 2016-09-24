@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :user do
-    name { Faker::Internet.user_name }
+    name { generate(:username) }
     created_at { Time.current }
     updated_at { Time.current }
     display_name { Faker::Name.last_name }
