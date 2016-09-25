@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 require 'devise'
 
@@ -25,7 +27,6 @@ RSpec.describe User, type: :model do
       old_pw = subject.encrypted_password
       subject.password = 'barfoo'
       expect(subject.encrypted_password).not_to equal(old_pw)
-
     end
   end
 
