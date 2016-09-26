@@ -2,6 +2,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/ontohub/ontohub-models/badge.svg?branch=master)](https://coveralls.io/github/ontohub/ontohub-models?branch=master)
 [![Code Climate](https://codeclimate.com/github/ontohub/ontohub-models/badges/gpa.svg)](https://codeclimate.com/github/ontohub/ontohub-models)
 [![Dependency Status](https://gemnasium.com/badges/github.com/ontohub/ontohub-models.svg)](https://gemnasium.com/github.com/ontohub/ontohub-models)
+[![GitHub issues](https://img.shields.io/github/issues/ontohub/ontohub-models.svg?maxAge=2592000)](https://waffle.io/ontohub/ontohub-backend?source=ontohub%2Fontohub-models)
 
 # ontohub-models
 Data model for Ontohub, to be used by [ontohub-backend](https://github.com/ontohub/ontohub-backend) and by [hets-ontohub-adapter](https://github.com/ontohub/hets-ontohub-adapter).
