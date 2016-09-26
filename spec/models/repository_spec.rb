@@ -3,6 +3,7 @@
 require 'rails_helper'
 require 'shared_examples/active_model'
 require 'shared_examples/active_model_serializer'
+require 'shared_examples/slug'
 
 RSpec.describe Repository, type: :model do
   context 'columns' do
@@ -20,11 +21,6 @@ RSpec.describe Repository, type: :model do
       it { is_expected.to validate_length_range((3..100), :name) }
     end
 
-    context 'slug' do
-      it { is_expected.to validate_unique(:slug) }
-      it { is_expected.to validate_format(/\A[a-z0-9\-_]+\z/, :slug) }
-    end
-
     context 'namespace' do
       it { is_expected.to validate_presence(:namespace_id) }
     end
@@ -40,28 +36,9 @@ RSpec.describe Repository, type: :model do
     let(:repository) do
       create :repository, name: Faker::Lorem.words(2).join(' ')
     end
+
     subject { repository }
 
-    context 'on create' do
-      it 'the slug is set correctly' do
-        expect(subject.slug).to eq(subject.name.parameterize)
-      end
-    end
-
-    context 'on update' do
-      let!(:old_slug) { subject.slug }
-      before do
-        subject.name = "#{subject.name}_changed"
-        subject.save
-      end
-
-      it 'the slug is not changed' do
-        expect(subject.slug).to eq(old_slug)
-      end
-    end
-
-    it 'exposes to_param correctly' do
-      expect(subject.to_param).to eq(subject.slug)
-    end
+    it_behaves_like 'an object that has a slug'
   end
 end

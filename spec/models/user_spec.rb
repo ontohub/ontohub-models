@@ -10,6 +10,12 @@ RSpec.describe User, type: :model do
     it { is_expected.to have_column(:encrypted_password, type: :string) }
   end
 
+  context 'slug' do
+    subject { create :user }
+
+    it_behaves_like 'an object that has a slug'
+  end
+
   context 'password' do
     subject { create :user, password: 'foobar' }
 
