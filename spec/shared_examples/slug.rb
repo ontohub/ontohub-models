@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 RSpec.shared_examples 'an object that has a slug' do
-
   let(:slug_base) { subject.class.instance_variable_get(:@slug_base) }
 
   context 'validations' do
