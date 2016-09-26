@@ -2,7 +2,7 @@
 
 FactoryGirl.define do
   factory :organizational_unit do
-    name { Faker::Name.last_name }
+    name { generate :org_unit_name }
     created_at { Time.current }
     updated_at { Time.current }
   end
