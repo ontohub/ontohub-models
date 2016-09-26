@@ -32,6 +32,8 @@ Gem::Specification.new do |s|
   s.add_dependency 'sequel_pg', '~> 1.6.17'
   s.add_dependency 'sequel-rails', '~> 0.9.14'
   s.add_dependency 'chewy', '~> 0.8.4'
+  s.add_dependency 'devise', '~> 4.2.0'
+  s.add_dependency 'sequel-devise', '~> 0.0.9'
 
   # General Development
   s.add_development_dependency 'bundler', '~> 1.12'

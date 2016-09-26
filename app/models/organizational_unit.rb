@@ -4,14 +4,14 @@
 class OrganizationalUnit < Sequel::Model
   plugin :timestamps
   plugin :validation_helpers
-  plugin :class_table_inheritance
+  plugin :class_table_inheritance, key: :kind
 
   include Slug
   slug_base :name
   slug_condition :new?
 
   one_to_one :namespace
-  plugin :association_dependencies, namespace: :delete
+  plugin :association_dependencies, namespace: :destroy
 
   def validate
     validates_length_range (3..100), :name

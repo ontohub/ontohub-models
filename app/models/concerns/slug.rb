@@ -28,6 +28,14 @@ module Slug
     def slug_condition(method)
       @slug_condition = method
     end
+
+    def inherited(subclass)
+      %w(@slug_base @slug_condition).each do |instance_var|
+        instance_var_value = instance_variable_get(instance_var)
+        subclass.instance_variable_set(instance_var, instance_var_value)
+      end
+      super
+    end
   end
 
   def to_param
