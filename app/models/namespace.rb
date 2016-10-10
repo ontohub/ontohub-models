@@ -15,7 +15,8 @@ class Namespace < Sequel::Model
   # Overwrite find to allow finding via slug, even though the slug is in
   # another table. This simplifies the controller.
   def self.find(**opts)
-    if slug = opts.delete(:slug)
+    if opts.keys.include?(:slug)
+      slug = opts.delete(:slug)
       # Find by slug via join table.
       graph(:organizational_units, {id: :organizational_unit_id},
               select: false).

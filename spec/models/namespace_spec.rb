@@ -28,6 +28,10 @@ RSpec.describe Namespace, type: :model do
       it 'can be found' do
         expect(subject.class.find(slug: subject.slug)).to eq(subject.reload)
       end
+
+      it 'behaves correctly if the slug is nil' do
+        expect(subject.class.find(slug: nil)).to be(nil)
+      end
     end
   end
 
