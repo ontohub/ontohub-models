@@ -37,7 +37,7 @@ Gem::Specification.new do |s|
 
   # General Development
   s.add_development_dependency 'bundler', '~> 1.12'
-  s.add_development_dependency 'rake', '~> 11.2.2'
+  s.add_development_dependency 'rake', '~> 11.3.0'
 
   # Testing
   s.add_development_dependency 'rspec', '~> 3.5.0'
