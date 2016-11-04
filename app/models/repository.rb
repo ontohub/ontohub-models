@@ -14,6 +14,8 @@ class Repository < Sequel::Model
   def validate
     validates_length_range (3..100), :name
     validates_presence :namespace_id
+    validates_presence :private_access
+    validates_includes %w(ontology model specification), :content
     super
   end
 end
