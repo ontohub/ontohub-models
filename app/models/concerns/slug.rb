@@ -1,10 +1,23 @@
 # frozen_string_literal: true
 
 # The Slug module allows a model to have a slug for routing. To use it in a
-# model, which induces the slug from the `name` attribute, the model needs to
-# call `slug_base :name` (required). It can optionally call
-# `slug_condition :condition_method` which determines whether or not to change
-# the slug.
+# model, which induces the slug from the +name+ attribute, the model needs to
+# call +slug_base :name+ (required).
+#
+# It can optionally call +slug_condition :condition_method+ which determines
+# whether or not to change the slug.
+#
+# If the condition holds, the slug gets set/updated in a before_save hook.
+#
+# At the end of the update, the optional +slug_postprocess+ lambda is called,
+# which expects one argument (the preset slug string). This method must return
+# the slug as it is supposed to be saved.
+#
+# During the validations, the format of the slug is checked against the optional
+# +slug_format+ regular expression. If no format is given, a default format is
+# used.
+#
+#
 # The model must have a `slug` column in the database.
 #
 # Usage:
@@ -13,9 +26,16 @@
 #
 #     slug_base :name
 #
+#     # Optional: Specify when the slug gets set/updated.
 #     slug_condition :new?
 #     # OR
 #     slug_condition ->() { name.changed? }
+#
+#     # Optional: Add some post-processing to set the slug.
+#     slug_postprocess ->(slug) { slug.upcase }
+#
+#     # Optional: Specify the validation format of the slug.
+#     slug_format /\A[A-Z0-9\-_]+\z/
 #   end
 module Slug
   extend ActiveSupport::Concern
