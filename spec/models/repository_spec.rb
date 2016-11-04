@@ -16,6 +16,7 @@ RSpec.describe Repository, type: :model do
   end
 
   context 'validations' do
+    subject { build :repository, name: Faker::Lorem.words(2).join(' ') }
     context 'name' do
       it { is_expected.to validate_presence(:name) }
       it { is_expected.to validate_length_range((3..100), :name) }
@@ -23,6 +24,25 @@ RSpec.describe Repository, type: :model do
 
     context 'namespace' do
       it { is_expected.to validate_presence(:namespace_id) }
+    end
+
+    context 'access' do
+      it { is_expected.to validate_presence(:private_access) }
+      it 'private access is nil' do
+        subject.private_access = nil
+        expect(subject.valid?).to be(false)
+      end
+    end
+
+    context 'content' do
+      it do
+        is_expected.to validate_includes %w(ontology model specification),
+          :content_type
+      end
+      it 'has a value that is not allowed' do
+        subject.content_type = 'not_allowed'
+        expect(subject.valid?).to be(false)
+      end
     end
   end
 

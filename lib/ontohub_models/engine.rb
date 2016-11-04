@@ -13,5 +13,14 @@ module OntohubModels
       g.fixture_replacement :factory_girl, dir: 'spec/factories',
                                            suffix: 'factory'
     end
+    config.sequel.after_connect = proc do
+      begin
+        Sequel::Model.db.extension :pg_enum
+      # rubocop:disable HandleExceptions
+      rescue Sequel::DatabaseConnectionError
+        # If we are in rake db:create, we don't want the extension to be loaded.
+        # See https://github.com/TalentBox/sequel-rails/issues/102
+      end
+    end
   end
 end
