@@ -7,7 +7,7 @@ FactoryGirl.define do
     description { Faker::Lorem.sentence }
     created_at { Time.current }
     updated_at { Time.current }
-    private_access { false }
+    public_access { false }
     content_type { 'ontology' }
   end
 end

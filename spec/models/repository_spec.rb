@@ -27,9 +27,9 @@ RSpec.describe Repository, type: :model do
     end
 
     context 'access' do
-      it { is_expected.to validate_presence(:private_access) }
-      it 'private access is nil' do
-        subject.private_access = nil
+      it { is_expected.to validate_presence(:public_access) }
+      it 'public access is nil' do
+        subject.public_access = nil
         expect(subject.valid?).to be(false)
       end
     end
