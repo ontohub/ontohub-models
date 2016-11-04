@@ -19,6 +19,7 @@
 #   end
 module Slug
   extend ActiveSupport::Concern
+  DEFAULT_SLUG_FORMAT = /\A[a-z0-9\-_]+\z/
 
   class_methods do
     def slug_base(attribute)
@@ -29,13 +30,32 @@ module Slug
       @slug_condition = method
     end
 
+    def slug_postprocess(callable)
+      @slug_postprocess = callable
+    end
+
+    def slug_format(format)
+      @slug_format = format
+    end
+
     def inherited(subclass)
-      %w(@slug_base @slug_condition).each do |instance_var|
+      %w(@slug_base @slug_condition @slug_postprocess @slug_format).
+        each do |instance_var|
         instance_var_value = instance_variable_get(instance_var)
         subclass.instance_variable_set(instance_var, instance_var_value)
       end
       super
     end
+  end
+
+  def self.sluggify(string)
+    string&.
+      downcase&.
+      gsub(/[*.=]/,
+           '*' => 'Star',
+           '=' => 'Eq')&.
+      parameterize(preserve_case: true)&.
+      gsub(/\s/, '_')
   end
 
   def to_param
@@ -50,7 +70,7 @@ module Slug
   def validate
     validates_presence slug_base
     validates_unique :slug
-    validates_format(/\A[a-z0-9\-_]+\z/, :slug)
+    validates_format(slug_format, :slug)
     super
   end
 
@@ -69,12 +89,12 @@ module Slug
   end
 
   def set_slug
-    self.slug = send(slug_base)&.
-      parameterize&.
-      gsub(/\s/, '_')&.
-      gsub(/[*.=]/,
-           '*' => 'Star',
-           '=' => 'Eq')
+    self.slug = Slug.sluggify(send(slug_base))
+    self.slug = do_slug_postprocess(slug)
+  end
+
+  def do_slug_postprocess(slug)
+    instance_exec(slug, &slug_postprocess)
   end
 
   def slug_base
@@ -83,5 +103,14 @@ module Slug
 
   def slug_condition
     self.class.instance_variable_get(:'@slug_condition')
+  end
+
+  def slug_postprocess
+    identity = ->(x) { x }
+    self.class.instance_variable_get(:'@slug_postprocess') || identity
+  end
+
+  def slug_format
+    self.class.instance_variable_get(:'@slug_format') || DEFAULT_SLUG_FORMAT
   end
 end

@@ -5,16 +5,14 @@ RSpec.shared_examples 'an object that has a slug' do
 
   context 'validations' do
     it { is_expected.to validate_unique(:slug) }
-    it { is_expected.to validate_format(/\A[a-z0-9\-_]+\z/, :slug) }
+    it { is_expected.to validate_format(subject.send(:slug_format), :slug) }
   end
 
   context 'on create' do
     it 'the slug is set correctly' do
-      expect(subject.slug).to eq(subject.send(slug_base).
-                                   parameterize.
-                                   gsub(/[*.=]/,
-                                        '*' => 'Star',
-                                        '=' => 'Eq'))
+      expect(subject.slug).
+        to eq(subject.
+          send(:do_slug_postprocess, Slug.sluggify(subject.send(slug_base))))
     end
   end
 
