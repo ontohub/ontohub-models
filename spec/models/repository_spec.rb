@@ -60,5 +60,10 @@ RSpec.describe Repository, type: :model do
     subject { repository }
 
     it_behaves_like 'an object that has a slug'
+
+    it "merges the namespace's slug with the own name" do
+      expect(subject.slug).
+        to eq("#{subject.namespace.slug}/#{Slug.sluggify(subject.name)}")
+    end
   end
 end
