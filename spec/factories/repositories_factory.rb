@@ -8,6 +8,6 @@ FactoryGirl.define do
     created_at { Time.current }
     updated_at { Time.current }
     private_access { false }
-    content { 'ontology' }
+    content_type { 'ontology' }
   end
 end
