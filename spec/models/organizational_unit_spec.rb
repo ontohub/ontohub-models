@@ -27,6 +27,10 @@ RSpec.describe OrganizationalUnit, type: :model do
     subject { organizational_unit }
 
     it_behaves_like 'an object that has a slug'
+
+    it 'uses only the name for the slug' do
+      expect(subject.slug).to eq(Slug.sluggify(subject.name))
+    end
   end
 
   context 'deletion' do
