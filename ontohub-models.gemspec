@@ -56,6 +56,5 @@ Gem::Specification.new do |s|
   s.add_dependency 'pry-rescue', '~> 1.4.4'
   s.add_dependency 'pry-stack_explorer', '~> 0.4.9.2'
   s.add_dependency 'pry-byebug', '~> 3.4.0'
-  s.add_dependency 'pry-coolline', '~> 0.2.5'
   s.add_dependency 'awesome_print', '~> 1.7.0'
 end
