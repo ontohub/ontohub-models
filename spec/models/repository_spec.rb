@@ -24,6 +24,10 @@ RSpec.describe Repository, type: :model do
 
     context 'namespace' do
       it { is_expected.to validate_presence(:namespace_id) }
+      it 'is invalid if the namespace is nil' do
+        subject.namespace = nil
+        expect(subject.valid?).to be(false)
+      end
     end
 
     context 'access' do
