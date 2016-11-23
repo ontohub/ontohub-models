@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
+require 'shared_examples/model_with_url'
 require 'shared_examples/slug'
 
 RSpec.describe OrganizationalUnit, type: :model do
@@ -17,6 +18,11 @@ RSpec.describe OrganizationalUnit, type: :model do
       it { is_expected.to validate_presence(:name) }
       it { is_expected.to validate_length_range((3..100), :name) }
     end
+  end
+
+  context 'url' do
+    subject { build :organizational_unit }
+    it_behaves_like 'an object that has a URL'
   end
 
   context 'slug' do

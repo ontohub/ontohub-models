@@ -7,6 +7,8 @@ Sequel.migration do
       # Kind of record - for class table inheritance
       column :kind, String
 
+      column :url_path, String, unique: true
+
       column :name, String
       column :slug, String, unique: true
 
@@ -25,6 +27,7 @@ Sequel.migration do
 
     create_table :namespaces do
       primary_key :id
+
       foreign_key :organizational_unit_id, :organizational_units, unique: true
       column :created_at, DateTime
       column :updated_at, DateTime
@@ -34,6 +37,8 @@ Sequel.migration do
     create_table :repositories do
       primary_key :id
       foreign_key :namespace_id, :namespaces, index: true, null: false
+
+      column :url_path, String, unique: true
 
       column :name, String
       column :slug, String, unique: true
