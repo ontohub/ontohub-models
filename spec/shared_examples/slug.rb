@@ -6,6 +6,21 @@ RSpec.shared_examples 'an object that has a slug' do
   context 'validations' do
     it { is_expected.to validate_unique(:slug) }
     it { is_expected.to validate_format(subject.send(:slug_format), :slug) }
+
+    context 'with duplicate slug' do
+      before do
+        subject.dup.save
+        subject.valid?
+      end
+
+      it 'has no slug errors' do
+        expect(subject.errors[:slug]).to be_empty
+      end
+
+      it 'has slug_base errors' do
+        expect(subject.errors[slug_base]).not_to be_empty
+      end
+    end
   end
 
   context 'on create' do
