@@ -24,6 +24,7 @@ RSpec.shared_examples 'an object that has a slug' do
   end
 
   context 'on create' do
+    before { subject.save }
     it 'the slug is set correctly' do
       expect(subject.slug).
         to eq(subject.
@@ -32,14 +33,19 @@ RSpec.shared_examples 'an object that has a slug' do
   end
 
   context 'on update' do
-    let!(:old_slug) { subject.slug }
-    before do
-      subject.send("#{slug_base}=", "#{subject.send(slug_base)}_changed")
-      subject.save
-    end
+    before { subject.save }
 
-    it 'the slug is not changed' do
-      expect(subject.slug).to eq(old_slug)
+    context 'changing the slug base' do
+      let!(:old_slug) { subject.slug }
+
+      before do
+        subject.send("#{slug_base}=", "#{subject.send(slug_base)}_changed")
+        subject.save
+      end
+
+      it 'the slug is not changed' do
+        expect(subject.slug).to eq(old_slug)
+      end
     end
   end
 
