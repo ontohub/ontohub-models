@@ -18,7 +18,7 @@ Sequel.migration do
 
     create_table :users do
       foreign_key :id, :organizational_units, unique: true
-      column :display_name, String
+      column :real_name, String
 
       column :email, String
       column :encrypted_password, String

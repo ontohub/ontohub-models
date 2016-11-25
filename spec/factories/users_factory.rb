@@ -6,7 +6,7 @@ FactoryGirl.define do
     url_path { "/users/#{Slug.sluggify(name)}" }
     created_at { Time.current }
     updated_at { Time.current }
-    display_name { Faker::Name.last_name }
+    real_name { Faker::Name.name }
     email { Faker::Internet.email(name) }
     password { Faker::Internet.password }
     secret { Faker::Crypto.sha1 }
