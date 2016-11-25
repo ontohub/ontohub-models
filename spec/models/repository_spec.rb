@@ -53,15 +53,12 @@ RSpec.describe Repository, type: :model do
   end
 
   context 'slug' do
-    let(:repository) do
-      create :repository, name: Faker::Lorem.words(2).join(' ')
-    end
-
-    subject { repository }
+    subject { build :repository, name: Faker::Lorem.words(2).join(' ') }
 
     it_behaves_like 'an object that has a slug'
 
     it "merges the namespace's slug with the own name" do
+      subject.save
       expect(subject.slug).
         to eq("#{subject.namespace.slug}/#{Slug.sluggify(subject.name)}")
     end

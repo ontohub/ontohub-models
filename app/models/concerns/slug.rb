@@ -92,6 +92,7 @@ module Slug
     validates_unique :slug
     validates_format(slug_format, :slug)
     super
+    validate_move_slug_errors_to_base_errors
   end
 
   private
@@ -132,5 +133,11 @@ module Slug
 
   def slug_format
     self.class.instance_variable_get(:'@slug_format') || DEFAULT_SLUG_FORMAT
+  end
+
+  def validate_move_slug_errors_to_base_errors
+    return unless errors[:slug].any?
+    errors[slug_base] += errors.delete(:slug)
+    errors[slug_base].uniq!
   end
 end

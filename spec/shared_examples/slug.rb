@@ -6,9 +6,25 @@ RSpec.shared_examples 'an object that has a slug' do
   context 'validations' do
     it { is_expected.to validate_unique(:slug) }
     it { is_expected.to validate_format(subject.send(:slug_format), :slug) }
+
+    context 'with duplicate slug' do
+      before do
+        subject.dup.save
+        subject.valid?
+      end
+
+      it 'has no slug errors' do
+        expect(subject.errors[:slug]).to be_empty
+      end
+
+      it 'has slug_base errors' do
+        expect(subject.errors[slug_base]).not_to be_empty
+      end
+    end
   end
 
   context 'on create' do
+    before { subject.save }
     it 'the slug is set correctly' do
       expect(subject.slug).
         to eq(subject.
@@ -17,14 +33,19 @@ RSpec.shared_examples 'an object that has a slug' do
   end
 
   context 'on update' do
-    let!(:old_slug) { subject.slug }
-    before do
-      subject.send("#{slug_base}=", "#{subject.send(slug_base)}_changed")
-      subject.save
-    end
+    before { subject.save }
 
-    it 'the slug is not changed' do
-      expect(subject.slug).to eq(old_slug)
+    context 'changing the slug base' do
+      let!(:old_slug) { subject.slug }
+
+      before do
+        subject.send("#{slug_base}=", "#{subject.send(slug_base)}_changed")
+        subject.save
+      end
+
+      it 'the slug is not changed' do
+        expect(subject.slug).to eq(old_slug)
+      end
     end
   end
 
