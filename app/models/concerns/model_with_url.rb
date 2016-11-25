@@ -4,8 +4,17 @@
 module ModelWithURL
   extend ActiveSupport::Concern
 
+  attr_accessor :url_path_method
+
   def url(prefix)
     "#{prefix.sub(%r{/$}, '')}#{url_path}"
+  end
+
+  def before_validation
+    if url_path_method.respond_to?(:call)
+      self.url_path = url_path_method.call(self)
+    end
+    super
   end
 
   def validate

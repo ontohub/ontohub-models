@@ -3,7 +3,7 @@
 FactoryGirl.define do
   factory :user do
     name { generate(:username) }
-    url_path { "/users/#{Slug.sluggify(name)}" }
+    url_path_method { ->(user) { "/users/#{user.to_param}}" } }
     created_at { Time.current }
     updated_at { Time.current }
     real_name { Faker::Name.name }

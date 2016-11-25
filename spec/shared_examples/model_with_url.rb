@@ -6,13 +6,15 @@ RSpec.shared_examples 'an object that has a URL' do
     it { is_expected.to validate_format(%r{\A/}, :url_path) }
 
     it 'add an error if the url_path is blank' do
-      subject.url_path = nil
+      subject.url_path_method = nil
       subject.valid?
       expect(subject.errors[:url_path]).not_to be_empty
     end
 
     it 'add an error if the url_path does not begin with a slash' do
-      subject.url_path = subject.url_path.sub(%r{\A/}, '')
+      # Trigger url_path computation
+      subject.valid?
+      subject.url_path_method = ->(s) { s.url_path.sub(%r{\A/}, '') }
       subject.valid?
       expect(subject.errors[:url_path]).not_to be_empty
     end
