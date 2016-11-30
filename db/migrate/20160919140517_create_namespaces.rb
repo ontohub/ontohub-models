@@ -12,7 +12,6 @@ Sequel.migration do
     alter_table :repositories do
       add_foreign_key :namespace_id, :namespaces, null: false
       add_index :namespace_id
-      add_index %i(namespace_id slug), unique: true
     end
   end
 end
