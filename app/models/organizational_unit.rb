@@ -6,6 +6,8 @@ class OrganizationalUnit < Sequel::Model
   plugin :validation_helpers
   plugin :class_table_inheritance, key: :kind
 
+  include ModelWithURL
+
   include Slug
   slug_base :name
   slug_condition :new?

@@ -3,6 +3,7 @@
 require 'rails_helper'
 require 'shared_examples/active_model'
 require 'shared_examples/active_model_serializer'
+require 'shared_examples/model_with_url'
 require 'shared_examples/slug'
 
 RSpec.describe Repository, type: :model do
@@ -54,6 +55,11 @@ RSpec.describe Repository, type: :model do
     subject { build :repository, name: Faker::Lorem.words(2).join(' ') }
     it_behaves_like 'an ActiveModel compatible object'
     it_behaves_like 'an ActiveModelSerializer compatible object'
+  end
+
+  context 'url' do
+    subject { build :repository }
+    it_behaves_like 'an object that has a URL'
   end
 
   context 'slug' do

@@ -3,11 +3,19 @@
 require 'rails_helper'
 require 'devise'
 
+require 'shared_examples/model_with_url'
+require 'shared_examples/slug'
+
 RSpec.describe User, type: :model do
   context 'columns' do
-    it { is_expected.to have_column(:display_name, type: :string) }
+    it { is_expected.to have_column(:real_name, type: :string) }
     it { is_expected.to have_column(:email, type: :string) }
     it { is_expected.to have_column(:encrypted_password, type: :string) }
+  end
+
+  context 'url' do
+    subject { build :repository }
+    it_behaves_like 'an object that has a URL'
   end
 
   context 'slug' do
