@@ -17,6 +17,7 @@ RDoc::Task.new(:rdoc) do |rdoc|
 end
 
 load 'rails/tasks/statistics.rake'
+Dir.glob('lib/tasks/**/*.rake').each { |file| load file }
 
 Bundler::GemHelper.install_tasks
 APP_RAKEFILE = File.expand_path('../spec/dummy/Rakefile', __FILE__)
