@@ -48,7 +48,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'faker', '~> 1.6.6'
 
   # CI services
-  s.add_development_dependency 'coveralls', '~> 0.8.15'
+  s.add_development_dependency 'coveralls', '~> 0.8.16'
 
   # We want to have these in the production environment as well in case we need
   # to debug the application:
