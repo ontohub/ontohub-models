@@ -12,7 +12,7 @@ class OrganizationalUnit < Sequel::Model
   slug_base :name
   slug_condition :new?
 
-  one_to_many :repositories
+  one_to_many :repositories, key: :owner_id
   plugin :association_dependencies, repositories: :destroy
 
   def validate

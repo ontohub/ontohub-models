@@ -29,7 +29,7 @@ Sequel.migration do
     create_enum :repository_content_type, %w(ontology model specification)
     create_table :repositories do
       primary_key :id
-      foreign_key :organizational_unit_id, :organizational_units,
+      foreign_key :owner_id, :organizational_units,
                   index: true, null: false
 
       column :url_path, String, unique: true

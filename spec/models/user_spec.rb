@@ -48,8 +48,8 @@ RSpec.describe User, type: :model do
     subject { create :user }
 
     before do
-      5.times { create :repository, organizational_unit: subject }
-      2.times { create :repository, organizational_unit: create(:user) }
+      5.times { create :repository, owner: subject }
+      2.times { create :repository, owner: create(:user) }
     end
 
     it 'lists all personal repositories' do
