@@ -12,20 +12,11 @@ class OrganizationalUnit < Sequel::Model
   slug_base :name
   slug_condition :new?
 
-  one_to_one :namespace
-  plugin :association_dependencies, namespace: :destroy
+  one_to_many :repositories
+  plugin :association_dependencies, repositories: :destroy
 
   def validate
     validates_length_range (3..100), :name
     super
-  end
-
-  protected
-
-  # NOTE: Always create an OrganizationalUnit in a transaction in order to keep
-  # the database consistent. This after_create method must be part of the
-  # transaction.
-  def after_create
-    self.namespace = Namespace.new
   end
 end
