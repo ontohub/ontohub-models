@@ -5,4 +5,7 @@ class User < OrganizationalUnit
   plugin :devise
 
   devise :database_authenticatable
+
+  many_to_many :organizations,
+    join_table: :organizations_members, left_key: :member_id
 end

@@ -2,7 +2,8 @@
 
 Sequel.migration do
   change do
-    create_enum :organizational_unit_kind_type, %w(OrganizationalUnit User Team)
+    create_enum :organizational_unit_kind_type,
+      %w(OrganizationalUnit User Organization)
     create_table :organizational_units do
       primary_key :id
       # Kind of record - for class table inheritance
@@ -18,7 +19,6 @@ Sequel.migration do
     end
 
     create_table :users do
-      # A primary key is added in 40
       primary_key :id
       foreign_key [:id], :organizational_units, unique: true
       column :real_name, String
@@ -26,6 +26,17 @@ Sequel.migration do
       column :email, String
       column :encrypted_password, String
       column :secret, String
+    end
+
+    create_table :organizations do
+      primary_key :id
+      foreign_key [:id], :organizational_units, unique: true
+      column :real_name, String
+    end
+
+    create_table :organizations_members do
+      foreign_key :organization_id, :organizations, index: true
+      foreign_key :member_id, :users, index: true
     end
 
     create_enum :repository_content_type, %w(ontology model specification)

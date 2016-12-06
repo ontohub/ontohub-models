@@ -14,7 +14,7 @@ RSpec.describe User, type: :model do
   end
 
   context 'url' do
-    subject { build :repository }
+    subject { build :user }
     it_behaves_like 'an object that has a URL'
   end
 
@@ -44,7 +44,7 @@ RSpec.describe User, type: :model do
     end
   end
 
-  context 'personal repositories' do
+  context 'owned repositories' do
     subject { create :user }
 
     before do
@@ -54,6 +54,77 @@ RSpec.describe User, type: :model do
 
     it 'lists all personal repositories' do
       expect(subject.repositories.count).to be(5)
+    end
+  end
+
+  context 'organizations' do
+    subject { create :user }
+
+    context 'perspective: Organization#members' do
+      context 'adding the user to another organization' do
+        let(:organization) { create :organization }
+        let(:organization2) { create :organization }
+
+        it 'the organization has no members yet' do
+          expect(organization.members).to be_empty
+        end
+
+        context 'adding members' do
+          before do
+            organization.add_member(subject)
+            organization2.add_member(subject)
+          end
+
+          it 'has the correct organizations afterwards' do
+            expect(subject.organizations).
+              to match_array([organization, organization2])
+          end
+
+          context 'deleting it from the first organization again' do
+            before { organization.remove_member(subject) }
+
+            it 'has only the second organization afterwards' do
+              expect(subject.organizations).to match_array([organization2])
+            end
+          end
+        end
+      end
+    end
+
+    context 'perspective: User#organizations' do
+      it 'has none in the beginning' do
+        expect(subject.organizations.count).to eq(0)
+      end
+
+      context 'adding the user to organizations' do
+        let(:organization) { create :organization }
+        let(:organization2) { create :organization }
+        before do
+          subject.add_organization(organization)
+          subject.add_organization(organization2)
+        end
+
+        it 'has the correct organizations afterwards' do
+          expect(subject.organizations).
+            to match_array([organization, organization2])
+        end
+
+        context 'deleting it from the first organization again' do
+          before { subject.remove_organization(organization) }
+
+          it 'has only the second organization afterwards' do
+            expect(subject.organizations).to match_array([organization2])
+          end
+        end
+
+        context 'deleting it from all its organizations again' do
+          before { subject.remove_all_organizations }
+
+          it 'has only the second organization afterwards' do
+            expect(subject.organizations).to be_empty
+          end
+        end
+      end
     end
   end
 end
