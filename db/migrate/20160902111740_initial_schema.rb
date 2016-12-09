@@ -18,7 +18,9 @@ Sequel.migration do
     end
 
     create_table :users do
-      foreign_key :id, :organizational_units, unique: true
+      #A primary key is added in 40
+      primary_key :id
+      foreign_key [:id], :organizational_units, unique: true
       column :real_name, String
 
       column :email, String
@@ -41,6 +43,30 @@ Sequel.migration do
       column :updated_at, DateTime
       column :public_access, TrueClass
       column :content_type, :repository_content_type
+    end
+
+    create_table :commits do
+      primary_key :id
+      foreign_key :repository_id, :repositories, index: true, null: false
+      foreign_key :author_id, :users, index: true, null: true
+      foreign_key :editor_id, :users, index: true, null: true
+
+      column :author_name, String
+      column :editor_name, String
+      column :authored_at, DateTime
+      column :edited_at, DateTime
+      column :shasum, String
+      column :created_at, DateTime
+      column :updated_at, DateTime
+    end
+
+    create_table :file_versions do
+      primary_key :id
+      foreign_key :commit_id, :commits, index: true, null: false
+
+      column :path, String
+      column :created_at, DateTime
+      column :updated_at, DateTime
     end
   end
 end

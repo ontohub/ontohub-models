@@ -14,6 +14,7 @@ class Repository < Sequel::Model
   slug_format %r{\A([a-z0-9\-_]+)/([a-z0-9\-_]+)\z}
 
   many_to_one :owner, class: OrganizationalUnit
+  one_to_many :commits
 
   def validate
     validates_length_range (3..100), :name
