@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# A specific commit belongs to a repository and can have many file versions.
 class Commit < Sequel::Model
   plugin :timestamps
 

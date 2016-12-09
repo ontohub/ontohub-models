@@ -18,7 +18,7 @@ Sequel.migration do
     end
 
     create_table :users do
-      #A primary key is added in 40
+      # A primary key is added in 40
       primary_key :id
       foreign_key [:id], :organizational_units, unique: true
       column :real_name, String
