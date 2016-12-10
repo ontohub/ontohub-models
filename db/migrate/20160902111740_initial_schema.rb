@@ -26,18 +26,11 @@ Sequel.migration do
       column :secret, String
     end
 
-    create_table :namespaces do
-      primary_key :id
-
-      foreign_key :organizational_unit_id, :organizational_units, unique: true
-      column :created_at, DateTime
-      column :updated_at, DateTime
-    end
-
     create_enum :repository_content_type, %w(ontology model specification)
     create_table :repositories do
       primary_key :id
-      foreign_key :namespace_id, :namespaces, index: true, null: false
+      foreign_key :owner_id, :organizational_units,
+                  index: true, null: false
 
       column :url_path, String, unique: true
 

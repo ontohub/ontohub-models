@@ -13,7 +13,7 @@ RSpec.describe Repository, type: :model do
     it { is_expected.to have_column(:description, type: :string) }
     it { is_expected.to have_column(:created_at, type: :datetime) }
     it { is_expected.to have_column(:updated_at, type: :datetime) }
-    it { is_expected.to have_column(:namespace_id, type: :integer) }
+    it { is_expected.to have_column(:owner_id, type: :integer) }
   end
 
   context 'validations' do
@@ -23,10 +23,10 @@ RSpec.describe Repository, type: :model do
       it { is_expected.to validate_length_range((3..100), :name) }
     end
 
-    context 'namespace' do
-      it { is_expected.to validate_presence(:namespace_id) }
-      it 'is invalid if the namespace is nil' do
-        subject.namespace = nil
+    context 'owner' do
+      it { is_expected.to validate_presence(:owner) }
+      it 'is invalid if the owner is nil' do
+        subject.owner = nil
         expect(subject.valid?).to be(false)
       end
     end
@@ -67,10 +67,11 @@ RSpec.describe Repository, type: :model do
 
     it_behaves_like 'an object that has a slug'
 
-    it "merges the namespace's slug with the own name" do
+    it "merges the owner's slug with the own name" do
       subject.save
       expect(subject.slug).
-        to eq("#{subject.namespace.slug}/#{Slug.sluggify(subject.name)}")
+        to eq("#{subject.owner.slug}/"\
+              "#{Slug.sluggify(subject.name)}")
     end
   end
 end

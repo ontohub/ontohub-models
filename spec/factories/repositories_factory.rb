@@ -2,7 +2,7 @@
 
 FactoryGirl.define do
   factory :repository do
-    association :namespace
+    association :owner, factory: :organizational_unit
     name { generate :repository_name }
     url_path_method { ->(repo) { "/repositories/#{repo.to_param}" } }
     description { Faker::Lorem.sentence }
