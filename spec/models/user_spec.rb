@@ -53,7 +53,33 @@ RSpec.describe User, type: :model do
     end
 
     it 'lists all personal repositories' do
-      expect(subject.repositories.count).to be(5)
+      expect(subject.repositories.count).to eq(5)
+    end
+  end
+
+  context 'accessible repositories' do
+    subject { create :user }
+    let(:organization1) { create :organization }
+    let(:organization2) { create :organization }
+    let!(:repositories) do
+      [create(:repository, owner: subject),
+       create(:repository, owner: organization1),
+       create(:repository, owner: organization2)]
+    end
+
+    before do
+      organization1.add_member(subject)
+      organization2.add_member(subject)
+
+      other_user = create(:user)
+      other_organization = create(:organization)
+      other_organization.add_member(other_user)
+      create(:repository, owner: other_user)
+      create(:repository, owner: other_organization)
+    end
+
+    it 'lists the correct repositories' do
+      expect(subject.accessible_repositories).to match_array(repositories)
     end
   end
 

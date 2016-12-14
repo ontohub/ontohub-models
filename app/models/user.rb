@@ -8,4 +8,8 @@ class User < OrganizationalUnit
 
   many_to_many :organizations,
     join_table: :organizations_members, left_key: :member_id
+
+  def accessible_repositories
+    repositories + organizations.map(&:repositories).flatten
+  end
 end
