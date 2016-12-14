@@ -11,7 +11,11 @@ class User < OrganizationalUnit
 
   one_to_many :accessible_repositories, dataset: (proc do |reflection|
     reflection.associated_dataset.
-      where(owner_id: id).
-      or(owner_id: organizations_dataset.select(:organizational_units__id))
+      graph(:organizations, {id: :owner_id}, select: false).
+      graph(:organizations_members, {organization_id: :id}, select: false).
+      graph(:users, {id: :member_id}, select: false).
+      where(repositories__owner_id: id).
+      or(repositories__owner_id: :organizations_members__organization_id,
+         organizations_members__member_id: id)
   end), class: Repository
 end
