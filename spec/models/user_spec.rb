@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
-require 'devise'
 
+require 'shared_examples/active_model'
+require 'shared_examples/active_model_serializer'
 require 'shared_examples/model_with_url'
 require 'shared_examples/slug'
 
@@ -13,8 +14,14 @@ RSpec.describe User, type: :model do
     it { is_expected.to have_column(:encrypted_password, type: :string) }
   end
 
+  context 'compatibility' do
+    subject { build :user }
+    it_behaves_like 'an ActiveModel compatible object'
+    it_behaves_like 'an ActiveModelSerializer compatible object with devise'
+  end
+
   context 'url' do
-    subject { build :repository }
+    subject { build :user }
     it_behaves_like 'an object that has a URL'
   end
 
@@ -44,7 +51,7 @@ RSpec.describe User, type: :model do
     end
   end
 
-  context 'personal repositories' do
+  context 'owned repositories' do
     subject { create :user }
 
     before do
@@ -53,7 +60,104 @@ RSpec.describe User, type: :model do
     end
 
     it 'lists all personal repositories' do
-      expect(subject.repositories.count).to be(5)
+      expect(subject.repositories.count).to eq(5)
+    end
+  end
+
+  context 'accessible repositories' do
+    subject { create :user }
+    let(:organization1) { create :organization }
+    let(:organization2) { create :organization }
+    let!(:repositories) do
+      [create(:repository, owner: subject),
+       create(:repository, owner: organization1),
+       create(:repository, owner: organization2)]
+    end
+
+    before do
+      organization1.add_member(subject)
+      organization2.add_member(subject)
+
+      other_user = create(:user)
+      other_organization = create(:organization)
+      other_organization.add_member(other_user)
+      create(:repository, owner: other_user)
+      create(:repository, owner: other_organization)
+    end
+
+    it 'lists the correct repositories' do
+      expect(subject.accessible_repositories).to match_array(repositories)
+    end
+  end
+
+  context 'organizations' do
+    subject { create :user }
+
+    context 'perspective: Organization#members' do
+      context 'adding the user to another organization' do
+        let(:organization) { create :organization }
+        let(:organization2) { create :organization }
+
+        it 'the organization has no members yet' do
+          expect(organization.members).to be_empty
+        end
+
+        context 'adding members' do
+          before do
+            organization.add_member(subject)
+            organization2.add_member(subject)
+          end
+
+          it 'has the correct organizations afterwards' do
+            expect(subject.organizations).
+              to match_array([organization, organization2])
+          end
+
+          context 'deleting it from the first organization again' do
+            before { organization.remove_member(subject) }
+
+            it 'has only the second organization afterwards' do
+              expect(subject.organizations).to match_array([organization2])
+            end
+          end
+        end
+      end
+    end
+
+    context 'perspective: User#organizations' do
+      it 'has none in the beginning' do
+        expect(subject.organizations.count).to eq(0)
+      end
+
+      context 'adding the user to organizations' do
+        let(:organization) { create :organization }
+        let(:organization2) { create :organization }
+        before do
+          subject.add_organization(organization)
+          subject.add_organization(organization2)
+        end
+
+        it 'has the correct organizations afterwards' do
+          expect(subject.organizations).
+            to match_array([organization, organization2])
+        end
+
+        context 'deleting it from the first organization again' do
+          before { subject.remove_organization(organization) }
+
+          it 'has only the second organization afterwards' do
+            expect(subject.organizations).to match_array([organization2])
+          end
+        end
+
+        context 'deleting it from all its organizations again' do
+          before { subject.remove_all_organizations }
+
+          it 'has only the second organization afterwards' do
+            expect(subject.organizations).to be_empty
+          end
+        end
+      end
     end
   end
 end

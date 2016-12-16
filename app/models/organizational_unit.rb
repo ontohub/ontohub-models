@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# Superclass of Team and User
+# Superclass of Organization and User
 class OrganizationalUnit < Sequel::Model
   plugin :timestamps
   plugin :validation_helpers
