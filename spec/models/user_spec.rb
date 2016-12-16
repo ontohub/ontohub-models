@@ -3,6 +3,8 @@
 require 'rails_helper'
 require 'devise'
 
+require 'shared_examples/active_model'
+require 'shared_examples/active_model_serializer'
 require 'shared_examples/model_with_url'
 require 'shared_examples/slug'
 
@@ -11,6 +13,12 @@ RSpec.describe User, type: :model do
     it { is_expected.to have_column(:real_name, type: :string) }
     it { is_expected.to have_column(:email, type: :string) }
     it { is_expected.to have_column(:encrypted_password, type: :string) }
+  end
+
+  context 'compatibility' do
+    subject { build :user }
+    it_behaves_like 'an ActiveModel compatible object'
+    it_behaves_like 'an ActiveModelSerializer compatible object with devise'
   end
 
   context 'url' do
