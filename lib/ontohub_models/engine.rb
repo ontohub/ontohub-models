@@ -2,6 +2,7 @@
 
 require 'pry'
 require 'sequel-rails'
+require 'devise'
 
 module OntohubModels
   # The base engine class - Rails default
