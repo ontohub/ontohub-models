@@ -48,14 +48,18 @@ Sequel.migration do
     create_table :commits do
       primary_key :id
       foreign_key :repository_id, :repositories, index: true, null: false
-      foreign_key :author_id, :users, index: true, null: true
-      foreign_key :editor_id, :users, index: true, null: true
+      foreign_key :author_id, :users, index: true
+      foreign_key :editor_id, :users, index: true
+      foreign_key :pusher_id, :users, index: true, null: false
 
       column :author_name, String
       column :editor_name, String
+      column :author_email, String
+      column :editor_email, String
       column :authored_at, DateTime
       column :edited_at, DateTime
-      column :shasum, String
+      column :shasum, String, index: true
+      column :url_path, String, unique: true
       column :created_at, DateTime
       column :updated_at, DateTime
     end
@@ -65,6 +69,7 @@ Sequel.migration do
       foreign_key :commit_id, :commits, index: true, null: false
 
       column :path, String
+      column :url_path, String, unique: true
       column :created_at, DateTime
       column :updated_at, DateTime
     end
