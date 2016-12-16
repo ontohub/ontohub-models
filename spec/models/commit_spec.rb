@@ -22,6 +22,23 @@ RSpec.describe Commit, type: :model do
     it { is_expected.to have_column(:shasum, type: :string) }
   end
 
+  context 'validations' do
+    context 'pusher' do
+      it { is_expected.to validate_presence(:pusher) }
+      context 'check' do
+        subject { build :commit, pusher: nil }
+        it 'is invalid' do
+          expect(subject.valid?).to eq(false)
+        end
+
+        it 'sets the correct error' do
+          subject.valid?
+          expect(subject.errors[:pusher]).not_to be_empty
+        end
+      end
+    end
+  end
+
   context 'url' do
     subject { build :commit }
     it_behaves_like 'an object that has a URL'

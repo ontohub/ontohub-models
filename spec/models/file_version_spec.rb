@@ -13,6 +13,23 @@ RSpec.describe FileVersion, type: :model do
     it { is_expected.to have_column(:path, type: :string) }
   end
 
+  context 'validations' do
+    context 'commit' do
+      it { is_expected.to validate_presence(:commit) }
+      context 'check' do
+        subject { build :file_version, commit: nil }
+        it 'is invalid' do
+          expect(subject.valid?).to eq(false)
+        end
+
+        it 'sets the correct error' do
+          subject.valid?
+          expect(subject.errors[:commit]).not_to be_empty
+        end
+      end
+    end
+  end
+
   context 'url' do
     subject { build :file_version }
     it_behaves_like 'an object that has a URL'
