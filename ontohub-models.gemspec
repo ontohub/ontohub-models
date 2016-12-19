@@ -44,7 +44,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rspec-rails', '~> 3.5.2'
   s.add_development_dependency 'rspec_sequel_matchers', '~> 0.4.0'
   s.add_development_dependency 'database_cleaner', '~> 1.5.3'
-  s.add_development_dependency 'factory_girl_rails', '~> 4.7.0'
+  s.add_development_dependency 'factory_girl_rails', '~> 4.8.0'
   s.add_development_dependency 'faker', '~> 1.6.6'
 
   # CI services
