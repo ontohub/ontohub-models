@@ -7,6 +7,12 @@ source 'https://rubygems.org'
 # development dependencies will be added by default to the :development group.
 gemspec
 
+group :development do
+  gem 'pry-byebug', '~> 3.4.2', platform: :mri
+  gem 'pry-stack_explorer', '~> 0.4.9.2', platform: :mri
+  gem 'pry-rescue', '~> 1.4.4', platform: :mri
+end
+
 # Declare any dependencies that are still in development here instead of in
 # your gemspec. These might include edge Rails or gems from your path or
 # Git. Remember to move these dependencies to your gemspec before releasing
