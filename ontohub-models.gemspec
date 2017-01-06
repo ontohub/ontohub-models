@@ -36,7 +36,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'sequel-devise', '~> 0.0.9'
 
   # General Development
-  s.add_development_dependency 'bundler', '~> 1.12'
+  s.add_development_dependency 'bundler', '~> 1.11'
   s.add_development_dependency 'rake', '~> 12.0.0'
 
   # Testing
@@ -53,8 +53,5 @@ Gem::Specification.new do |s|
   # We want to have these in the production environment as well in case we need
   # to debug the application:
   s.add_dependency 'pry', '~> 0.10.4'
-  s.add_dependency 'pry-rescue', '~> 1.4.4'
-  s.add_dependency 'pry-stack_explorer', '~> 0.4.9.2'
-  s.add_dependency 'pry-byebug', '~> 3.4.2'
   s.add_dependency 'awesome_print', '~> 1.7.0'
 end

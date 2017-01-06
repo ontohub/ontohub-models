@@ -3,6 +3,7 @@
 require 'pry'
 require 'sequel-rails'
 require 'devise'
+require 'rubinius/debugger' if RUBY_ENGINE == 'rbx' && !Rails.env.production?
 
 module OntohubModels
   # The base engine class - Rails default
