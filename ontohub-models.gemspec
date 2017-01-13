@@ -28,7 +28,7 @@ Gem::Specification.new do |s|
 
   # Runtime dependencies
   s.add_dependency 'rails', '~> 5.0.1'
-  s.add_dependency 'sequel', '~> 4.41.0'
+  s.add_dependency 'sequel', '~> 4.42.1'
   s.add_dependency 'sequel_pg', '~> 1.6.17'
   s.add_dependency 'sequel-rails', '~> 0.9.14'
   s.add_dependency 'chewy', '~> 0.9.0'
