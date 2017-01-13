@@ -28,10 +28,10 @@ Gem::Specification.new do |s|
 
   # Runtime dependencies
   s.add_dependency 'rails', '~> 5.0.1'
-  s.add_dependency 'sequel', '~> 4.41.0'
+  s.add_dependency 'sequel', '~> 4.42.1'
   s.add_dependency 'sequel_pg', '~> 1.6.17'
   s.add_dependency 'sequel-rails', '~> 0.9.14'
-  s.add_dependency 'chewy', '~> 0.8.4'
+  s.add_dependency 'chewy', '~> 0.9.0'
   s.add_dependency 'devise', '~> 4.2.0'
   s.add_dependency 'sequel-devise', '~> 0.0.9'
 
@@ -45,7 +45,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rspec_sequel_matchers', '~> 0.4.0'
   s.add_development_dependency 'database_cleaner', '~> 1.5.3'
   s.add_development_dependency 'factory_girl_rails', '~> 4.8.0'
-  s.add_development_dependency 'faker', '~> 1.6.6'
+  s.add_development_dependency 'faker', '~> 1.7.2'
 
   # CI services
   s.add_development_dependency 'coveralls', '~> 0.8.17'
