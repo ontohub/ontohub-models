@@ -32,6 +32,7 @@ Sequel.migration do
       primary_key :id
       foreign_key [:id], :organizational_units, unique: true
       column :real_name, String
+      column :description, String
     end
 
     create_table :organizations_members do
