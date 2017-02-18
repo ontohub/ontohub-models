@@ -7,6 +7,7 @@ require 'rspec_sequel_matchers'
 require 'database_cleaner'
 require 'factory_girl_rails'
 
+require_relative 'support/example_groups/git_repository_example_group'
 require_relative 'support/git_matcher'
 require_relative 'support/tempdir'
 
