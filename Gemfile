@@ -7,6 +7,9 @@ source 'https://rubygems.org'
 # development dependencies will be added by default to the :development group.
 gemspec
 
+gem 'gitlab_git', github: 'ontohub/gitlab_git',
+                  branch: 'update_to_gitlab_edb8ed36'
+
 group :development do
   gem 'pry-byebug', '~> 3.4.2', platform: :mri
   gem 'pry-stack_explorer', '~> 0.4.9.2', platform: :mri
