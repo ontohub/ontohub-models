@@ -7,6 +7,8 @@ require 'rspec_sequel_matchers'
 require 'database_cleaner'
 require 'factory_girl_rails'
 
+require_relative 'support/tempdir'
+
 RSpec.configure do |config|
   config.expect_with :rspec do |expectations|
     # This option will default to `true` in RSpec 4. It makes the `description`
