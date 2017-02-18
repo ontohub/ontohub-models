@@ -12,6 +12,9 @@ services:
 
 addons:
   postgresql: '9.6'
+  apt:
+    packages:
+    - git-svn
 
 notifications:
   email: false
