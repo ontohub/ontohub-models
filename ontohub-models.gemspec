@@ -3,7 +3,7 @@
 $LOAD_PATH.push File.expand_path('../lib', __FILE__)
 
 # Maintain your gem's version:
-require 'ontohub_models/version'
+require 'ontohub-models/version'
 
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
