@@ -10,7 +10,7 @@ class Commit < Sequel::Model
   many_to_one :repository
   one_to_many :file_versions
   many_to_one :author, class: :User
-  many_to_one :editor, class: :User
+  many_to_one :committer, class: :User
   many_to_one :pusher, class: :User
 
   def author_email=(author_email)
@@ -18,9 +18,9 @@ class Commit < Sequel::Model
     self.author = User.find(email: author_email)
   end
 
-  def editor_email=(editor_email)
-    super(editor_email)
-    self.editor = User.find(email: editor_email)
+  def committer_email=(committer_email)
+    super(committer_email)
+    self.committer = User.find(email: committer_email)
   end
 
   def validate
