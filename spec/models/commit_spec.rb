@@ -11,14 +11,14 @@ RSpec.describe Commit, type: :model do
     it { is_expected.to have_column(:updated_at, type: :datetime) }
     it { is_expected.to have_column(:repository_id, type: :integer) }
     it { is_expected.to have_column(:author_id, type: :integer) }
-    it { is_expected.to have_column(:editor_id, type: :integer) }
+    it { is_expected.to have_column(:committer_id, type: :integer) }
     it { is_expected.to have_column(:pusher_id, type: :integer) }
     it { is_expected.to have_column(:author_name, type: :string) }
-    it { is_expected.to have_column(:editor_name, type: :string) }
+    it { is_expected.to have_column(:committer_name, type: :string) }
     it { is_expected.to have_column(:author_email, type: :string) }
-    it { is_expected.to have_column(:editor_email, type: :string) }
+    it { is_expected.to have_column(:committer_email, type: :string) }
     it { is_expected.to have_column(:authored_at, type: :datetime) }
-    it { is_expected.to have_column(:edited_at, type: :datetime) }
+    it { is_expected.to have_column(:committed_at, type: :datetime) }
     it { is_expected.to have_column(:shasum, type: :string) }
   end
 
@@ -52,11 +52,11 @@ RSpec.describe Commit, type: :model do
 
   context 'associations' do
     subject do
-      build :commit, repository: nil, author: nil, editor: nil, pusher: nil
+      build :commit, repository: nil, author: nil, committer: nil, pusher: nil
     end
     let(:repository) { create :repository }
     let(:author) { create :user }
-    let(:editor) { create :user }
+    let(:committer) { create :user }
     let(:pusher) { create :user }
 
     it 'can set a repository' do
@@ -71,10 +71,10 @@ RSpec.describe Commit, type: :model do
       expect(subject.author).to be(author)
     end
 
-    it 'can set an editor' do
-      editor.save
-      subject.editor = editor
-      expect(subject.editor).to be(editor)
+    it 'can set a committer' do
+      committer.save
+      subject.committer = committer
+      expect(subject.committer).to be(committer)
     end
 
     it 'can set a pusher' do
@@ -84,10 +84,10 @@ RSpec.describe Commit, type: :model do
     end
   end
 
-  context 'author and editor' do
-    subject { create :commit, author: nil, editor: nil }
+  context 'author and committer' do
+    subject { create :commit, author: nil, committer: nil }
     let(:author) { create :user }
-    let(:editor) { create :user }
+    let(:committer) { create :user }
 
     it 'can set author automatically' do
       subject.author_email = author.email
@@ -95,10 +95,10 @@ RSpec.describe Commit, type: :model do
       expect(subject.author).to eq(author)
     end
 
-    it 'can set editor automatically' do
-      subject.editor_email = editor.email
+    it 'can set committer automatically' do
+      subject.committer_email = committer.email
       subject.save
-      expect(subject.editor).to eq(editor)
+      expect(subject.committer).to eq(committer)
     end
   end
 end

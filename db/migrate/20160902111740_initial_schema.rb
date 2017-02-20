@@ -61,15 +61,15 @@ Sequel.migration do
       primary_key :id
       foreign_key :repository_id, :repositories, index: true, null: false
       foreign_key :author_id, :users, index: true
-      foreign_key :editor_id, :users, index: true
+      foreign_key :committer_id, :users, index: true
       foreign_key :pusher_id, :users, index: true, null: false
 
       column :author_name, String
-      column :editor_name, String
+      column :committer_name, String
       column :author_email, String
-      column :editor_email, String
+      column :committer_email, String
       column :authored_at, DateTime
-      column :edited_at, DateTime
+      column :committed_at, DateTime
       column :shasum, String, index: true
       column :url_path, String, unique: true
       column :created_at, DateTime
