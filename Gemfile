@@ -9,8 +9,8 @@ gemspec
 
 group :development do
   gem 'pry-byebug', '~> 3.4.2', platform: :mri
-  gem 'pry-stack_explorer', '~> 0.4.9.2', platform: :mri
   gem 'pry-rescue', '~> 1.4.4', platform: :mri
+  gem 'pry-stack_explorer', '~> 0.4.9.2', platform: :mri
 end
 
 # Declare any dependencies that are still in development here instead of in
