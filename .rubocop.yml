@@ -42,6 +42,7 @@ AllCops:
     - 'bin/spring'
     - 'bin/update'
     - 'db/schema.rb'
+    - 'spec/dummy/**/*'
     - 'vendor/**/*'
   # Default formatter will be used if no `-f/--format` option is given.
   DefaultFormatter: progress

@@ -1,6 +1,8 @@
 Metrics/BlockLength:
   Exclude:
+    - 'ontohub-models.gemspec'
     - 'spec/**/*'
+    - 'db/migrate/*'
 
 Style/AlignParameters:
   Enabled: false
