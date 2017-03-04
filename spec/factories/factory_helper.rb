@@ -2,7 +2,7 @@
 
 require 'faker'
 FactoryGirl.define do
-  to_create { |instance| instance.save }
+  to_create(&:save)
 
   sequence :username do |n|
     "#{Faker::Internet.user_name}#{n}"
