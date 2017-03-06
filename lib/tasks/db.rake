@@ -6,7 +6,6 @@ namespace :db do
     begin
       Rake::Task['db:drop'].invoke
     rescue Sequel::DatabaseConnectionError => e
-      raise unless e.message =~ /database "[^"]+" does not exist/
     end
     Rake::Task['db:create'].invoke
     Rake::Task['db:migrate'].invoke
