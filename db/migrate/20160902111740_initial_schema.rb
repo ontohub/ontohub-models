@@ -57,30 +57,11 @@ Sequel.migration do
       column :content_type, :repository_content_type
     end
 
-    create_table :commits do
-      primary_key :id
-      foreign_key :repository_id, :repositories, index: true, null: false
-      foreign_key :author_id, :users, index: true
-      foreign_key :committer_id, :users, index: true
-      foreign_key :pusher_id, :users, index: true, null: false
-
-      column :author_name, String
-      column :committer_name, String
-      column :author_email, String
-      column :committer_email, String
-      column :authored_at, DateTime
-      column :committed_at, DateTime
-      column :shasum, String, index: true
-      column :url_path, String, unique: true
-      column :created_at, DateTime
-      column :updated_at, DateTime
-    end
-
     create_table :file_versions do
       primary_key :id
-      foreign_key :commit_id, :commits, index: true, null: false
 
-      column :path, String
+      column :commit_sha, index: true, null: false
+      column :path, String, index: true, null: false
       column :url_path, String, unique: true
       column :created_at, DateTime
       column :updated_at, DateTime

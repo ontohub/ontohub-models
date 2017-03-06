@@ -11,6 +11,7 @@ class FileVersion < Sequel::Model
 
   def validate
     validates_presence :commit
+    validates_presence :path
     super
   end
 end
