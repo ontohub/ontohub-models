@@ -38,6 +38,7 @@ Sequel.migration do
     end
 
     create_table :organizations_members do
+      primary_key [:organization_id, :member_id]
       foreign_key :organization_id, :organizations, index: true
       foreign_key :member_id, :users, index: true
     end
