@@ -18,6 +18,7 @@ Sequel.migration do
       column :updated_at, DateTime
     end
 
+    # User is an OrganizationalUnit
     create_table :users do
       primary_key :id
       foreign_key [:id], :organizational_units, unique: true
@@ -28,6 +29,7 @@ Sequel.migration do
       column :secret, String
     end
 
+    # Organization is a OrganizationalUnit
     create_table :organizations do
       primary_key :id
       foreign_key [:id], :organizational_units, unique: true
@@ -36,6 +38,7 @@ Sequel.migration do
     end
 
     create_table :organizations_members do
+      primary_key [:organization_id, :member_id]
       foreign_key :organization_id, :organizations, index: true
       foreign_key :member_id, :users, index: true
     end
@@ -57,33 +60,28 @@ Sequel.migration do
       column :content_type, :repository_content_type
     end
 
-    create_table :commits do
+    create_enum :loc_id_base_kind_type,
+      %w(FileVersion)
+    create_table :loc_id_bases do
       primary_key :id
-      foreign_key :repository_id, :repositories, index: true, null: false
-      foreign_key :author_id, :users, index: true
-      foreign_key :committer_id, :users, index: true
-      foreign_key :pusher_id, :users, index: true, null: false
+      # Kind of record - for class table inheritance
+      column :kind, :loc_id_base_kind_type
 
-      column :author_name, String
-      column :committer_name, String
-      column :author_email, String
-      column :committer_email, String
-      column :authored_at, DateTime
-      column :committed_at, DateTime
-      column :shasum, String, index: true
+      # The actual Loc/Id is saved in url_path to stay consistent throughout the
+      # code.
       column :url_path, String, unique: true
       column :created_at, DateTime
       column :updated_at, DateTime
     end
 
+    # FileVersion is a LocIdBase
     create_table :file_versions do
       primary_key :id
-      foreign_key :commit_id, :commits, index: true, null: false
+      foreign_key [:id], :loc_id_bases, unique: true
 
-      column :path, String
-      column :url_path, String, unique: true
-      column :created_at, DateTime
-      column :updated_at, DateTime
+      column :commit_sha, String, null: false
+      column :path, String, null: false
+      index [:commit_sha, :path], unique: true
     end
   end
 end

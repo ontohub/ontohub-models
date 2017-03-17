@@ -2,7 +2,7 @@
 
 FactoryGirl.define do
   factory :file_version do
-    association :commit
+    commit_sha { Faker::Crypto.sha1 }
     path { Faker::File.file_name('path/to', Faker::Name.first_name.downcase) }
     created_at { Time.current }
     updated_at { Time.current }
