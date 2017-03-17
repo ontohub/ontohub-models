@@ -18,6 +18,7 @@ Sequel.migration do
       column :updated_at, DateTime
     end
 
+    # User is an OrganizationalUnit
     create_table :users do
       primary_key :id
       foreign_key [:id], :organizational_units, unique: true
@@ -28,6 +29,7 @@ Sequel.migration do
       column :secret, String
     end
 
+    # Organization is a OrganizationalUnit
     create_table :organizations do
       primary_key :id
       foreign_key [:id], :organizational_units, unique: true
@@ -57,14 +59,27 @@ Sequel.migration do
       column :content_type, :repository_content_type
     end
 
-    create_table :file_versions do
+    create_enum :loc_id_base_kind_type,
+      %w(FileVersion)
+    create_table :loc_id_bases do
       primary_key :id
+      # Kind of record - for class table inheritance
+      column :kind, :loc_id_base_kind_type
 
-      column :commit_sha, index: true, null: false
-      column :path, String, index: true, null: false
+      # The actual Loc/Id is saved in url_path to stay consistent throughout the
+      # code.
       column :url_path, String, unique: true
       column :created_at, DateTime
       column :updated_at, DateTime
+    end
+
+    # FileVersion is a LocIdBase
+    create_table :file_versions do
+      primary_key :id
+      foreign_key [:id], :loc_id_bases, unique: true
+
+      column :commit_sha, String, index: true, null: false
+      column :path, String, index: true, null: false
     end
   end
 end
