@@ -11,6 +11,12 @@ RSpec.describe FileVersion, type: :model do
     it { is_expected.to have_column(:path, type: :string) }
   end
 
+  context 'validations' do
+    it { is_expected.to validate_presence(:commit_sha) }
+    it { is_expected.to validate_format(/\A[a-f0-9]{40}\z/, :commit_sha) }
+    it { is_expected.to validate_presence(:path) }
+  end
+
   context 'url' do
     subject { build :file_version }
     it_behaves_like 'an object that has a URL'

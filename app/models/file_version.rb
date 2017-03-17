@@ -9,6 +9,7 @@ class FileVersion < LocIdBase
 
   def validate
     validates_presence :commit_sha
+    validates_format(/\A[a-f0-9]{40}\z/, :commit_sha)
     validates_presence :path
     super
   end
