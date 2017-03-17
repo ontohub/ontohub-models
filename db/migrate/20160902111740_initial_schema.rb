@@ -79,8 +79,9 @@ Sequel.migration do
       primary_key :id
       foreign_key [:id], :loc_id_bases, unique: true
 
-      column :commit_sha, String, index: true, null: false
-      column :path, String, index: true, null: false
+      column :commit_sha, String, null: false
+      column :path, String, null: false
+      index [:commit_sha, :path], unique: true
     end
   end
 end
