@@ -9,6 +9,6 @@ FactoryGirl.define do
     created_at { Time.current }
     updated_at { Time.current }
     public_access { false }
-    content_type { 'ontology' }
+    content_type { %w(ontology specification model mathematical).sample }
   end
 end
