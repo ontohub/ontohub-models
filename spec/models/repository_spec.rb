@@ -41,7 +41,7 @@ RSpec.describe Repository, type: :model do
 
     context 'content' do
       it do
-        is_expected.to validate_includes %w(ontology model specification),
+        is_expected.to validate_includes %w(ontology model specification mathematical),
           :content_type
       end
       it 'has a value that is not allowed' do

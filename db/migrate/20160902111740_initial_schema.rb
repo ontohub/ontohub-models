@@ -43,7 +43,7 @@ Sequel.migration do
       foreign_key :member_id, :users, index: true
     end
 
-    create_enum :repository_content_type, %w(ontology model specification)
+    create_enum :repository_content_type, %w(ontology model specification mathematical)
     create_table :repositories do
       primary_key :id
       foreign_key :owner_id, :organizational_units,
