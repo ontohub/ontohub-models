@@ -20,7 +20,7 @@ class Repository < Sequel::Model
     validates_length_range (3..100), :name
     validates_presence :owner
     validates_presence :public_access
-    validates_includes %w(ontology model specification), :content_type
+    validates_includes %w(ontology model specification mathematical), :content_type
     super
   end
 end
