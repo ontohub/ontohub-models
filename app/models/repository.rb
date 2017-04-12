@@ -14,13 +14,16 @@ class Repository < Sequel::Model
   slug_format %r{\A([a-z0-9\-_]+)/([a-z0-9\-_]+)\z}
 
   many_to_one :owner, class: OrganizationalUnit
-  one_to_many :commits
+
+  one_to_many :file_versions
+  plugin :association_dependencies, file_versions: :destroy
 
   def validate
     validates_length_range (3..100), :name
     validates_presence :owner
     validates_presence :public_access
-    validates_includes %w(ontology model specification mathematical), :content_type
+    validates_includes %w(ontology model specification mathematical),
+      :content_type
     super
   end
 end

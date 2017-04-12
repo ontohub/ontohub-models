@@ -13,8 +13,23 @@ RSpec.describe FileVersion, type: :model do
 
   context 'validations' do
     it { is_expected.to validate_presence(:commit_sha) }
+    it 'is invalid if the commit_sha is nil' do
+      subject.commit_sha = nil
+      expect(subject.valid?).to be(false)
+    end
     it { is_expected.to validate_format(/\A[a-f0-9]{40}\z/, :commit_sha) }
+
     it { is_expected.to validate_presence(:path) }
+    it 'is invalid if the path is nil' do
+      subject.path = nil
+      expect(subject.valid?).to be(false)
+    end
+
+    it { is_expected.to validate_presence(:repository) }
+    it 'is invalid if the repository is nil' do
+      subject.repository = nil
+      expect(subject.valid?).to be(false)
+    end
   end
 
   context 'url' do
@@ -30,5 +45,9 @@ RSpec.describe FileVersion, type: :model do
 
   context 'file version' do
     subject { build :file_version }
+
+    it 'has a repository' do
+      expect(subject.repository).to be_a(Repository)
+    end
   end
 end
