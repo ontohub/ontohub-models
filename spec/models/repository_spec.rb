@@ -41,8 +41,9 @@ RSpec.describe Repository, type: :model do
 
     context 'content' do
       it do
-        is_expected.to validate_includes %w(ontology model specification mathematical),
-          :content_type
+        is_expected.
+          to validate_includes %w(ontology model specification mathematical),
+            :content_type
       end
       it 'has a value that is not allowed' do
         subject.content_type = 'not_allowed'
@@ -72,6 +73,22 @@ RSpec.describe Repository, type: :model do
       expect(subject.slug).
         to eq("#{subject.owner.slug}/"\
               "#{Slug.sluggify(subject.name)}")
+    end
+  end
+
+  context 'file_versions' do
+    subject { create(:repository, name: Faker::Lorem.words(2).join(' ')) }
+
+    before do
+      5.times do
+        create(:file_version, repository: subject)
+      end
+    end
+
+    it 'destroys the file_versions on destroy' do
+      id = subject.id
+      expect { subject.destroy }.
+        to change { FileVersion.where(repository_id: id).count }.to(0)
     end
   end
 end
