@@ -17,6 +17,7 @@ class OrganizationalUnit < Sequel::Model
 
   def validate
     validates_length_range (3..100), :name
+    validates_length_range (0..100), :real_name if real_name.present?
     super
   end
 end

@@ -17,6 +17,7 @@ RSpec.describe OrganizationalUnit, type: :model do
     context 'name' do
       it { is_expected.to validate_presence(:name) }
       it { is_expected.to validate_length_range((3..100), :name) }
+      it { is_expected.to validate_length_range((0..100), :real_name) }
     end
   end
 

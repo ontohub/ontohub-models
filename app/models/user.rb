@@ -4,7 +4,7 @@
 class User < OrganizationalUnit
   plugin :devise
 
-  devise :database_authenticatable
+  devise :database_authenticatable, :registerable
 
   many_to_many :organizations,
     join_table: :organizations_members, left_key: :member_id
@@ -18,4 +18,10 @@ class User < OrganizationalUnit
       or(repositories__owner_id: :organizations_members__organization_id,
          organizations_members__member_id: id)
   end), class: Repository
+
+  def validate
+    validates_format /\A([\w+\-].?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i, :email
+    validates_presence :password if new?
+    super
+  end
 end
