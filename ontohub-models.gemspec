@@ -27,12 +27,12 @@ Gem::Specification.new do |s|
   end
 
   # Runtime dependencies
-  s.add_dependency 'rails', '~> 5.0.1'
+  s.add_dependency 'rails', '~> 5.1.1'
   s.add_dependency 'sequel', '~> 4.42.1'
   s.add_dependency 'sequel_pg', '~> 1.6.17'
   s.add_dependency 'sequel-rails', '~> 0.9.14'
   s.add_dependency 'chewy', '~> 0.9.0'
-  s.add_dependency 'devise', '~> 4.2.0'
+  s.add_dependency 'devise', '~> 4.3.0'
   s.add_dependency 'sequel-devise', '~> 0.0.9'
   s.add_dependency 'orm_adapter-sequel', '~> 0.1.0'
 
