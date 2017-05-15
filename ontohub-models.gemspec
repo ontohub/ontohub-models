@@ -28,7 +28,7 @@ Gem::Specification.new do |s|
 
   # Runtime dependencies
   s.add_dependency 'rails', '~> 5.1.1'
-  s.add_dependency 'sequel', '~> 4.42.1'
+  s.add_dependency 'sequel', '~> 4.46.0'
   s.add_dependency 'sequel_pg', '~> 1.6.17'
   s.add_dependency 'sequel-rails', '~> 0.9.14'
   s.add_dependency 'chewy', '~> 0.9.0'
@@ -41,10 +41,10 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rake', '~> 12.0.0'
 
   # Testing
-  s.add_development_dependency 'rspec', '~> 3.5.0'
-  s.add_development_dependency 'rspec-rails', '~> 3.5.2'
+  s.add_development_dependency 'rspec', '~> 3.6.0'
+  s.add_development_dependency 'rspec-rails', '~> 3.6.0'
   s.add_development_dependency 'rspec_sequel_matchers', '~> 0.4.0'
-  s.add_development_dependency 'database_cleaner', '~> 1.5.3'
+  s.add_development_dependency 'database_cleaner', '~> 1.6.1'
   s.add_development_dependency 'factory_girl_rails', '~> 4.8.0'
   s.add_development_dependency 'faker', '~> 1.7.2'
 
