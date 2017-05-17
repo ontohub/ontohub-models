@@ -9,6 +9,7 @@ class OrganizationalUnit < Sequel::Model
   include ModelWithURL
 
   include Slug
+  attr_accessor :name
   slug_base :name
   slug_condition :new?
 
@@ -16,7 +17,7 @@ class OrganizationalUnit < Sequel::Model
   plugin :association_dependencies, repositories: :destroy
 
   def validate
-    validates_length_range (3..100), :name
+    validates_length_range (3..100), :name if new?
     validates_length_range (0..100), :real_name if real_name.present?
     super
   end

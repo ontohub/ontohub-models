@@ -88,9 +88,11 @@ module Slug
   end
 
   def validate
-    validates_presence slug_base
-    validates_unique :slug
-    validates_format(slug_format, :slug)
+    if set_slug?
+      validates_presence slug_base
+      validates_unique :slug
+      validates_format(slug_format, :slug)
+    end
     super
     validate_move_slug_errors_to_base_errors
   end

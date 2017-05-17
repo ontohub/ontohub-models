@@ -9,7 +9,6 @@ require 'shared_examples/slug'
 
 RSpec.describe Organization, type: :model do
   context 'columns' do
-    it { is_expected.to have_column(:real_name, type: :string) }
     it { is_expected.to have_column(:description, type: :string) }
   end
 

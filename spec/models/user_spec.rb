@@ -9,7 +9,6 @@ require 'shared_examples/slug'
 
 RSpec.describe User, type: :model do
   context 'columns' do
-    it { is_expected.to have_column(:real_name, type: :string) }
     it { is_expected.to have_column(:email, type: :string) }
     it { is_expected.to have_column(:encrypted_password, type: :string) }
   end

@@ -2,7 +2,7 @@
 
 FactoryGirl.define do
   factory :user do
-    name { generate(:username) }
+    name { generate(:username) } # name is only used for registration
     url_path_method { ->(user) { "/users/#{user.to_param}}" } }
     created_at { Time.current }
     updated_at { Time.current }
