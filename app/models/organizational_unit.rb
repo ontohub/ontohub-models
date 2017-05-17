@@ -9,6 +9,7 @@ class OrganizationalUnit < Sequel::Model
   include ModelWithURL
 
   include Slug
+  # Use a non-persisted attribute to create the slug
   attr_accessor :name
   slug_base :name
   slug_condition :new?
@@ -17,8 +18,14 @@ class OrganizationalUnit < Sequel::Model
   plugin :association_dependencies, repositories: :destroy
 
   def validate
-    validates_length_range (3..100), :name if new?
-    validates_length_range (0..100), :real_name if real_name.present?
+    if new?
+      validates_length_range (3..100), :name
+      validates_format(Slug::DEFAULT_SLUG_FORMAT, :name,
+                       message: 'must start and end with a lower case letter '\
+                                'or number, and only contain lower case '\
+                                'letters, numbers, "-" and "_"')
+    end
+    validates_length_range (0..100), :real_name unless real_name.nil?
     super
   end
 end

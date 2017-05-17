@@ -26,7 +26,6 @@ RSpec.describe User, type: :model do
 
   context 'slug' do
     subject { build :user }
-
     it_behaves_like 'an object that has a slug'
   end
 
