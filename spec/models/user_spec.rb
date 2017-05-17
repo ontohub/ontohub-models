@@ -13,6 +13,14 @@ RSpec.describe User, type: :model do
     it { is_expected.to have_column(:encrypted_password, type: :string) }
   end
 
+  context 'warden' do
+    subject { create :user }
+    it 'find_for_database_authentication' do
+      expect(User.find_for_database_authentication({name: subject.to_param})).
+        to eq(subject)
+    end
+  end
+
   context 'compatibility' do
     subject { build :user }
     it_behaves_like 'an ActiveModel compatible object'

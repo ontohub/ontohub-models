@@ -2,6 +2,15 @@
 
 # The class representing an actual user
 class User < OrganizationalUnit
+  # Devise workaround: This allows the user to be authenticated by a :name
+  # parameter, that is actually the slug. The public API expects to receive
+  # the slug as :name while devise expects the slug as :slug.
+  def self.find_for_database_authentication(warden_conditions)
+    conditions = warden_conditions.dup
+    conditions[:slug] = conditions.delete(:name) if conditions[:name]
+    super(conditions)
+  end
+
   plugin :devise
 
   devise :database_authenticatable, :registerable
