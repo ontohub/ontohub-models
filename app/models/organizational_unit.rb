@@ -6,11 +6,12 @@ class OrganizationalUnit < Sequel::Model
   plugin :validation_helpers
   plugin :class_table_inheritance, key: :kind
 
+  # Use a non-persisted attribute to create the slug
+  attr_accessor :name
+
   include ModelWithURL
 
   include Slug
-  # Use a non-persisted attribute to create the slug
-  attr_accessor :name
   slug_base :name
   slug_condition :new?
 

@@ -108,15 +108,12 @@ RSpec.describe OrganizationalUnit, type: :model do
   end
 
   context 'slug' do
-    subject do
-      build :organizational_unit, name: Faker::Lorem.words(2).join(' ')
-    end
-
+    subject { build :organizational_unit }
     it_behaves_like 'an object that has a slug'
 
-    it 'uses only the name for the slug' do
+    it 'uses only the name as the slug' do
       subject.save
-      expect(subject.slug).to eq(Slug.sluggify(subject.name))
+      expect(subject.slug).to eq(subject.name)
     end
   end
 end
