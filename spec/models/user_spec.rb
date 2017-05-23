@@ -8,11 +8,6 @@ require 'shared_examples/model_with_url'
 require 'shared_examples/slug'
 
 RSpec.describe User, type: :model do
-  context 'columns' do
-    it { is_expected.to have_column(:email, type: :string) }
-    it { is_expected.to have_column(:encrypted_password, type: :string) }
-  end
-
   context 'warden' do
     subject { create :user }
     it 'find_for_database_authentication' do
