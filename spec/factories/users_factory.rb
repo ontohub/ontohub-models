@@ -8,7 +8,7 @@ FactoryGirl.define do
     updated_at { Time.current }
     real_name { Faker::Name.name }
     email { Faker::Internet.email(name) }
-    password { Faker::Internet.password }
+    password { Faker::Internet.password(10) }
     secret { Faker::Crypto.sha1 }
   end
 end

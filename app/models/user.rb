@@ -29,8 +29,14 @@ class User < OrganizationalUnit
   end), class: Repository
 
   def validate
-    validates_format /\A([\w+\-].?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i, :email
-    validates_presence :password if new?
+    validates_format(Devise.email_regexp, :email)
+    validates_presence(:password) if new?
+    unless password.nil?
+      min = Devise.password_length.first
+      max = Devise.password_length.last
+      validates_length_range(Devise.password_length, :password,
+        message: "must be between #{min} and #{max} characters")
+    end
     super
   end
 end
