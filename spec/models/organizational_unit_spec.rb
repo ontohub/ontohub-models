@@ -7,7 +7,7 @@ require 'shared_examples/slug'
 RSpec.describe OrganizationalUnit, type: :model do
   context 'columns' do
     it { is_expected.to have_column(:slug, type: :string) }
-    it { is_expected.to have_column(:real_name, type: :string) }
+    it { is_expected.to have_column(:display_name, type: :string) }
     it { is_expected.to have_column(:created_at, type: :datetime) }
     it { is_expected.to have_column(:updated_at, type: :datetime) }
   end
@@ -80,23 +80,23 @@ RSpec.describe OrganizationalUnit, type: :model do
       end
     end
 
-    context 'real_name' do
+    context 'display_name' do
       it 'nil is valid' do
         expect(subject).to be_valid
       end
 
       it 'empty is valid' do
-        subject.real_name = ''
+        subject.display_name = ''
         expect(subject).to be_valid
       end
 
       it 'with a long real name is valid' do
-        subject.real_name = 'a' * 100
+        subject.display_name = 'a' * 100
         expect(subject).to be_valid
       end
 
       it 'with too long of a real name is invalid' do
-        subject.real_name = 'a' * 101
+        subject.display_name = 'a' * 101
         expect(subject).not_to be_valid
       end
     end

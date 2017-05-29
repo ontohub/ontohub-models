@@ -26,7 +26,7 @@ class OrganizationalUnit < Sequel::Model
                                 'or number, and only contain lower case '\
                                 'letters, numbers, "-" and "_"')
     end
-    validates_length_range (0..100), :real_name unless real_name.nil?
+    validates_length_range (0..100), :display_name unless display_name.nil?
     super
   end
 end

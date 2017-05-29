@@ -12,7 +12,7 @@ Sequel.migration do
       column :url_path, String, unique: true
 
       column :slug, String, unique: true
-      column :real_name, String, null: true
+      column :display_name, String, null: true
 
       column :created_at, DateTime
       column :updated_at, DateTime
