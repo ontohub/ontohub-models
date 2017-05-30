@@ -3,7 +3,7 @@
 FactoryGirl.define do
   factory :organization do
     name { generate(:username) }
-    real_name { Faker::Name.name }
+    display_name { Faker::Name.name }
     description { Faker::Company.catch_phrase }
     url_path_method { ->(org) { "/organizations/#{org.to_param}}" } }
     created_at { Time.current }

@@ -9,9 +9,16 @@ require 'shared_examples/slug'
 
 RSpec.describe User, type: :model do
   context 'columns' do
-    it { is_expected.to have_column(:real_name, type: :string) }
     it { is_expected.to have_column(:email, type: :string) }
     it { is_expected.to have_column(:encrypted_password, type: :string) }
+  end
+
+  context 'warden' do
+    subject { create :user }
+    it 'find_for_database_authentication' do
+      expect(User.find_for_database_authentication(name: subject.to_param)).
+        to eq(subject)
+    end
   end
 
   context 'compatibility' do
@@ -27,12 +34,12 @@ RSpec.describe User, type: :model do
 
   context 'slug' do
     subject { build :user }
-
     it_behaves_like 'an object that has a slug'
   end
 
   context 'password' do
-    subject { create :user, password: 'foobar' }
+    let(:password) { 'foobarfoobarbaz' }
+    subject { create :user, password: password }
 
     it 'saved the password encrypted' do
       expect(subject.encrypted_password.length).to be(60)
@@ -40,13 +47,13 @@ RSpec.describe User, type: :model do
     end
 
     it 'validates the password correctly' do
-      expect(subject.valid_password?('foobar')).to be true
-      expect(subject.valid_password?('barfoo')).to be false
+      expect(subject.valid_password?(password)).to be true
+      expect(subject.valid_password?("#{password}-bad")).to be false
     end
 
     it 'updates the encrypted password when the password is updated' do
       old_pw = subject.encrypted_password
-      subject.password = 'barfoo'
+      subject.password = 'bazbarfoobarfoo'
       expect(subject.encrypted_password).not_to equal(old_pw)
     end
   end

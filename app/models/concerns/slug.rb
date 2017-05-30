@@ -35,11 +35,11 @@
 #     slug_postprocess ->(slug) { slug.upcase }
 #
 #     # Optional: Specify the validation format of the slug.
-#     slug_format /\A[A-Z0-9\-_]+\z/
+#     slug_format /\A[a-z0-9][a-z0-9\-_]*[a-z0-9]\z/
 #   end
 module Slug
   extend ActiveSupport::Concern
-  DEFAULT_SLUG_FORMAT = /\A[a-z0-9\-_]+\z/
+  DEFAULT_SLUG_FORMAT = /\A[a-z0-9][a-z0-9\-_]*[a-z0-9]\z/
 
   class_methods do
     def slug_base(attribute)
@@ -88,9 +88,11 @@ module Slug
   end
 
   def validate
-    validates_presence slug_base
-    validates_unique :slug
-    validates_format(slug_format, :slug)
+    if set_slug?
+      validates_presence slug_base
+      validates_unique :slug
+      validates_format(slug_format, :slug)
+    end
     super
     validate_move_slug_errors_to_base_errors
   end

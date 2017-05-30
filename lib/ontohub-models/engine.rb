@@ -2,6 +2,7 @@
 
 require 'pry'
 require 'sequel-rails'
+require 'orm_adapter-sequel'
 require 'devise'
 require 'rubinius/debugger' if RUBY_ENGINE == 'rbx' && !Rails.env.production?
 

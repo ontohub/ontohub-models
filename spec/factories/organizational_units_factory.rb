@@ -2,7 +2,7 @@
 
 FactoryGirl.define do
   factory :organizational_unit do
-    name { generate :org_unit_name }
+    name { generate :username }
     url_path_method do
       ->(org_unit) { "/organizational_units/#{org_unit.to_param}" }
     end

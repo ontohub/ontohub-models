@@ -11,8 +11,8 @@ Sequel.migration do
 
       column :url_path, String, unique: true
 
-      column :name, String
       column :slug, String, unique: true
+      column :display_name, String, null: true
 
       column :created_at, DateTime
       column :updated_at, DateTime
@@ -22,7 +22,6 @@ Sequel.migration do
     create_table :users do
       primary_key :id
       foreign_key [:id], :organizational_units, unique: true
-      column :real_name, String
 
       column :email, String
       column :encrypted_password, String
@@ -33,7 +32,6 @@ Sequel.migration do
     create_table :organizations do
       primary_key :id
       foreign_key [:id], :organizational_units, unique: true
-      column :real_name, String
       column :description, String
     end
 
