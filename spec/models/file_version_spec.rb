@@ -6,26 +6,32 @@ require 'shared_examples/active_model_serializer'
 require 'shared_examples/model_with_url'
 
 RSpec.describe FileVersion, type: :model do
-  context 'columns' do
-    it { is_expected.to have_column(:commit_sha, type: :string) }
-    it { is_expected.to have_column(:path, type: :string) }
-  end
-
   context 'validations' do
-    it { is_expected.to validate_presence(:commit_sha) }
+    subject { build :file_version }
+    it 'is valid' do
+      expect(subject).to be_valid
+    end
+
     it 'is invalid if the commit_sha is nil' do
       subject.commit_sha = nil
       expect(subject.valid?).to be(false)
     end
-    it { is_expected.to validate_format(/\A[a-f0-9]{40}\z/, :commit_sha) }
 
-    it { is_expected.to validate_presence(:path) }
+    it 'is invalid with the wrong commit_sha format' do
+      subject.commit_sha = '123'
+      expect(subject.valid?).to be(false)
+    end
+
+    it 'is invalid without path' do
+      subject.path = nil
+      expect(subject.valid?).to be(false)
+    end
+
     it 'is invalid if the path is nil' do
       subject.path = nil
       expect(subject.valid?).to be(false)
     end
 
-    it { is_expected.to validate_presence(:repository) }
     it 'is invalid if the repository is nil' do
       subject.repository = nil
       expect(subject.valid?).to be(false)

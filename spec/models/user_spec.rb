@@ -29,7 +29,14 @@ RSpec.describe User, type: :model do
 
   context 'slug' do
     subject { build :user }
+<<<<<<< HEAD
     it_behaves_like 'an object that has a slug'
+=======
+
+    it_behaves_like 'an object that has a slug', ',' do
+      let(:other_subject) { create :user, name: subject.name }
+    end
+>>>>>>> Remove have_column tests and change validation tests.
   end
 
   context 'password' do

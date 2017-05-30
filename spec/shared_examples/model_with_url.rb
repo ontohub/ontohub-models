@@ -2,8 +2,15 @@
 
 RSpec.shared_examples 'an object that has a URL' do
   context 'validations' do
-    it { is_expected.to validate_presence(:url_path) }
-    it { is_expected.to validate_format(%r{\A/}, :url_path) }
+    it 'is invalid without url_path' do 
+      subject.url_path_method =  ->(_resource) { nil }
+      expect(subject.valid?).to be(false)
+    end
+
+    it 'is invalid with the wrong url_path format' do
+      subject.url_path_method = ->(_resource) { 'foobar' }
+      expect(subject.valid?).to be(false)
+    end
 
     it 'add an error if the url_path is blank' do
       subject.url_path_method = nil

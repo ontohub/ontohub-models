@@ -7,24 +7,21 @@ require 'shared_examples/model_with_url'
 require 'shared_examples/slug'
 
 RSpec.describe Repository, type: :model do
-  context 'columns' do
-    it { is_expected.to have_column(:name, type: :string) }
-    it { is_expected.to have_column(:slug, type: :string) }
-    it { is_expected.to have_column(:description, type: :string) }
-    it { is_expected.to have_column(:created_at, type: :datetime) }
-    it { is_expected.to have_column(:updated_at, type: :datetime) }
-    it { is_expected.to have_column(:owner_id, type: :integer) }
-  end
-
   context 'validations' do
     subject { build :repository, name: Faker::Lorem.words(2).join(' ') }
     context 'name' do
-      it { is_expected.to validate_presence(:name) }
-      it { is_expected.to validate_length_range((3..100), :name) }
+      it 'is invalid without name' do
+        subject.name = nil
+        expect(subject.valid?).to be(false)
+      end
+
+      it 'is invalid with a name which is to short' do
+        subject.name = 'fo'
+        expect(subject.valid?).to be(false)
+      end
     end
 
     context 'owner' do
-      it { is_expected.to validate_presence(:owner) }
       it 'is invalid if the owner is nil' do
         subject.owner = nil
         expect(subject.valid?).to be(false)
@@ -32,7 +29,6 @@ RSpec.describe Repository, type: :model do
     end
 
     context 'access' do
-      it { is_expected.to validate_presence(:public_access) }
       it 'public access is nil' do
         subject.public_access = nil
         expect(subject.valid?).to be(false)
@@ -40,11 +36,13 @@ RSpec.describe Repository, type: :model do
     end
 
     context 'content' do
-      it do
-        is_expected.
-          to validate_includes %w(ontology model specification mathematical),
-            :content_type
+      %w(ontology model specification mathematical).each do |content_type|
+        it "is valid with #{content_type} content type" do
+          subject.content_type = content_type
+          expect(subject.valid?).to be(true)
+        end
       end
+
       it 'has a value that is not allowed' do
         subject.content_type = 'not_allowed'
         expect(subject.valid?).to be(false)
@@ -66,7 +64,9 @@ RSpec.describe Repository, type: :model do
   context 'slug' do
     subject { build :repository, name: Faker::Lorem.words(2).join(' ') }
 
-    it_behaves_like 'an object that has a slug'
+    it_behaves_like 'an object that has a slug', ',' do
+      let(:other_subject) { create :repository, owner: subject.owner }
+    end
 
     it "merges the owner's slug with the own name" do
       subject.save

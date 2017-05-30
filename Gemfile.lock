@@ -188,8 +188,6 @@ GEM
       rspec-mocks (~> 3.6.0)
       rspec-support (~> 3.6.0)
     rspec-support (3.6.0)
-    rspec_sequel_matchers (0.4.0)
-      sequel (>= 3.8.0)
     sequel (4.46.0)
     sequel-devise (0.0.9)
       devise
@@ -244,7 +242,6 @@ DEPENDENCIES
   rake (~> 12.0.0)
   rspec (~> 3.6.0)
   rspec-rails (~> 3.6.0)
-  rspec_sequel_matchers (~> 0.4.0)
 
 BUNDLED WITH
    1.14.6

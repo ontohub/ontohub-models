@@ -8,10 +8,6 @@ require 'shared_examples/model_with_url'
 require 'shared_examples/slug'
 
 RSpec.describe Organization, type: :model do
-  context 'columns' do
-    it { is_expected.to have_column(:description, type: :string) }
-  end
-
   context 'compatibility' do
     subject { build :organization }
     it_behaves_like 'an ActiveModel compatible object'
@@ -26,7 +22,9 @@ RSpec.describe Organization, type: :model do
   context 'slug' do
     subject { build :organization }
 
-    it_behaves_like 'an object that has a slug'
+    it_behaves_like 'an object that has a slug' do
+      let(:other_subject) { create :organization, name: subject.name }
+    end
   end
 
   context 'owned repositories' do

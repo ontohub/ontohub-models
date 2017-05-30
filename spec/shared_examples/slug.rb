@@ -1,11 +1,22 @@
 # frozen_string_literal: true
 
-RSpec.shared_examples 'an object that has a slug' do
+RSpec.shared_examples 'an object that has a slug' do |invalid_format|
   let(:slug_base) { subject.class.instance_variable_get(:@slug_base) }
 
   context 'validations' do
-    it { is_expected.to validate_unique(:slug) }
-    it { is_expected.to validate_format(subject.send(:slug_format), :slug) }
+    it 'is invalid without a unique slug' do
+      attribute = subject.class.instance_variable_get(:'@slug_base')
+      subject.send("#{attribute}=", other_subject.send(attribute))
+      expect(subject.valid?).to be(false)
+    end
+
+    it 'is invalid with invalid format' do
+      original = subject.class.instance_variable_get(:@slug_postprocess)
+      stub = ->(_slug) { invalid_format }
+      subject.class.instance_variable_set(:@slug_postprocess, stub)
+      expect(subject.valid?).to be(false)
+      subject.class.instance_variable_set(:@slug_postprocess, original)
+    end
 
     context 'with duplicate slug' do
       before do
