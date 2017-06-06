@@ -20,17 +20,6 @@ class User < OrganizationalUnit
   one_to_many :organization_memberships
   one_to_many :repository_memberships, key: :member_id
 
-  # one_to_many :accessible_repositories, dataset: (proc do |reflection|
-  #   reflection.associated_dataset.
-  #     graph(:organizations, {id: :owner_id}, select: false).
-  #     graph(:organization_memberships, {organization_id: :id}, select: false).
-  #     graph(:users, {id: :member_id}, select: false).
-  #     where(Sequel[:repositories][:owner_id] => id).
-  #     or(Sequel[:repositories][:owner_id] =>
-  #       Sequel[:organizations_members][:organization_id],
-  #       Sequel[:organizations_members][:member_id] => id)
-  # end), class: Repository
-
   def validate
     validates_format(Devise.email_regexp, :email)
     validates_presence(:password) if new?

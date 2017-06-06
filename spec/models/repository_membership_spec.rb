@@ -10,7 +10,7 @@ RSpec.describe RepositoryMembership, type: :model do
     end
 
     it 'has a user' do
-      expect(subject.user).to be_a(User)
+      expect(subject.member).to be_a(User)
     end
 
     it 'has a role' do

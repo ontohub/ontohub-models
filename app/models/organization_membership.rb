@@ -2,6 +2,6 @@
 
 # The class representing an Organization Membership
 class OrganizationMembership < Sequel::Model
-  many_to_one :user, key: :member_id
+  many_to_one :member, class: User
   many_to_one :organization
 end

@@ -3,7 +3,7 @@
 FactoryGirl.define do
   factory :repository_membership do
     association :repository
-    association :user
+    association :member, factory: :user
     role { %w(admin write read).sample }
   end
 end
