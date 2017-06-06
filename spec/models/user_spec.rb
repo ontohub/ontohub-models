@@ -95,6 +95,54 @@ RSpec.describe User, type: :model do
     end
   end
 
+  context 'associations' do
+    subject { create :user }
+    let!(:organization1) { create :organization }
+    let!(:organization2) { create :organization }
+    let!(:user2) { create :user }
+    let!(:repository1) { create(:repository, owner: subject) }
+    let!(:repository2) { create(:repository, owner: organization1) }
+    let!(:repository3) { create(:repository, owner: organization2) }
+    let!(:repository4) { create(:repository, owner: user2) }
+    let!(:repository5) { create(:repository, owner: organization2) }
+
+    before do
+      subject.add_organization(organization1)
+      repository2.add_member(subject)
+      repository3.add_member(subject)
+    end
+
+    context 'repositories' do
+      it 'return correct repositories' do
+        expect(subject.repositories).to match_array([repository1])
+      end
+    end
+
+    context 'repositories_by_organizations' do
+      it 'returns correct repositories' do
+        expect(subject.repositories_by_organizations).to match_array([repository2])
+      end
+    end
+
+    context 'repositories_by_membership' do
+      it 'returns correct repositories' do
+        expect(subject.repositories_by_membership).to match_array([repository2, repository3])
+      end
+    end
+
+    context 'foreign_repositories' do
+      it 'returns correct repositories' do
+        expect(subject.foreign_repositories).to match_array([repository2, repository3])
+      end
+    end
+
+    context 'accessbile_repositories' do
+      it 'returns correct repositories' do
+        expect(subject.accessible_repositories).to match_array([repository1, repository2, repository3])
+      end
+    end
+  end
+
   context 'organizations' do
     subject { create :user }
 
