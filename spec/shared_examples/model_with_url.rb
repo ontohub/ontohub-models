@@ -2,8 +2,8 @@
 
 RSpec.shared_examples 'an object that has a URL' do
   context 'validations' do
-    it 'is invalid without url_path' do 
-      subject.url_path_method =  ->(_resource) { nil }
+    it 'is invalid without url_path' do
+      subject.url_path_method = ->(_resource) { nil }
       expect(subject.valid?).to be(false)
     end
 

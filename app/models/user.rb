@@ -24,7 +24,9 @@ class User < OrganizationalUnit
       graph(:organizations_members, {organization_id: :id}, select: false).
       graph(:users, {id: :member_id}, select: false).
       where(Sequel[:repositories][:owner_id] => id).
-      or(Sequel[:repositories][:owner_id] => Sequel[:organizations_members][:organization_id], Sequel[:organizations_members][:member_id] => id)
+      or(Sequel[:repositories][:owner_id] =>
+        Sequel[:organizations_members][:organization_id],
+        Sequel[:organizations_members][:member_id] => id)
   end), class: Repository
 
   def validate
