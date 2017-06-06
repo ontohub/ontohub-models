@@ -3,7 +3,7 @@
 RSpec.describe RepositoryMembership, type: :model do
   context 'associations' do
     subject { build :repository_membership }
-    let(:roles){ %w(admin write read) }
+    let(:roles) { %w(admin write read) }
 
     it 'has a repository' do
       expect(subject.repository).to be_a(Repository)

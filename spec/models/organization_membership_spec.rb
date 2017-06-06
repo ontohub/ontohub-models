@@ -3,7 +3,7 @@
 RSpec.describe OrganizationMembership, type: :model do
   context 'associations' do
     subject { build :organization_membership }
-    let(:roles){ %w(admin write read) }
+    let(:roles) { %w(admin write read) }
 
     it 'has a organization' do
       expect(subject.organization).to be_a(Organization)

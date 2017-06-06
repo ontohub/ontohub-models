@@ -97,7 +97,7 @@ RSpec.describe User, type: :model do
 
   context 'roles' do
     subject { create :user }
-    let(:roles){ %w(admin user) }
+    let(:roles) { %w(admin user) }
 
     it 'has a role' do
       expect(roles).to include(subject.role)
@@ -134,25 +134,29 @@ RSpec.describe User, type: :model do
 
     context 'repositories_by_organizations' do
       it 'returns correct repositories' do
-        expect(subject.repositories_by_organizations).to match_array([repository2])
+        expect(subject.repositories_by_organizations).
+          to match_array([repository2])
       end
     end
 
     context 'repositories_by_membership' do
       it 'returns correct repositories' do
-        expect(subject.repositories_by_membership).to match_array([repository2, repository3])
+        expect(subject.repositories_by_membership).
+          to match_array([repository2, repository3])
       end
     end
 
     context 'foreign_repositories' do
       it 'returns correct repositories' do
-        expect(subject.foreign_repositories).to match_array([repository2, repository3])
+        expect(subject.foreign_repositories).
+          to match_array([repository2, repository3])
       end
     end
 
     context 'accessbile_repositories' do
       it 'returns correct repositories' do
-        expect(subject.accessible_repositories).to match_array([repository1, repository2, repository3])
+        expect(subject.accessible_repositories).
+          to match_array([repository1, repository2, repository3])
       end
     end
   end
