@@ -8,11 +8,6 @@ require 'shared_examples/model_with_url'
 require 'shared_examples/slug'
 
 RSpec.describe User, type: :model do
-  context 'columns' do
-    it { is_expected.to have_column(:email, type: :string) }
-    it { is_expected.to have_column(:encrypted_password, type: :string) }
-  end
-
   context 'warden' do
     subject { create :user }
     it 'find_for_database_authentication' do
@@ -34,7 +29,10 @@ RSpec.describe User, type: :model do
 
   context 'slug' do
     subject { build :user }
-    it_behaves_like 'an object that has a slug'
+
+    it_behaves_like 'an object that has a slug', ',' do
+      let(:other_subject) { create :user, name: subject.name }
+    end
   end
 
   context 'password' do

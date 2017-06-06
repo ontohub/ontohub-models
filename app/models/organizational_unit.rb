@@ -4,7 +4,7 @@
 class OrganizationalUnit < Sequel::Model
   plugin :timestamps
   plugin :validation_helpers
-  plugin :class_table_inheritance, key: :kind
+  plugin :class_table_inheritance, key: :kind, alias: :organizational_units
 
   # Use a non-persisted attribute to create the slug
   attr_accessor :name

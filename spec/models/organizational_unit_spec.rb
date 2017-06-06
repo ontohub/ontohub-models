@@ -5,13 +5,6 @@ require 'shared_examples/model_with_url'
 require 'shared_examples/slug'
 
 RSpec.describe OrganizationalUnit, type: :model do
-  context 'columns' do
-    it { is_expected.to have_column(:slug, type: :string) }
-    it { is_expected.to have_column(:display_name, type: :string) }
-    it { is_expected.to have_column(:created_at, type: :datetime) }
-    it { is_expected.to have_column(:updated_at, type: :datetime) }
-  end
-
   context 'validations' do
     subject { build :organizational_unit }
     context 'name' do
@@ -109,11 +102,14 @@ RSpec.describe OrganizationalUnit, type: :model do
 
   context 'slug' do
     subject { build :organizational_unit }
-    it_behaves_like 'an object that has a slug'
 
     it 'uses only the name as the slug' do
       subject.save
       expect(subject.slug).to eq(subject.name)
+    end
+
+    it_behaves_like 'an object that has a slug', ',' do
+      let(:other_subject) { create :organizational_unit, name: subject.name }
     end
   end
 end
