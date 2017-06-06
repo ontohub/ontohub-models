@@ -95,6 +95,20 @@ RSpec.describe User, type: :model do
     end
   end
 
+  context 'roles' do
+    subject { create :user }
+    let(:roles){ %w(admin user) }
+
+    it 'has a role' do
+      expect(roles).to include(subject.role)
+    end
+
+    it 'has a wrong role' do
+      subject.role = 'Bad'
+      expect(roles).not_to include(subject.role)
+    end
+  end
+
   context 'associations' do
     subject { create :user }
     let!(:organization1) { create :organization }
