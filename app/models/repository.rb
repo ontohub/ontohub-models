@@ -15,6 +15,9 @@ class Repository < Sequel::Model
 
   many_to_one :owner, class: OrganizationalUnit
 
+  one_to_many :repository_memberships
+  many_to_many :members, join_table: :repository_memberships, class: User
+
   one_to_many :file_versions
   plugin :association_dependencies, file_versions: :destroy
 

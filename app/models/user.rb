@@ -16,18 +16,20 @@ class User < OrganizationalUnit
   devise :database_authenticatable, :registerable
 
   many_to_many :organizations,
-    join_table: :organizations_members, left_key: :member_id
+    join_table: :organization_memberships, left_key: :member_id
+  one_to_many :organization_memberships
+  one_to_many :repository_memberships, key: :member_id
 
-  one_to_many :accessible_repositories, dataset: (proc do |reflection|
-    reflection.associated_dataset.
-      graph(:organizations, {id: :owner_id}, select: false).
-      graph(:organizations_members, {organization_id: :id}, select: false).
-      graph(:users, {id: :member_id}, select: false).
-      where(Sequel[:repositories][:owner_id] => id).
-      or(Sequel[:repositories][:owner_id] =>
-        Sequel[:organizations_members][:organization_id],
-        Sequel[:organizations_members][:member_id] => id)
-  end), class: Repository
+  # one_to_many :accessible_repositories, dataset: (proc do |reflection|
+  #   reflection.associated_dataset.
+  #     graph(:organizations, {id: :owner_id}, select: false).
+  #     graph(:organization_memberships, {organization_id: :id}, select: false).
+  #     graph(:users, {id: :member_id}, select: false).
+  #     where(Sequel[:repositories][:owner_id] => id).
+  #     or(Sequel[:repositories][:owner_id] =>
+  #       Sequel[:organizations_members][:organization_id],
+  #       Sequel[:organizations_members][:member_id] => id)
+  # end), class: Repository
 
   def validate
     validates_format(Devise.email_regexp, :email)
@@ -39,5 +41,23 @@ class User < OrganizationalUnit
         message: "must be between #{min} and #{max} characters")
     end
     super
+  end
+
+  def repositories_by_organizations
+    organizations.reduce([]) do |org_repos, organization|
+      org_repos + organization.repositories
+    end
+  end
+
+  def repositories_by_membership
+    repository_memberships.map(&:repository).uniq
+  end
+
+  def foreign_repositories
+    (repositories_by_organizations + repositories_by_membership).uniq
+  end
+
+  def accessible_repositories
+    (foreign_repositories + repositories).uniq
   end
 end

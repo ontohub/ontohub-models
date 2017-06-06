@@ -19,6 +19,8 @@ Sequel.migration do
     end
 
     # User is an OrganizationalUnit
+    create_enum :global_role,
+    %w(admin user)
     create_table :users do
       primary_key :id
       foreign_key [:id], :organizational_units, unique: true
@@ -26,6 +28,7 @@ Sequel.migration do
       column :email, String
       column :encrypted_password, String
       column :secret, String
+      column :role, :global_role
     end
 
     # Organization is a OrganizationalUnit
@@ -35,10 +38,13 @@ Sequel.migration do
       column :description, String
     end
 
-    create_table :organizations_members do
+    create_enum :organization_role,
+    %w(admin write read)
+    create_table :organization_memberships do
       primary_key [:organization_id, :member_id]
       foreign_key :organization_id, :organizations, index: true
       foreign_key :member_id, :users, index: true
+      column :role, :organization_role
     end
 
     create_enum :repository_content_type,
@@ -57,6 +63,15 @@ Sequel.migration do
       column :updated_at, DateTime
       column :public_access, TrueClass
       column :content_type, :repository_content_type
+    end
+
+    create_enum :repository_role,
+    %w(admin write read)
+    create_table :repository_memberships do
+      primary_key [:repository_id, :member_id]
+      foreign_key :repository_id, :repositories, index: true
+      foreign_key :member_id, :users, index: true
+      column :role, :repository_role
     end
 
     create_enum :loc_id_base_kind_type,
