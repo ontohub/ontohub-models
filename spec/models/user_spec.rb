@@ -35,6 +35,19 @@ RSpec.describe User, type: :model do
     end
   end
 
+  context 'confirmation' do
+    subject { create :user }
+
+    it 'is not yet confirmed' do
+      expect(subject.confirmed?).to be(false)
+    end
+
+    it 'is confirmed after confirmation' do
+      subject.confirm
+      expect(subject.reload.confirmed?).to be(true)
+    end
+  end
+
   context 'password' do
     let(:password) { 'foobarfoobarbaz' }
     subject { create :user, password: password }

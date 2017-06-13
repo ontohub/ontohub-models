@@ -12,8 +12,7 @@ class User < OrganizationalUnit
   end
 
   plugin :devise
-
-  devise :database_authenticatable, :registerable
+  devise :database_authenticatable, :registerable, :confirmable
 
   many_to_many :organizations,
     join_table: :organization_memberships, left_key: :member_id

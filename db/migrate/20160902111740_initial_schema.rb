@@ -28,7 +28,14 @@ Sequel.migration do
       column :email, String
       column :encrypted_password, String
       column :secret, String
+
       column :role, :global_role
+
+      # Devise confirmable
+      column :confirmation_token, String
+      column :confirmed_at, DateTime
+      column :confirmation_sent_at, DateTime
+      column :unconfirmed_email, String
     end
 
     # Organization is a OrganizationalUnit
