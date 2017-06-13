@@ -33,7 +33,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'sequel-rails', '~> 0.9.14'
   s.add_dependency 'chewy', '~> 0.9.0'
   s.add_dependency 'devise', '~> 4.3.0'
-  s.add_dependency 'sequel-devise', '~> 0.0.9'
+  s.add_dependency 'sequel-devise', '~> 0.0.11'
   s.add_dependency 'orm_adapter-sequel', '~> 0.1.0'
 
   # General Development
