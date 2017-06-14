@@ -107,6 +107,20 @@ RSpec.describe User, type: :model do
     end
   end
 
+  context 'email_was' do
+    subject { create(:user) }
+
+    it 'is the same as the original email if unchanged' do
+      expect(subject.email_was).to eq(subject.email)
+    end
+
+    it 'is the original email since the last save' do
+      original_email = subject.email
+      subject.email = "new-#{subject.email}"
+      expect(subject.email_was).to eq(original_email)
+    end
+  end
+
   context 'owned repositories' do
     subject { create :user }
 

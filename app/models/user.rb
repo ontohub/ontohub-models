@@ -97,4 +97,12 @@ class User < OrganizationalUnit
     end
     super
   end
+
+  # Devise uses email_was to determine the old email address when sending an
+  # email changed message. This could also be implemented via the +dirty+
+  # plugin, but this method is not used very often, so the plugin would be
+  # overhead.
+  def email_was
+    self.class.find(id: id).email
+  end
 end
