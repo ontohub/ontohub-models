@@ -36,6 +36,10 @@ Sequel.migration do
       column :confirmed_at, DateTime
       column :confirmation_sent_at, DateTime
       column :unconfirmed_email, String
+
+      # Devise recoverable
+      column :reset_password_token, String
+      column :reset_password_sent_at, DateTime
     end
 
     # Organization is a OrganizationalUnit
