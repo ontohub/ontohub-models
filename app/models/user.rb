@@ -12,7 +12,8 @@ class User < OrganizationalUnit
   end
 
   plugin :devise
-  devise :database_authenticatable, :registerable, :confirmable, :recoverable
+  devise :database_authenticatable, :registerable, :confirmable, :recoverable,
+    :lockable
 
   many_to_many :organizations,
     join_table: :organization_memberships, left_key: :member_id
@@ -105,4 +106,22 @@ class User < OrganizationalUnit
   def email_was
     self.class.find(id: id).email
   end
+
+  # Workaround: This is the exact same implementation as in devise, with the
+  # exception that the GMT offset is added to the time. There seems to be a bug
+  # in PostgreSQL, Sequel or Sequel-Rails that stores the UTC time in the
+  # database correctly, but when reading from the database, it subtracts the
+  # GMT offset once more and tells that it's UTC.
+  # :nocov:
+  # This is implicitly tested in the backend.
+  def lock_access!(opts = {})
+    self.locked_at = Time.now.utc + Time.now.gmtoff
+
+    if unlock_strategy_enabled?(:email) && opts.fetch(:send_instructions, true)
+      send_unlock_instructions
+    else
+      save(validate: false)
+    end
+  end
+  # :nocov:
 end

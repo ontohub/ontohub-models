@@ -40,6 +40,11 @@ Sequel.migration do
       # Devise recoverable
       column :reset_password_token, String
       column :reset_password_sent_at, DateTime
+
+      # Devise lockable
+      column :failed_attempts, Integer, default: 0
+      column :unlock_token, String
+      column :locked_at, DateTime
     end
 
     # Organization is a OrganizationalUnit
