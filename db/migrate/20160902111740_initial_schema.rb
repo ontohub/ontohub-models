@@ -25,7 +25,7 @@ Sequel.migration do
       primary_key :id
       foreign_key [:id], :organizational_units, unique: true
 
-      column :email, String
+      column :email, String, unique: true
       column :encrypted_password, String
       column :secret, String
 

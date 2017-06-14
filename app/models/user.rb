@@ -87,6 +87,7 @@ class User < OrganizationalUnit
 
   def validate
     validates_format(Devise.email_regexp, :email)
+    validates_unique(:email)
     validates_presence(:password) if new?
     unless password.nil?
       min = Devise.password_length.first

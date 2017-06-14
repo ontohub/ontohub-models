@@ -16,6 +16,44 @@ RSpec.describe User, type: :model do
     end
   end
 
+  context 'validations' do
+    subject { build :user }
+
+    it 'is valid' do
+      expect(subject).to be_valid
+    end
+
+    context 'email' do
+      it 'bad email address is invalid' do
+        subject.email = 'not-an-email-address'
+        expect(subject).not_to be_valid
+      end
+
+      it 'duplicate email address is invalid' do
+        create(:user, email: subject.email)
+        expect(subject).not_to be_valid
+      end
+    end
+
+    context 'password' do
+      it 'too short is invalid' do
+        subject.password = 'a' * (Devise.password_length.first - 1)
+        expect(subject).not_to be_valid
+      end
+
+      it 'too long is invalid' do
+        subject.password = 'a' * (Devise.password_length.last + 1)
+        expect(subject).not_to be_valid
+      end
+
+      it 'already saved, with password nil is valid' do
+        subject.save
+        subject.password = nil
+        expect(subject).to be_valid
+      end
+    end
+  end
+
   context 'compatibility' do
     subject { build :user }
     it_behaves_like 'an ActiveModel compatible object'
