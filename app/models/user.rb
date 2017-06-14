@@ -13,7 +13,7 @@ class User < OrganizationalUnit
 
   plugin :devise
   devise :database_authenticatable, :registerable, :confirmable, :recoverable,
-    :lockable
+    :lockable, :trackable
 
   many_to_many :organizations,
     join_table: :organization_memberships, left_key: :member_id
@@ -124,4 +124,12 @@ class User < OrganizationalUnit
     end
   end
   # :nocov:
+
+  # Devise Trackable requires these two attributes to be defined, but we do not
+  # want to store the IP addresses in the database. These empty getters and
+  # setters work around Devise's requirement:
+  %i(current_sign_in_ip last_sign_in_ip).each do |method|
+    define_method(method) {}
+    define_method("#{method}=") { |_ip| }
+  end
 end

@@ -45,6 +45,16 @@ Sequel.migration do
       column :failed_attempts, Integer, default: 0
       column :unlock_token, String
       column :locked_at, DateTime
+
+      # Devise trackable
+      column :sign_in_count, Integer, default: 0
+      column :current_sign_in_at, DateTime
+      column :last_sign_in_at, DateTime
+      # Devise requires these columns to be set, but we don't want to store the
+      # IP addresses in the database. We define empty getters/setters in the
+      # model for these attributes:
+      # column :current_sign_in_ip, String
+      # column :last_sign_in_ip, String
     end
 
     # Organization is a OrganizationalUnit
