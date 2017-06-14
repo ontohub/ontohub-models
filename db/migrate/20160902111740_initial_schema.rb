@@ -25,11 +25,13 @@ Sequel.migration do
       primary_key :id
       foreign_key [:id], :organizational_units, unique: true
 
-      column :email, String, unique: true
-      column :encrypted_password, String
       column :secret, String
 
       column :role, :global_role
+
+      # Devise database authenticatable
+      column :email, String, unique: true
+      column :encrypted_password, String
 
       # Devise confirmable
       column :confirmation_token, String
