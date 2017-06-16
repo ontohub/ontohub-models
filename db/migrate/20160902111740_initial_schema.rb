@@ -27,8 +27,6 @@ Sequel.migration do
 
       column :secret, String
 
-      column :role, :global_role
-
       # Devise database authenticatable
       column :email, String, unique: true
       column :encrypted_password, String
@@ -57,6 +55,8 @@ Sequel.migration do
       # model for these attributes:
       # column :current_sign_in_ip, String
       # column :last_sign_in_ip, String
+
+      column :role, :global_role, default: 'user'
     end
 
     # Organization is a OrganizationalUnit
@@ -72,7 +72,7 @@ Sequel.migration do
       primary_key [:organization_id, :member_id]
       foreign_key :organization_id, :organizations, index: true
       foreign_key :member_id, :users, index: true
-      column :role, :organization_role
+      column :role, :organization_role, default: 'read'
     end
 
     create_enum :repository_content_type,
@@ -99,7 +99,7 @@ Sequel.migration do
       primary_key [:repository_id, :member_id]
       foreign_key :repository_id, :repositories, index: true
       foreign_key :member_id, :users, index: true
-      column :role, :repository_role
+      column :role, :repository_role, default: 'read'
     end
 
     create_enum :loc_id_base_kind_type,
