@@ -16,17 +16,74 @@ class User < OrganizationalUnit
   devise :database_authenticatable, :registerable
 
   many_to_many :organizations,
-    join_table: :organizations_members, left_key: :member_id
+    join_table: :organization_memberships, left_key: :member_id
+  one_to_many :organization_memberships
+  one_to_many :repository_memberships, key: :member_id
 
+  # equivalent to
+  # organizations.reduce([]) do |org_repos, organization|
+  #   org_repos + organization.repositories
+  # end
+  one_to_many :repositories_by_organizations, dataset: (proc do |reflection|
+    reflection.associated_dataset.
+      graph(:organizations, {id: :owner_id}, select: false).
+      graph(:organization_memberships, {organization_id: :id}, select: false).
+      graph(:users, {id: :member_id}, select: false).
+      where(Sequel[:repositories][:owner_id] =>
+            Sequel[:organization_memberships][:organization_id],
+            Sequel[:organization_memberships][:member_id] => id)
+  end), class: Repository
+
+  # equivalent to
+  # repository_memberships.map(&:repository).uniq
+  one_to_many :repositories_by_membership, dataset: (proc do |reflection|
+    reflection.associated_dataset.
+      graph(:repository_memberships,
+            {repository_id: Sequel[:repositories][:id]},
+            select: false).
+      graph(:users, {id: :member_id}, select: false).
+      where(Sequel[:repository_memberships][:member_id] => id)
+  end), class: Repository
+
+  # equivalent to
+  # (repositories_by_organizations + repositories_by_membership).uniq
+  one_to_many :foreign_repositories, dataset: (proc do |reflection|
+    reflection.associated_dataset.
+      graph(:organizations, {id: :owner_id}, select: false).
+      graph(:organization_memberships, {organization_id: :id}, select: false).
+      graph(:users, {id: :member_id}, select: false).
+
+      graph(:repository_memberships,
+            {repository_id: Sequel[:repositories][:id]},
+            select: false).
+      graph(:users, {id: :member_id},
+            table_alias: :users_repository,
+            select: false).
+      where(Sequel[:repositories][:owner_id] =>
+            Sequel[:organization_memberships][:organization_id],
+            Sequel[:organization_memberships][:member_id] => id).
+      or(Sequel[:repository_memberships][:member_id] => id)
+  end), class: Repository
+
+  # equivalent to
+  # (foreign_repositories + repositories).uniq
   one_to_many :accessible_repositories, dataset: (proc do |reflection|
     reflection.associated_dataset.
       graph(:organizations, {id: :owner_id}, select: false).
-      graph(:organizations_members, {organization_id: :id}, select: false).
+      graph(:organization_memberships, {organization_id: :id}, select: false).
       graph(:users, {id: :member_id}, select: false).
-      where(Sequel[:repositories][:owner_id] => id).
-      or(Sequel[:repositories][:owner_id] =>
-        Sequel[:organizations_members][:organization_id],
-        Sequel[:organizations_members][:member_id] => id)
+
+      graph(:repository_memberships,
+            {repository_id: Sequel[:repositories][:id]},
+            select: false).
+      graph(:users, {id: :member_id},
+            table_alias: :users_repository,
+            select: false).
+      where(Sequel[:repositories][:owner_id] =>
+            Sequel[:organization_memberships][:organization_id],
+            Sequel[:organization_memberships][:member_id] => id).
+      or(Sequel[:repository_memberships][:member_id] => id).
+      or(Sequel[:repositories][:owner_id] => id)
   end), class: Repository
 
   def validate
