@@ -20,7 +20,7 @@ Sequel.migration do
 
     # User is an OrganizationalUnit
     create_enum :global_role,
-    %w(admin user)
+      %w(admin user)
     create_table :users do
       primary_key :id
       foreign_key [:id], :organizational_units, unique: true
@@ -39,7 +39,7 @@ Sequel.migration do
     end
 
     create_enum :organization_role,
-    %w(admin write read)
+      %w(admin write read)
     create_table :organization_memberships do
       primary_key [:organization_id, :member_id]
       foreign_key :organization_id, :organizations, index: true
@@ -66,7 +66,7 @@ Sequel.migration do
     end
 
     create_enum :repository_role,
-    %w(admin write read)
+      %w(admin write read)
     create_table :repository_memberships do
       primary_key [:repository_id, :member_id]
       foreign_key :repository_id, :repositories, index: true
