@@ -90,6 +90,7 @@ class User < OrganizationalUnit
   end), class: Repository
 
   def validate
+    validates_includes %w(admin user), :role
     validates_format(Devise.email_regexp, :email)
     validates_unique(:email)
     validates_presence(:password) if new?
