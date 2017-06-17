@@ -107,24 +107,6 @@ class User < OrganizationalUnit
     self.class.find(id: id).email
   end
 
-  # Workaround: This is the exact same implementation as in devise, with the
-  # exception that the GMT offset is added to the time. There seems to be a bug
-  # in PostgreSQL, Sequel or Sequel-Rails that stores the UTC time in the
-  # database correctly, but when reading from the database, it subtracts the
-  # GMT offset once more and tells that it's UTC.
-  # :nocov:
-  # This is implicitly tested in the backend.
-  def lock_access!(opts = {})
-    self.locked_at = Time.now.utc + Time.now.gmtoff
-
-    if unlock_strategy_enabled?(:email) && opts.fetch(:send_instructions, true)
-      send_unlock_instructions
-    else
-      save(validate: false)
-    end
-  end
-  # :nocov:
-
   # Devise Trackable requires these two attributes to be defined, but we do not
   # want to store the IP addresses in the database. These empty getters and
   # setters work around Devise's requirement:
