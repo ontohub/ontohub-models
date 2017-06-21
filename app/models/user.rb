@@ -12,8 +12,8 @@ class User < OrganizationalUnit
   end
 
   plugin :devise
-
-  devise :database_authenticatable, :registerable
+  devise :database_authenticatable, :registerable, :confirmable, :recoverable,
+    :lockable, :trackable
 
   many_to_many :organizations,
     join_table: :organization_memberships, left_key: :member_id
@@ -88,6 +88,7 @@ class User < OrganizationalUnit
 
   def validate
     validates_format(Devise.email_regexp, :email)
+    validates_unique(:email)
     validates_presence(:password) if new?
     unless password.nil?
       min = Devise.password_length.first
@@ -96,5 +97,21 @@ class User < OrganizationalUnit
         message: "must be between #{min} and #{max} characters")
     end
     super
+  end
+
+  # Devise uses email_was to determine the old email address when sending an
+  # email changed message. This could also be implemented via the +dirty+
+  # plugin, but this method is not used very often, so the plugin would be
+  # overhead.
+  def email_was
+    self.class.find(id: id).email
+  end
+
+  # Devise Trackable requires these two attributes to be defined, but we do not
+  # want to store the IP addresses in the database. These empty getters and
+  # setters work around Devise's requirement:
+  %i(current_sign_in_ip last_sign_in_ip).each do |method|
+    define_method(method) {}
+    define_method("#{method}=") { |_ip| }
   end
 end

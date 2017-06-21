@@ -16,6 +16,44 @@ RSpec.describe User, type: :model do
     end
   end
 
+  context 'validations' do
+    subject { build :user }
+
+    it 'is valid' do
+      expect(subject).to be_valid
+    end
+
+    context 'email' do
+      it 'bad email address is invalid' do
+        subject.email = 'not-an-email-address'
+        expect(subject).not_to be_valid
+      end
+
+      it 'duplicate email address is invalid' do
+        create(:user, email: subject.email)
+        expect(subject).not_to be_valid
+      end
+    end
+
+    context 'password' do
+      it 'too short is invalid' do
+        subject.password = 'a' * (Devise.password_length.first - 1)
+        expect(subject).not_to be_valid
+      end
+
+      it 'too long is invalid' do
+        subject.password = 'a' * (Devise.password_length.last + 1)
+        expect(subject).not_to be_valid
+      end
+
+      it 'already saved, with password nil is valid' do
+        subject.save
+        subject.password = nil
+        expect(subject).to be_valid
+      end
+    end
+  end
+
   context 'compatibility' do
     subject { build :user }
     it_behaves_like 'an ActiveModel compatible object'
@@ -32,6 +70,19 @@ RSpec.describe User, type: :model do
 
     it_behaves_like 'an object that has a slug', ',' do
       let(:other_subject) { create :user, name: subject.name }
+    end
+  end
+
+  context 'confirmation' do
+    subject { create :user }
+
+    it 'is not yet confirmed' do
+      expect(subject.confirmed?).to be(false)
+    end
+
+    it 'is confirmed after confirmation' do
+      subject.confirm
+      expect(subject.reload.confirmed?).to be(true)
     end
   end
 
@@ -53,6 +104,20 @@ RSpec.describe User, type: :model do
       old_pw = subject.encrypted_password
       subject.password = 'bazbarfoobarfoo'
       expect(subject.encrypted_password).not_to equal(old_pw)
+    end
+  end
+
+  context 'email_was' do
+    subject { create(:user) }
+
+    it 'is the same as the original email if unchanged' do
+      expect(subject.email_was).to eq(subject.email)
+    end
+
+    it 'is the original email since the last save' do
+      original_email = subject.email
+      subject.email = "new-#{subject.email}"
+      expect(subject.email_was).to eq(original_email)
     end
   end
 

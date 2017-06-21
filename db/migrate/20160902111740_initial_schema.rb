@@ -25,10 +25,38 @@ Sequel.migration do
       primary_key :id
       foreign_key [:id], :organizational_units, unique: true
 
-      column :email, String
-      column :encrypted_password, String
       column :secret, String
+
       column :role, :global_role
+
+      # Devise database authenticatable
+      column :email, String, unique: true
+      column :encrypted_password, String
+
+      # Devise confirmable
+      column :confirmation_token, String
+      column :confirmed_at, DateTime
+      column :confirmation_sent_at, DateTime
+      column :unconfirmed_email, String
+
+      # Devise recoverable
+      column :reset_password_token, String
+      column :reset_password_sent_at, DateTime
+
+      # Devise lockable
+      column :failed_attempts, Integer, default: 0
+      column :unlock_token, String
+      column :locked_at, DateTime
+
+      # Devise trackable
+      column :sign_in_count, Integer, default: 0
+      column :current_sign_in_at, DateTime
+      column :last_sign_in_at, DateTime
+      # Devise requires these columns to be set, but we don't want to store the
+      # IP addresses in the database. We define empty getters/setters in the
+      # model for these attributes:
+      # column :current_sign_in_ip, String
+      # column :last_sign_in_ip, String
     end
 
     # Organization is a OrganizationalUnit
