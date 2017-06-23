@@ -181,7 +181,7 @@ RSpec.describe User, type: :model do
       expect(roles).not_to include(subject.role)
     end
 
-    it 'has a admin role' do
+    it 'has an admin role' do
       subject.role = 'admin'
       expect(subject.admin?).to be(true)
     end

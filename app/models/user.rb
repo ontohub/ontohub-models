@@ -121,8 +121,10 @@ class User < OrganizationalUnit
 
   def email_hash
     @email_hash ||= Digest::MD5.hexdigest(email)
+  end
 
   def admin?
     role.eql?('admin')
   end
 end
+
