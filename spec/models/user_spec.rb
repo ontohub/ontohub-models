@@ -73,6 +73,14 @@ RSpec.describe User, type: :model do
     end
   end
 
+  context 'email hash' do
+    subject { build :user, email: 'foobar@example.com' }
+
+    it 'generates the md5 hash of the email address' do
+      expect(subject.email_hash).to eq('0d4907cea9d97688aa7a5e722d742f71')
+    end
+  end
+
   context 'confirmation' do
     subject { create :user }
 

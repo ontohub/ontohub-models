@@ -114,4 +114,8 @@ class User < OrganizationalUnit
     define_method(method) {}
     define_method("#{method}=") { |_ip| }
   end
+
+  def email_hash
+    @email_hash ||= Digest::MD5.hexdigest(email)
+  end
 end
