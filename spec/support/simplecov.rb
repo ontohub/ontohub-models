@@ -1,13 +1,8 @@
 # frozen_string_literal: true
 
 if RUBY_ENGINE == 'ruby' # not 'rbx'
-  unless defined?(Coveralls)
+  unless defined?(SimpleCov)
     require 'simplecov'
-    require 'coveralls'
-    SimpleCov.formatters = [
-      SimpleCov::Formatter::HTMLFormatter,
-      Coveralls::SimpleCov::Formatter,
-    ]
     SimpleCov.start do
       # This initializer is not executed because no migrations are run.
       add_filter 'config/initializers/expose_migrations_path.rb'
@@ -19,5 +14,9 @@ if RUBY_ENGINE == 'ruby' # not 'rbx'
       add_filter 'spec/spec_helper.rb'
       add_filter 'spec/rails_helper.rb'
     end
+    require 'codecov'
+    formatters = [SimpleCov::Formatter::HTMLFormatter]
+    formatters << SimpleCov::Formatter::Codecov if ENV['CI']
+    SimpleCov.formatters = formatters
   end
 end
