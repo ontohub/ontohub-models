@@ -86,7 +86,9 @@ RSpec.describe Organization, type: :model do
         it 'deletes all organization memberships on destroy' do
           id = subject.id
           expect { subject.destroy }.
-            to change { OrganizationMembership.where(organization_id: id).count }.to(0)
+            to change {
+              OrganizationMembership.where(organization_id: id).count
+            }.to(0)
         end
       end
     end
