@@ -203,6 +203,12 @@ RSpec.describe User, type: :model do
       it 'return correct repositories' do
         expect(subject.repositories).to match_array([repository1])
       end
+
+      it 'destroys the repositories on destroy' do
+        id = subject.id
+        expect { subject.destroy }.
+          to change { Repository.where(owner_id: id).count }.to(0)
+      end
     end
 
     context 'repositories_by_organizations' do
@@ -300,6 +306,13 @@ RSpec.describe User, type: :model do
           it 'has only the second organization afterwards' do
             expect(subject.organizations).to be_empty
           end
+        end
+
+        it 'deletes all organization memberships on destroy' do
+          id = subject.id
+          expect { subject.destroy }.
+            to change { OrganizationMembership.where(member_id: id).count }.
+            to(0)
         end
       end
     end

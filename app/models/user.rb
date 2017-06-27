@@ -20,6 +20,9 @@ class User < OrganizationalUnit
   one_to_many :organization_memberships
   one_to_many :repository_memberships, key: :member_id
 
+  plugin :association_dependencies,
+    organizations: :nullify, repository_memberships: :delete
+
   # equivalent to
   # organizations.reduce([]) do |org_repos, organization|
   #   org_repos + organization.repositories

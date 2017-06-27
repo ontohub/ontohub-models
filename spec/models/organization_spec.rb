@@ -38,6 +38,12 @@ RSpec.describe Organization, type: :model do
     it 'lists all personal repositories' do
       expect(subject.repositories.count).to be(5)
     end
+
+    it 'destroys the repositories on destroy' do
+      id = subject.id
+      expect { subject.destroy }.
+        to change { Repository.where(owner_id: id).count }.to(0)
+    end
   end
 
   context 'members' do
@@ -75,6 +81,14 @@ RSpec.describe Organization, type: :model do
           it 'has only the second member afterwards' do
             expect(subject.members).to be_empty
           end
+        end
+
+        it 'deletes all organization memberships on destroy' do
+          id = subject.id
+          expect { subject.destroy }.
+            to change {
+              OrganizationMembership.where(organization_id: id).count
+            }.to(0)
         end
       end
     end
