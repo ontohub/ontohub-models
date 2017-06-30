@@ -29,4 +29,18 @@ class Repository < Sequel::Model
       :content_type
     super
   end
+
+  def add_member(member, role = 'read')
+    repository_membership = RepositoryMembership.find(member: member, repository: self)
+    if repository_membership
+      repository_membership.role = role
+      repository_membership.save
+    else
+      RepositoryMembership.new(member: member, repository: self, role: role).save
+    end
+  end
+
+  def remove_member(member)
+    RepositoryMembership.find(member: member, repository: self).destroy
+  end
 end
