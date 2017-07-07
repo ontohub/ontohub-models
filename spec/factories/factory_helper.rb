@@ -5,7 +5,7 @@ FactoryGirl.define do
   to_create(&:save)
 
   sequence :username do |n|
-    "#{Faker::Internet.user_name(nil, %w(- _))}#{n}".downcase
+    "#{Faker::Internet.user_name(nil, %w(-))}#{n}".downcase
   end
 
   sequence :repository_name do |n|
