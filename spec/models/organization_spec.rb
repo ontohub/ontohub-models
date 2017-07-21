@@ -83,6 +83,15 @@ RSpec.describe Organization, type: :model do
           end
         end
 
+        context 'changing role' do
+          before { subject.add_member(user, 'write') }
+
+          it 'has changed role' do
+            expect(OrganizationMembership.
+              find(member: user, organization: subject).role).to match('write')
+          end
+        end
+
         it 'deletes all organization memberships on destroy' do
           id = subject.id
           expect { subject.destroy }.
