@@ -10,6 +10,10 @@ FactoryGirl.define do
     email { Faker::Internet.email(name) }
     password { Faker::Internet.password(10) }
     secret { Faker::Crypto.sha1 }
-    role { %w(admin user).sample }
+    role { 'user' }
+
+    trait :admin do
+      role { 'admin' }
+    end
   end
 end

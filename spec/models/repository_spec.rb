@@ -91,4 +91,31 @@ RSpec.describe Repository, type: :model do
         to change { FileVersion.where(repository_id: id).count }.to(0)
     end
   end
+
+  context 'membership' do
+    subject { create(:repository, name: Faker::Lorem.words(2).join(' ')) }
+    let(:member) { create :user }
+
+    it 'adds new member with read role' do
+      subject.add_member(member)
+      expect(RepositoryMembership.
+        find(member: member, repository: subject).role).to eq('read')
+    end
+
+    context 'existent member' do
+      before { subject.add_member(member) }
+
+      it 'changes role of existent member' do
+        subject.add_member(member, 'write')
+        expect(RepositoryMembership.find(member: member, repository: subject).
+          role).to match('write')
+      end
+
+      it 'removes member' do
+        subject.remove_member(member)
+        expect(RepositoryMembership.find(member: member, repository: subject)).
+          to be_falsy
+      end
+    end
+  end
 end
