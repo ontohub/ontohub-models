@@ -8,12 +8,14 @@ class Organization < OrganizationalUnit
   plugin :association_dependencies, members: :nullify
 
   def add_member(member, role = 'read')
-    organization_membership = OrganizationMembership.find(member: member, organization: self)
+    organization_membership = OrganizationMembership.
+      find(member: member,  organization: self)
     if organization_membership
       organization_membership.role = role
       organization_membership.save
     else
-      OrganizationMembership.new(member: member, organization: self, role: role).save
+      OrganizationMembership.
+        new(member: member, organization: self, role: role).save
     end
   end
 

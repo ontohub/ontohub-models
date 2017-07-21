@@ -127,4 +127,3 @@ class User < OrganizationalUnit
     role.eql?('admin')
   end
 end
-
