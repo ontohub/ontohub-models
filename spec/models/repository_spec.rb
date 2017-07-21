@@ -98,8 +98,8 @@ RSpec.describe Repository, type: :model do
 
     it 'adds new member with read role' do
       subject.add_member(member)
-      expect(RepositoryMembership.find(member: member, repository: subject)).
-        to be_truthy
+      expect(RepositoryMembership.
+        find(member: member, repository: subject).role).to eq('read')
     end
 
     context 'existent member' do
