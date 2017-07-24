@@ -28,8 +28,8 @@ Gem::Specification.new do |s|
 
   # Runtime dependencies
   s.add_dependency 'rails', '~> 5.1.2'
-  s.add_dependency 'sequel', '~> 4.46.0'
-  s.add_dependency 'sequel_pg', '~> 1.6.17'
+  s.add_dependency 'sequel', '~> 4.48.0'
+  s.add_dependency 'sequel_pg', '~> 1.7.0'
   s.add_dependency 'sequel-rails', '~> 0.9.14'
   s.add_dependency 'chewy', '~> 0.9.0'
   s.add_dependency 'devise', '~> 4.3.0'
@@ -45,7 +45,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rspec-rails', '~> 3.6.0'
   s.add_development_dependency 'database_cleaner', '~> 1.6.1'
   s.add_development_dependency 'factory_girl_rails', '~> 4.8.0'
-  s.add_development_dependency 'faker', '~> 1.7.2'
+  s.add_development_dependency 'faker', '~> 1.8.4'
 
   # CI services
   s.add_development_dependency 'codecov', '~> 0.1.10'
@@ -53,5 +53,5 @@ Gem::Specification.new do |s|
   # We want to have these in the production environment as well in case we need
   # to debug the application:
   s.add_dependency 'pry', '~> 0.10.4'
-  s.add_dependency 'awesome_print', '~> 1.7.0'
+  s.add_dependency 'awesome_print', '~> 1.8.0'
 end
