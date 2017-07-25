@@ -10,6 +10,10 @@
 # fixed.
 # :nocov:
 if RUBY_ENGINE == 'rbx'
+  class Object
+    def self.deprecate_constant(*_args); end
+  end
+
   module Sequel
     def self.deprecate_constant(*_args); end
 
