@@ -4,9 +4,9 @@ require 'rails_helper'
 require 'shared_examples/model_with_url'
 require 'shared_examples/slug'
 
-RSpec.describe OrganizationalUnit, type: :model do
+RSpec.shared_examples 'an organizational unit' do
   context 'validations' do
-    subject { build :organizational_unit }
+    subject { build factory }
     context 'name' do
       context 'new record' do
         it 'with a correct name is valid' do
@@ -96,12 +96,12 @@ RSpec.describe OrganizationalUnit, type: :model do
   end
 
   context 'url' do
-    subject { build :organizational_unit }
+    subject { build factory }
     it_behaves_like 'an object that has a URL'
   end
 
   context 'slug' do
-    subject { build :organizational_unit }
+    subject { build factory }
 
     it 'uses only the name as the slug' do
       subject.save
@@ -109,7 +109,19 @@ RSpec.describe OrganizationalUnit, type: :model do
     end
 
     it_behaves_like 'an object that has a slug', ',' do
-      let(:other_subject) { create :organizational_unit, name: subject.name }
+      let(:other_subject) { create(factory, name: subject.name) }
     end
+  end
+end
+
+RSpec.describe OrganizationalUnit, type: :model do
+  context 'organization' do
+    let(:factory) { :organization }
+    it_behaves_like 'an organizational unit'
+  end
+
+  context 'user' do
+    let(:factory) { :user }
+    it_behaves_like 'an organizational unit'
   end
 end
