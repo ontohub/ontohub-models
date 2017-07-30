@@ -127,5 +127,13 @@ Sequel.migration do
       column :path, String, null: false
       index [:repository_id, :commit_sha, :path], unique: true
     end
+
+    create_table :public_keys do
+      primary_key :id
+      foreign_key :user_id, :users, index: true, null: false
+
+      column :name, String, null: false
+      column :key, String, null: false
+    end
   end
 end
