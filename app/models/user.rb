@@ -15,13 +15,17 @@ class User < OrganizationalUnit
   devise :database_authenticatable, :registerable, :confirmable, :recoverable,
     :lockable, :trackable
 
+  one_to_many :public_keys
+
   many_to_many :organizations,
     join_table: :organization_memberships, left_key: :member_id
   one_to_many :organization_memberships
   one_to_many :repository_memberships, key: :member_id
 
   plugin :association_dependencies,
-    organizations: :nullify, repository_memberships: :delete
+    organizations: :nullify,
+    repository_memberships: :delete,
+    public_keys: :delete
 
   # equivalent to
   # organizations.reduce([]) do |org_repos, organization|

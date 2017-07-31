@@ -194,6 +194,8 @@ RSpec.describe User, type: :model do
 
   context 'associations' do
     subject { create :user }
+    let!(:public_key1) { create :public_key, user: subject }
+    let!(:public_key2) { create :public_key, user: subject }
     let!(:organization1) { create :organization }
     let!(:organization2) { create :organization }
     let!(:user2) { create :user }
@@ -218,6 +220,18 @@ RSpec.describe User, type: :model do
         id = subject.id
         expect { subject.destroy }.
           to change { Repository.where(owner_id: id).count }.to(0)
+      end
+    end
+
+    context 'public_keys' do
+      it 'returns correct public keys' do
+        expect(subject.public_keys).to match_array([public_key1, public_key2])
+      end
+
+      it 'deletes the public keys on destroy' do
+        id = subject.id
+        expect { subject.destroy }.
+          to change { PublicKey.where(user_id: id).count }.to(0)
       end
     end
 
