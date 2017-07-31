@@ -17,11 +17,20 @@ class User < OrganizationalUnit
 
   many_to_many :organizations,
     join_table: :organization_memberships, left_key: :member_id
-  one_to_many :organization_memberships
+  one_to_many :organization_memberships, key: :member_id
   one_to_many :repository_memberships, key: :member_id
 
   plugin :association_dependencies,
     organizations: :nullify, repository_memberships: :delete
+
+  # equivalent to
+  # organization_memberships.where(role: role).map(&:organization)
+  def organizations_by_role(role)
+    @organizations_by_role_dataset ||= Organization.dataset.
+      join(:organization_memberships, {organization_id: :id}, select: false).
+      where(Sequel[:organization_memberships][:role] => role,
+            Sequel[:organization_memberships][:member_id] => id)
+  end
 
   # equivalent to
   # organizations.reduce([]) do |org_repos, organization|

@@ -327,4 +327,96 @@ RSpec.describe User, type: :model do
       end
     end
   end
+
+  context 'organizations_by_role' do
+    subject { create :user }
+    let!(:organization) { create :organization }
+    let!(:membership) do
+      create :organization_membership, member: subject,
+                                       organization: organization,
+                                       role: role
+    end
+
+    context 'with role: admin' do
+      let(:role) { 'admin' }
+
+      context 'query by role: admin' do
+        it 'returns the organization' do
+          expect(subject.organizations_by_role('admin').to_a).
+            to include(organization)
+        end
+      end
+
+      context 'query by invalid role' do
+        it 'raises a database error' do
+          expect { subject.organizations_by_role('invalid').to_a }.
+            to raise_error(Sequel::DatabaseError)
+        end
+      end
+
+      context 'query by role: read' do
+        it 'does not return the organization' do
+          expect(subject.organizations_by_role('read').to_a).
+            not_to include(organization)
+        end
+      end
+
+      context 'query by role: write' do
+        it 'does not return the organization' do
+          expect(subject.organizations_by_role('write').to_a).
+            not_to include(organization)
+        end
+      end
+    end
+
+    context 'with role: read' do
+      let(:role) { 'read' }
+
+      context 'query by role: admin' do
+        it 'does not return the organization' do
+          expect(subject.organizations_by_role('admin').to_a).
+            not_to include(organization)
+        end
+      end
+
+      context 'query by role: read' do
+        it 'returns the organization' do
+          expect(subject.organizations_by_role('read').to_a).
+            to include(organization)
+        end
+      end
+
+      context 'query by role: write' do
+        it 'does not return the organization' do
+          expect(subject.organizations_by_role('write').to_a).
+            not_to include(organization)
+        end
+      end
+    end
+
+    context 'with role: write' do
+      let(:role) { 'write' }
+
+      context 'query by role: admin' do
+        it 'does not return the organization' do
+          expect(subject.organizations_by_role('admin').to_a).
+            not_to include(organization)
+        end
+      end
+
+      context 'query by role: read' do
+        it 'does not return the organization' do
+          expect(subject.organizations_by_role('read').to_a).
+            not_to include(organization)
+        end
+      end
+
+      context 'query by role: write' do
+        it 'returns the organization' do
+          expect(subject.organizations_by_role('write').to_a).
+            to include(organization)
+        end
+      end
+    end
+  end
 end
