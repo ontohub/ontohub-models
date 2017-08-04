@@ -1,11 +1,9 @@
 # frozen_string_literal: true
 
 require 'pry'
-require_relative '../../config/initializers/rubinius_disable_sequel_deprecation'
 require 'sequel-rails'
 require 'orm_adapter-sequel'
 require 'devise'
-require 'rubinius/debugger' if RUBY_ENGINE == 'rbx' && !Rails.env.production?
 
 module OntohubModels
   # The base engine class - Rails default
