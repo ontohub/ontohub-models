@@ -6,8 +6,6 @@ require 'rspec'
 require 'database_cleaner'
 require 'factory_girl_rails'
 
-Faker::Config.random = Random.new
-
 RSpec.configure do |config|
   config.expect_with :rspec do |expectations|
     # This option will default to `true` in RSpec 4. It makes the `description`
