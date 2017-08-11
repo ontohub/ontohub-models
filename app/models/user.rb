@@ -15,6 +15,10 @@ class User < OrganizationalUnit
   devise :database_authenticatable, :registerable, :confirmable, :recoverable,
     :lockable, :trackable
 
+  def send_devise_notification(notification, *args)
+    devise_mailer.send(notification, to_json, *args).deliver_later
+  end
+
   one_to_many :public_keys
 
   many_to_many :organizations,
