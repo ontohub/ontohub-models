@@ -16,7 +16,7 @@ class User < OrganizationalUnit
     :lockable, :trackable
 
   def send_devise_notification(notification, *args)
-    devise_mailer.send(notification, to_json, *args).deliver_later
+    devise_mailer.send(notification, id, *args).deliver_later
   end
 
   one_to_many :public_keys
