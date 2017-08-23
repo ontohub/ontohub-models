@@ -30,7 +30,7 @@ module Sequel
 
         def cache_key
           "#{self.class.to_s.downcase.pluralize}/"\
-            "#{id}-#{updated_at.strftime('%Y%m%d%H%M%S%6N')}"
+            "#{id}-#{updated_at&.strftime('%Y%m%d%H%M%S%6N')}"
         end
       end
     end
