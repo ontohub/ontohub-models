@@ -110,6 +110,11 @@ RSpec.shared_examples 'an organizational unit' do
       let(:other_subject) { create(factory, name: subject.name) }
     end
   end
+
+  context 'timestamps' do
+    subject { build factory }
+    it_behaves_like 'an object with timestamps'
+  end
 end
 
 RSpec.describe OrganizationalUnit, type: :model do

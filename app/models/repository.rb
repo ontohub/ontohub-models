@@ -2,7 +2,6 @@
 
 # The Repository model groups libraries and exposes the basic git functinoality.
 class Repository < Sequel::Model
-  plugin :timestamps
   plugin :validation_helpers
 
   include ModelWithURL
@@ -31,7 +30,8 @@ class Repository < Sequel::Model
   end
 
   def add_member(member, role = 'read')
-    repository_membership = RepositoryMembership.find(member: member, repository: self)
+    repository_membership = RepositoryMembership.find(member: member,
+                                                      repository: self)
     if repository_membership
       repository_membership.role = role
       repository_membership.save

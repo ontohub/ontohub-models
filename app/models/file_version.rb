@@ -4,7 +4,6 @@
 class FileVersion < LocIdBase
   include ModelWithURL
 
-  plugin :timestamps
   plugin :validation_helpers
 
   many_to_one :repository

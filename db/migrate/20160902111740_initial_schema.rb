@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 Sequel.migration do
-  change do
+  up do
     create_enum :organizational_unit_kind_type,
       %w(User Organization)
 
@@ -148,6 +148,27 @@ Sequel.migration do
       column :path, String, null: false
 
       index [:repository_id, :commit_sha, :path], null: false, unique: true
+    end
+
+    # Setup created_at and updated_at triggers to automatically set these column
+    # values.
+    # See https://github.com/jeremyevans/sequel_postgresql_triggers
+    extension :pg_triggers
+
+    tables.select { |table| self[table].columns.include?(:created_at) }.
+      each do |table|
+      pgt_created_at(table,
+                     :created_at,
+                     function_name: :"#{table}_set_created_at",
+                     trigger_name: :set_created_at)
+    end
+
+    tables.select { |table| self[table].columns.include?(:updated_at) }.
+      each do |table|
+      pgt_updated_at(table,
+                     :updated_at,
+                     function_name: :"#{table}_set_updated_at",
+                     trigger_name: :set_updated_at)
     end
   end
 end

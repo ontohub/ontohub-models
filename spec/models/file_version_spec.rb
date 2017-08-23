@@ -46,6 +46,11 @@ RSpec.describe FileVersion, type: :model do
     it_behaves_like 'an ActiveModelSerializer compatible object'
   end
 
+  context 'timestamps' do
+    subject { build(:file_version) }
+    it_behaves_like 'an object with timestamps'
+  end
+
   context 'file version' do
     subject { build :file_version }
 

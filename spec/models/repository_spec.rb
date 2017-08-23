@@ -72,6 +72,11 @@ RSpec.describe Repository, type: :model do
     end
   end
 
+  context 'timestamps' do
+    subject { build(:repository) }
+    it_behaves_like 'an object with timestamps'
+  end
+
   context 'file_versions' do
     subject { create(:repository, name: Faker::Lorem.words(2).join(' ')) }
 
