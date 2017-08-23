@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
-require 'shared_examples/model_with_url'
-require 'shared_examples/slug'
 
 RSpec.shared_examples 'an organizational unit' do
   context 'validations' do
