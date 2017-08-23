@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative 'support/simplecov'
+require_relative 'support/cleaning_helpers'
 
 require 'rspec'
 require 'database_cleaner'
@@ -59,19 +60,6 @@ RSpec.configure do |config|
   # the seed, which is printed after each run.
   #     --seed 1234
   config.order = :random
-
-  # DatabaseCleaner should perform after every example and a full clean before
-  # the suite
-  config.before(:suite) do
-    DatabaseCleaner.strategy = :transaction
-    DatabaseCleaner.clean_with(:truncation)
-  end
-
-  config.around(:each) do |example|
-    DatabaseCleaner.cleaning do
-      example.run
-    end
-  end
 
   # Allow to find all factories
   config.include FactoryGirl::Syntax::Methods
