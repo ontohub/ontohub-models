@@ -15,10 +15,8 @@ Sequel.migration do
 
       column :display_name, String, null: true
 
-      column :created_at, DateTime, null: false,
-                                    default: Sequel::CURRENT_TIMESTAMP
-      column :updated_at, DateTime, null: false,
-                                    default: Sequel::CURRENT_TIMESTAMP
+      column :created_at, DateTime, null: false # This is set by a trigger
+      column :updated_at, DateTime, null: false # This is set by a trigger
     end
 
     # User is an OrganizationalUnit
@@ -70,10 +68,8 @@ Sequel.migration do
       column :name, String, null: false
       column :key, String, null: false
 
-      column :created_at, DateTime, null: false,
-                                    default: Sequel::CURRENT_TIMESTAMP
-      column :updated_at, DateTime, null: false,
-                                    default: Sequel::CURRENT_TIMESTAMP
+      column :created_at, DateTime, null: false # This is set by a trigger
+      column :updated_at, DateTime, null: false # This is set by a trigger
     end
 
     # Organization is a OrganizationalUnit
@@ -108,10 +104,8 @@ Sequel.migration do
       column :public_access, TrueClass, null: false
       column :content_type, :repository_content_type, null: false
 
-      column :created_at, DateTime, null: false,
-                                    default: Sequel::CURRENT_TIMESTAMP
-      column :updated_at, DateTime, null: false,
-                                    default: Sequel::CURRENT_TIMESTAMP
+      column :created_at, DateTime, null: false # This is set by a trigger
+      column :updated_at, DateTime, null: false # This is set by a trigger
     end
 
     create_enum :repository_role,
@@ -135,10 +129,8 @@ Sequel.migration do
       # The actual Loc/Id is saved in url_path to stay consistent throughout the
       # code.
       column :url_path, String, null: false, unique: true
-      column :created_at, DateTime, null: false,
-                                    default: Sequel::CURRENT_TIMESTAMP
-      column :updated_at, DateTime, null: false,
-                                    default: Sequel::CURRENT_TIMESTAMP
+      column :created_at, DateTime, null: false # This is set by a trigger
+      column :updated_at, DateTime, null: false # This is set by a trigger
     end
 
     # FileVersion is a LocIdBase
