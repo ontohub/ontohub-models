@@ -17,7 +17,8 @@ Sequel.migration do
 
       column :created_at, DateTime, null: false,
                                     default: Sequel::CURRENT_TIMESTAMP
-      column :updated_at, DateTime, null: true
+      column :updated_at, DateTime, null: false,
+                                    default: Sequel::CURRENT_TIMESTAMP
     end
 
     # User is an OrganizationalUnit
@@ -71,7 +72,8 @@ Sequel.migration do
 
       column :created_at, DateTime, null: false,
                                     default: Sequel::CURRENT_TIMESTAMP
-      column :updated_at, DateTime, null: true
+      column :updated_at, DateTime, null: false,
+                                    default: Sequel::CURRENT_TIMESTAMP
     end
 
     # Organization is a OrganizationalUnit
@@ -108,7 +110,8 @@ Sequel.migration do
 
       column :created_at, DateTime, null: false,
                                     default: Sequel::CURRENT_TIMESTAMP
-      column :updated_at, DateTime, null: true
+      column :updated_at, DateTime, null: false,
+                                    default: Sequel::CURRENT_TIMESTAMP
     end
 
     create_enum :repository_role,
@@ -134,7 +137,8 @@ Sequel.migration do
       column :url_path, String, null: false, unique: true
       column :created_at, DateTime, null: false,
                                     default: Sequel::CURRENT_TIMESTAMP
-      column :updated_at, DateTime, null: true
+      column :updated_at, DateTime, null: false,
+                                    default: Sequel::CURRENT_TIMESTAMP
     end
 
     # FileVersion is a LocIdBase
