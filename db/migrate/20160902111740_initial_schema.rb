@@ -70,6 +70,8 @@ Sequel.migration do
 
       column :created_at, DateTime, null: false # This is set by a trigger
       column :updated_at, DateTime, null: false # This is set by a trigger
+
+      index [:user_id, :name], null: false, unique: true
     end
 
     # Organization is a OrganizationalUnit
