@@ -2,7 +2,6 @@
 
 # Superclass of Organization and User
 class OrganizationalUnit < Sequel::Model
-  plugin :timestamps
   plugin :validation_helpers
   plugin :class_table_inheritance, key: :kind, alias: :organizational_units
 

@@ -9,8 +9,6 @@ FactoryGirl.define do
     association :repository
     commit_sha { Faker::Crypto.sha1 }
     path { generate(:filepath) }
-    created_at { Time.current }
-    updated_at { Time.current }
     url_path_method do
       ->(file_version) { "/file_version/#{file_version.path}" }
     end

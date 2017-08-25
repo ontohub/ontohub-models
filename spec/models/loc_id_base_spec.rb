@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
-require 'shared_examples/model_with_url'
 
 RSpec.describe LocIdBase, type: :model do
   context 'url' do

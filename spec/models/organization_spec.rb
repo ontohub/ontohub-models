@@ -2,11 +2,6 @@
 
 require 'rails_helper'
 
-require 'shared_examples/active_model'
-require 'shared_examples/active_model_serializer'
-require 'shared_examples/model_with_url'
-require 'shared_examples/slug'
-
 RSpec.describe Organization, type: :model do
   context 'compatibility' do
     subject { build :organization }

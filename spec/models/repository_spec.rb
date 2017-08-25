@@ -1,10 +1,6 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
-require 'shared_examples/active_model'
-require 'shared_examples/active_model_serializer'
-require 'shared_examples/model_with_url'
-require 'shared_examples/slug'
 
 RSpec.describe Repository, type: :model do
   context 'validations' do
@@ -74,6 +70,11 @@ RSpec.describe Repository, type: :model do
         to eq("#{subject.owner.slug}/"\
               "#{Slug.sluggify(subject.name)}")
     end
+  end
+
+  context 'timestamps' do
+    subject { build(:repository) }
+    it_behaves_like 'an object with timestamps'
   end
 
   context 'file_versions' do

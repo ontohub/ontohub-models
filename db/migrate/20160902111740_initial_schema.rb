@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 Sequel.migration do
-  change do
+  up do
     create_enum :organizational_unit_kind_type,
       %w(User Organization)
 
@@ -15,9 +15,8 @@ Sequel.migration do
 
       column :display_name, String, null: true
 
-      column :created_at, DateTime, null: false,
-                                    default: Sequel::CURRENT_TIMESTAMP
-      column :updated_at, DateTime, null: true
+      column :created_at, DateTime, null: false # This is set by a trigger
+      column :updated_at, DateTime, null: false # This is set by a trigger
     end
 
     # User is an OrganizationalUnit
@@ -69,9 +68,8 @@ Sequel.migration do
       column :name, String, null: false
       column :key, String, null: false
 
-      column :created_at, DateTime, null: false,
-                                    default: Sequel::CURRENT_TIMESTAMP
-      column :updated_at, DateTime, null: true
+      column :created_at, DateTime, null: false # This is set by a trigger
+      column :updated_at, DateTime, null: false # This is set by a trigger
     end
 
     # Organization is a OrganizationalUnit
@@ -106,9 +104,8 @@ Sequel.migration do
       column :public_access, TrueClass, null: false
       column :content_type, :repository_content_type, null: false
 
-      column :created_at, DateTime, null: false,
-                                    default: Sequel::CURRENT_TIMESTAMP
-      column :updated_at, DateTime, null: true
+      column :created_at, DateTime, null: false # This is set by a trigger
+      column :updated_at, DateTime, null: false # This is set by a trigger
     end
 
     create_enum :repository_role,
@@ -132,9 +129,8 @@ Sequel.migration do
       # The actual Loc/Id is saved in url_path to stay consistent throughout the
       # code.
       column :url_path, String, null: false, unique: true
-      column :created_at, DateTime, null: false,
-                                    default: Sequel::CURRENT_TIMESTAMP
-      column :updated_at, DateTime, null: true
+      column :created_at, DateTime, null: false # This is set by a trigger
+      column :updated_at, DateTime, null: false # This is set by a trigger
     end
 
     # FileVersion is a LocIdBase
@@ -148,6 +144,27 @@ Sequel.migration do
       column :path, String, null: false
 
       index [:repository_id, :commit_sha, :path], null: false, unique: true
+    end
+
+    # Setup created_at and updated_at triggers to automatically set these column
+    # values.
+    # See https://github.com/jeremyevans/sequel_postgresql_triggers
+    extension :pg_triggers
+
+    tables.select { |table| self[table].columns.include?(:created_at) }.
+      each do |table|
+      pgt_created_at(table,
+                     :created_at,
+                     function_name: :"#{table}_set_created_at",
+                     trigger_name: :set_created_at)
+    end
+
+    tables.select { |table| self[table].columns.include?(:updated_at) }.
+      each do |table|
+      pgt_updated_at(table,
+                     :updated_at,
+                     function_name: :"#{table}_set_updated_at",
+                     trigger_name: :set_updated_at)
     end
   end
 end

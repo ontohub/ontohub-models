@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
-require 'shared_examples/model_with_url'
-require 'shared_examples/slug'
 
 RSpec.shared_examples 'an organizational unit' do
   context 'validations' do
@@ -111,6 +109,11 @@ RSpec.shared_examples 'an organizational unit' do
     it_behaves_like 'an object that has a slug', ',' do
       let(:other_subject) { create(factory, name: subject.name) }
     end
+  end
+
+  context 'timestamps' do
+    subject { build factory }
+    it_behaves_like 'an object with timestamps'
   end
 end
 

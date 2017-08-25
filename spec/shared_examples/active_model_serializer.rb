@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'shared_examples/active_model_serializer_with_devise'
-
 # This is the RSpec formulation of ActiveModel::Serializer::Lint::Tests
 RSpec.shared_examples 'an ActiveModelSerializer compatible object' do
   it_behaves_like 'an ActiveModelSerializer compatible object with devise'
