@@ -3,7 +3,7 @@
 FactoryGirl.define do
   factory :public_key do
     association :user, factory: :user
-    name { Faker::Cat.name }
+    name { Faker::Cat.unique.name }
     key { Faker::Crypto.sha256 }
   end
 end
