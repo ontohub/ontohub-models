@@ -67,6 +67,7 @@ Sequel.migration do
 
       column :name, String, null: false
       column :key, String, null: false
+      column :fingerprint, String, null: false
 
       column :created_at, DateTime, null: false # This is set by a trigger
       column :updated_at, DateTime, null: false # This is set by a trigger
