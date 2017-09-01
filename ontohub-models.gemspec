@@ -35,7 +35,6 @@ Gem::Specification.new do |s|
   s.add_dependency 'chewy', '~> 0.10.1'
   s.add_dependency 'devise', '~> 4.3.0'
   s.add_dependency 'sequel-devise', '~> 0.0.11'
-  s.add_dependency 'orm_adapter-sequel', '~> 0.1.0'
 
   # General Development
   s.add_development_dependency 'bundler', '~> 1.11'
