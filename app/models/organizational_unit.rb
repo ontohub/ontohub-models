@@ -8,8 +8,6 @@ class OrganizationalUnit < Sequel::Model
   # Use a non-persisted attribute to create the slug
   attr_accessor :name
 
-  include ModelWithURL
-
   include Slug
   slug_base :name
   slug_condition :new?

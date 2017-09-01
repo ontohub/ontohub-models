@@ -72,11 +72,6 @@ RSpec.describe User, type: :model do
     it_behaves_like 'an ActiveModelSerializer compatible object with devise'
   end
 
-  context 'url' do
-    subject { build :user }
-    it_behaves_like 'an object that has a URL'
-  end
-
   context 'slug' do
     subject { build :user }
 

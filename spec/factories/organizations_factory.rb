@@ -5,6 +5,5 @@ FactoryGirl.define do
     name { generate(:username) }
     display_name { Faker::Name.name }
     description { Faker::Company.catch_phrase }
-    url_path_method { ->(org) { "/organizations/#{org.to_param}}" } }
   end
 end

@@ -93,11 +93,6 @@ RSpec.shared_examples 'an organizational unit' do
     end
   end
 
-  context 'url' do
-    subject { build factory }
-    it_behaves_like 'an object that has a URL'
-  end
-
   context 'slug' do
     subject { build factory }
 

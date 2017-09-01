@@ -9,11 +9,6 @@ RSpec.describe Organization, type: :model do
     it_behaves_like 'an ActiveModelSerializer compatible object'
   end
 
-  context 'url' do
-    subject { build :organization }
-    it_behaves_like 'an object that has a URL'
-  end
-
   context 'slug' do
     subject { build :organization }
 
