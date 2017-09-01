@@ -8,7 +8,7 @@ source 'https://rubygems.org'
 gemspec
 
 group :development do
-  gem 'pry-byebug', '~> 3.4.2', platform: :mri
+  gem 'pry-byebug', '~> 3.5.0', platform: :mri
   gem 'pry-rescue', '~> 1.4.4', platform: :mri
   gem 'pry-stack_explorer', '~> 0.4.9.2', platform: :mri
 end
