@@ -35,11 +35,6 @@ RSpec.describe FileVersion, type: :model do
     end
   end
 
-  context 'url' do
-    subject { build :file_version }
-    it_behaves_like 'an object that has a URL'
-  end
-
   context 'compatibility' do
     subject { build :file_version }
     it_behaves_like 'an ActiveModel compatible object'

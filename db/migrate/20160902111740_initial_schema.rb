@@ -11,7 +11,6 @@ Sequel.migration do
       column :kind, :organizational_unit_kind_type, null: false
 
       column :slug, String, null: false, unique: true
-      column :url_path, String, null: false, unique: true
 
       column :display_name, String, null: true
 
@@ -99,8 +98,6 @@ Sequel.migration do
       column :slug, String, null: false, unique: true
       foreign_key :owner_id, :organizational_units, null: false, index: true
 
-      column :url_path, String, unique: true
-
       column :name, String, null: false
       column :description, :text, null: true
       column :public_access, TrueClass, null: false
@@ -128,9 +125,8 @@ Sequel.migration do
       # Kind of record - for class table inheritance
       column :kind, :loc_id_base_kind_type, null: false
 
-      # The actual Loc/Id is saved in url_path to stay consistent throughout the
-      # code.
-      column :url_path, String, null: false, unique: true
+      column :loc_id, String, null: false, unique: true
+
       column :created_at, DateTime, null: false # This is set by a trigger
       column :updated_at, DateTime, null: false # This is set by a trigger
     end
@@ -138,12 +134,14 @@ Sequel.migration do
     # FileVersion is a LocIdBase
     create_table :file_versions do
       primary_key :id
-      foreign_key [:id], :loc_id_bases, null: false, unique: true
 
       foreign_key :repository_id, :repositories, null: false, index: true
 
       column :commit_sha, String, null: false
       column :path, String, null: false
+
+      column :created_at, DateTime, null: false # This is set by a trigger
+      column :updated_at, DateTime, null: false # This is set by a trigger
 
       index [:repository_id, :commit_sha, :path], null: false, unique: true
     end

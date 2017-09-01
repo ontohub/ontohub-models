@@ -4,8 +4,6 @@
 class Repository < Sequel::Model
   plugin :validation_helpers
 
-  include ModelWithURL
-
   include Slug
   slug_base :name
   slug_condition :new?

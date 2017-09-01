@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
 # Represents a specific version of a file.
-class FileVersion < LocIdBase
-  include ModelWithURL
-
+class FileVersion < Sequel::Model
   plugin :validation_helpers
 
   many_to_one :repository

@@ -52,11 +52,6 @@ RSpec.describe Repository, type: :model do
     it_behaves_like 'an ActiveModelSerializer compatible object'
   end
 
-  context 'url' do
-    subject { build :repository }
-    it_behaves_like 'an object that has a URL'
-  end
-
   context 'slug' do
     subject { build :repository, name: Faker::Lorem.words(2).join(' ') }
 
