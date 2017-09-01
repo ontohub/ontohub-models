@@ -46,7 +46,7 @@ RSpec.describe PublicKey, type: :model do
     context 'valid key' do
       subject { create(:public_key) }
 
-      it 'generates the fingerprint before saving' do
+      it 'has a fingerprint after creating' do
         expect(subject.fingerprint).not_to be_empty
       end
     end
