@@ -27,18 +27,18 @@ Gem::Specification.new do |s|
   end
 
   # Runtime dependencies
-  s.add_dependency 'rails', '~> 5.1.3'
+  s.add_dependency 'rails', '~> 5.1.4'
   s.add_dependency 'sequel', '~> 4.49.0'
-  s.add_dependency 'sequel_pg', '~> 1.7.0'
+  s.add_dependency 'sequel_pg', '~> 1.7.1'
   s.add_dependency 'sequel_postgresql_triggers', '~> 1.3.0'
-  s.add_dependency 'sequel-rails', '~> 0.9.14'
+  s.add_dependency 'sequel-rails', '~> 0.9.17'
   s.add_dependency 'chewy', '~> 0.10.1'
   s.add_dependency 'devise', '~> 4.3.0'
   s.add_dependency 'sequel-devise', '~> 0.0.11'
 
   # General Development
   s.add_development_dependency 'bundler', '~> 1.11'
-  s.add_development_dependency 'rake', '~> 12.0.0'
+  s.add_development_dependency 'rake', '~> 12.1.0'
 
   # Testing
   s.add_development_dependency 'rspec', '~> 3.6.0'
