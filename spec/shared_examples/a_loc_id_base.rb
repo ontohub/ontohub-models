@@ -24,4 +24,32 @@ RSpec.shared_examples 'a loc_id_base' do
       end
     end
   end
+
+  context 'dataset_module' do
+    context 'where_commit_sha' do
+      let!(:new_file_version) { create(:file_version) }
+
+      before do
+        subject.save
+        FileVersionParent.
+          create(last_changed_file_version: subject.file_version,
+                 queried_sha: new_file_version.commit_sha)
+      end
+
+      it 'finds the model at the newer version that does not change its file' do
+        expect(subject.class.
+                 where_commit_sha(commit_sha: new_file_version.commit_sha,
+                                  loc_id: subject.loc_id).all).
+          to match_array([subject])
+      end
+
+      it 'finds the model from LocIdBase at the newer version '\
+           'that does not change its file' do
+        expect(LocIdBase.
+                 where_commit_sha(commit_sha: new_file_version.commit_sha,
+                                  loc_id: subject.loc_id).all).
+          to match_array([subject])
+      end
+    end
+  end
 end

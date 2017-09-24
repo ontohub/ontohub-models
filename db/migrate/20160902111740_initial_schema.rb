@@ -148,7 +148,7 @@ Sequel.migration do
     end
 
     create_table :file_versions do
-      primary_key :id
+      primary_key :id, type: :bigserial
 
       foreign_key :repository_id, :repositories,
                   null: false, index: true, on_delete: :cascade
@@ -162,6 +162,13 @@ Sequel.migration do
       index [:repository_id, :commit_sha, :path], null: false, unique: true
     end
 
+    create_table :file_version_parents do
+      primary_key [:last_changed_file_version_id, :queried_sha]
+      foreign_key :last_changed_file_version_id, :file_versions,
+                  type: :bigint, null: false, on_delete: :cascade
+      column :queried_sha, String, null: false, index: true
+    end
+
     create_enum :loc_id_base_kind_type,
       %w(NativeDocument Library OMS Mapping OpenConjecture Theorem
          CounterTheorem Axiom Symbol)
@@ -171,7 +178,7 @@ Sequel.migration do
       # flooding this table for every version of every document file.
       primary_key :id, type: :bigserial
       foreign_key :file_version_id, :file_versions,
-                  null: false, on_delete: :cascade
+                  type: :bigint, null: false, on_delete: :cascade
       # Kind of record - for class table inheritance
       column :kind, :loc_id_base_kind_type, null: false
       column :loc_id, String, null: false
@@ -317,7 +324,7 @@ Sequel.migration do
     create_table :diagnoses do
       primary_key :id
       foreign_key :file_version_id, :file_versions,
-                  null: false, on_delete: :cascade
+                  type: :bigint, null: false, on_delete: :cascade
       foreign_key :file_range_id, :file_ranges,
                   type: :bigint, null: true, on_delete: :set_null
       column :number, Integer, null: false # This is set by a trigger
