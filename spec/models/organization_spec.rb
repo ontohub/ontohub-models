@@ -3,6 +3,11 @@
 require 'rails_helper'
 
 RSpec.describe Organization, type: :model do
+  context 'superclass' do
+    subject { build :organization }
+    it_behaves_like 'an organizational unit', :organization
+  end
+
   context 'compatibility' do
     subject { build :organization }
     it_behaves_like 'an ActiveModel compatible object'

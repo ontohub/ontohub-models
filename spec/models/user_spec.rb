@@ -5,6 +5,11 @@ require 'ostruct'
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
+  context 'superclass' do
+    subject { build :user }
+    it_behaves_like 'an organizational unit', :user
+  end
+
   context 'warden' do
     subject { create :user }
     it 'find_for_database_authentication' do
