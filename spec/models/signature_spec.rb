@@ -60,13 +60,15 @@ RSpec.describe Signature do
 
       context 'signature_morphisms_source' do
         it 'contains the signature_morphism' do
-          expect(subject.signature_morphisms_source).to match_array([as_source])
+          expect(subject.signature_morphisms_by_source).
+            to match_array([as_source])
         end
       end
 
       context 'signature_morphisms_target' do
         it 'contains the signature_morphism' do
-          expect(subject.signature_morphisms_target).to match_array([as_target])
+          expect(subject.signature_morphisms_by_target).
+            to match_array([as_target])
         end
       end
 

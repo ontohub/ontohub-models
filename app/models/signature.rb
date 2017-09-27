@@ -18,12 +18,12 @@ class Signature < Sequel::Model
             Sequel[:signature_symbols][:imported] => true)
   end), class: OMSSymbol, join_table: :signature_symbols, right_key: :symbol_id
 
-  one_to_many :signature_morphisms_source, dataset: (proc do |reflection|
+  one_to_many :signature_morphisms_by_source, dataset: (proc do |reflection|
     reflection.associated_dataset.
       where(Sequel[:signature_morphisms][:source_id] => id)
   end), class: SignatureMorphism
 
-  one_to_many :signature_morphisms_target, dataset: (proc do |reflection|
+  one_to_many :signature_morphisms_by_target, dataset: (proc do |reflection|
     reflection.associated_dataset.
       where(Sequel[:signature_morphisms][:target_id] => id)
   end), class: SignatureMorphism
