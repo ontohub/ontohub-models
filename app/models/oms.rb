@@ -14,11 +14,11 @@ class OMS < LocIdBase
   many_to_one :cons_status
   many_to_one :name_file_range, class: FileRange
 
-  one_to_many :mappings_source, dataset: (proc do |reflection|
+  one_to_many :mappings_by_source, dataset: (proc do |reflection|
     reflection.associated_dataset.where(source_id: id)
   end), class: Mapping
 
-  one_to_many :mappings_target, dataset: (proc do |reflection|
+  one_to_many :mappings_by_target, dataset: (proc do |reflection|
     reflection.associated_dataset.where(target_id: id)
   end), class: Mapping
 

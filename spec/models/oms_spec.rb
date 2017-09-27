@@ -128,13 +128,13 @@ RSpec.describe OMS do
 
       context 'mappings_source' do
         it 'contains the mapping' do
-          expect(subject.mappings_source).to match_array([as_source])
+          expect(subject.mappings_by_source).to match_array([as_source])
         end
       end
 
       context 'mappings_target' do
         it 'contains the mapping' do
-          expect(subject.mappings_target).to match_array([as_target])
+          expect(subject.mappings_by_target).to match_array([as_target])
         end
       end
 
