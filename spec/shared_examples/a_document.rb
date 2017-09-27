@@ -17,13 +17,13 @@ RSpec.shared_examples 'a document' do
 
       context 'document_links_source' do
         it 'contains the document_link' do
-          expect(subject.document_links_source).to match_array([as_source])
+          expect(subject.document_links_by_source).to match_array([as_source])
         end
       end
 
       context 'document_links_target' do
         it 'contains the document_link' do
-          expect(subject.document_links_target).to match_array([as_target])
+          expect(subject.document_links_by_target).to match_array([as_target])
         end
       end
 
