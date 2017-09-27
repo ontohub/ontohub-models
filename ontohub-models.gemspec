@@ -52,11 +52,11 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'faker', '~> 1.8.4'
 
   # CI services
-  s.add_development_dependency 'rubocop', '~> 0.49.1'
+  s.add_development_dependency 'rubocop', '~> 0.50.0'
   s.add_development_dependency 'codecov', '~> 0.1.10'
 
   # We want to have these in the production environment as well in case we need
   # to debug the application:
-  s.add_dependency 'pry', '~> 0.10.4'
+  s.add_dependency 'pry', '~> 0.11.0'
   s.add_dependency 'awesome_print', '~> 1.8.0'
 end
