@@ -18,13 +18,15 @@ RSpec.describe Language do
 
       context 'language_mappings_source' do
         it 'contains the language_mapping' do
-          expect(subject.language_mappings_source).to match_array([as_source])
+          expect(subject.language_mappings_by_source).
+            to match_array([as_source])
         end
       end
 
       context 'language_mappings_target' do
         it 'contains the language_mapping' do
-          expect(subject.language_mappings_target).to match_array([as_target])
+          expect(subject.language_mappings_by_target).
+            to match_array([as_target])
         end
       end
 
