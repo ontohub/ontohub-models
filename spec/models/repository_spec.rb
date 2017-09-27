@@ -114,4 +114,13 @@ RSpec.describe Repository, type: :model do
       end
     end
   end
+
+  context 'associations' do
+    subject { create(:repository) }
+
+    context 'owner' do
+      it_behaves_like('it has a', :owner, OrganizationalUnit)
+      it_behaves_like('restricting the deletion of the association', :owner)
+    end
+  end
 end

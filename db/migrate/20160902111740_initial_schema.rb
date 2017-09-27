@@ -124,7 +124,7 @@ Sequel.migration do
       primary_key :id
       column :slug, String, null: false, unique: true
       foreign_key :owner_id, :organizational_units,
-                  null: false, index: true, on_delete: :cascade
+                  null: false, index: true, on_delete: :restrict
 
       column :name, String, null: false
       column :description, :text, null: true
