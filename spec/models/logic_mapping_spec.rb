@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe LanguageMapping do
+RSpec.describe LogicMapping do
   context 'timestamps' do
     subject { build(:logic_mapping) }
     it_behaves_like 'an object with timestamps'
