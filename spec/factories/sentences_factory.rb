@@ -4,7 +4,7 @@ FactoryGirl.define do
   factory :sentence, class: Axiom do
     association :oms
     association :file_range
-    kind { [Axiom, OpenConjecture, CounterTheorem, Theorem].map(&:to_s).sample }
+    kind { [Axiom, OpenConjecture, CounterTheorem, Theorem].sample.to_s }
     name { Faker::Lorem.word }
     text { Faker::Lorem.sentence }
     loc_id { name }

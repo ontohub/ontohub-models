@@ -3,7 +3,7 @@
 FactoryGirl.define do
   factory :document do
     association :file_version
-    kind { [Library, NativeDocument].map(&:to_s).sample }
+    kind { [Library, NativeDocument].sample.to_s }
     display_name { Faker::Lorem.words(4, true).join(' ') }
     name { display_name.parameterize }
     location { Faker::Internet.url }
