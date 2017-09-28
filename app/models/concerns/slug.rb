@@ -101,11 +101,17 @@ module Slug
 
   def set_slug?
     if slug_condition.nil?
+      # :nocov:
+      # This is not yet used
       true
+      # :nocov:
     elsif slug_condition.respond_to?(:call)
       # The proc/block is defined on the class, but must be executed on this
       # instance. `instance_exec` changes the context.
+      # :nocov:
+      # This is not yet used
       instance_exec(&slug_condition)
+      # :nocov:
     else
       send(slug_condition)
     end

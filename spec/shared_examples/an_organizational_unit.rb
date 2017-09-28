@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.shared_examples 'an organizational unit' do
+RSpec.shared_examples 'an organizational unit' do |factory|
   context 'validations' do
     subject { build factory }
     context 'name' do
@@ -109,17 +109,5 @@ RSpec.shared_examples 'an organizational unit' do
   context 'timestamps' do
     subject { build factory }
     it_behaves_like 'an object with timestamps'
-  end
-end
-
-RSpec.describe OrganizationalUnit, type: :model do
-  context 'organization' do
-    let(:factory) { :organization }
-    it_behaves_like 'an organizational unit'
-  end
-
-  context 'user' do
-    let(:factory) { :user }
-    it_behaves_like 'an organizational unit'
   end
 end

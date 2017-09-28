@@ -16,5 +16,9 @@ Layout/MultilineMethodCallIndentation:
 Layout/SpaceInsideHashLiteralBraces:
   EnforcedStyle: no_space
 
+Style/SymbolArray:
+  Exclude:
+    - 'db/migrate/**'
+
 Style/TrailingCommaInLiteral:
   EnforcedStyleForMultiline: comma
