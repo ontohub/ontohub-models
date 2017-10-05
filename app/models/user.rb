@@ -34,7 +34,7 @@ class User < OrganizationalUnit
   # equivalent to
   # organization_memberships.where(role: role).map(&:organization)
   def organizations_by_role(role)
-    @organizations_by_role_dataset ||= Organization.dataset.
+    Organization.dataset.
       join(:organization_memberships, {organization_id: :id}, select: false).
       where(Sequel[:organization_memberships][:role] => role,
             Sequel[:organization_memberships][:member_id] => id)
@@ -105,6 +105,17 @@ class User < OrganizationalUnit
       or(Sequel[:repository_memberships][:member_id] => id).
       or(Sequel[:repositories][:owner_id] => id)
   end), class: Repository
+
+  def accessible_repositories_by_role(role, include_owner: false)
+    dataset = accessible_repositories_dataset.
+      where(Sequel[:organization_memberships][:role] => role).
+      or(Sequel[:repository_memberships][:role] => role)
+    if include_owner
+      dataset.or(Sequel[:repositories][:owner_id] => id)
+    else
+      dataset
+    end
+  end
 
   def validate
     validates_includes %w(admin user), :role
