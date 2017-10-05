@@ -34,7 +34,7 @@ class User < OrganizationalUnit
   # equivalent to
   # organization_memberships.where(role: role).map(&:organization)
   def organizations_by_role(role)
-    @organizations_by_role_dataset ||= Organization.dataset.
+    Organization.dataset.
       join(:organization_memberships, {organization_id: :id}, select: false).
       where(Sequel[:organization_memberships][:role] => role,
             Sequel[:organization_memberships][:member_id] => id)
