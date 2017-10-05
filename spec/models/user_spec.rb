@@ -445,4 +445,93 @@ RSpec.describe User, type: :model do
       end
     end
   end
+
+  context 'accessible_repositories_by_role' do
+    subject { create :user }
+    let!(:organization1) { create :organization }
+    let!(:organization2) { create :organization }
+    let!(:repository1) { create(:repository, owner: subject) }
+    let!(:repository2) { create(:repository, owner: organization1) }
+    let!(:repository3) { create(:repository, owner: organization1) }
+    let!(:repository4) { create(:repository) }
+    let!(:repository5) { create(:repository, owner: organization2) }
+
+    before do
+      create :organization_membership, member: subject,
+                                       organization: organization1,
+                                       role: 'write'
+      create :repository_membership, member: subject,
+                                     repository: repository4,
+                                     role: 'admin'
+      create :repository_membership, member: subject,
+                                     repository: repository5,
+                                     role: 'read'
+    end
+
+    context 'role: read' do
+      it 'returns the correct number of repositories' do
+        expect(subject.accessible_repositories_by_role('read').count).
+          to eq(1)
+      end
+
+      it 'returns the readable repositories' do
+        expect(subject.accessible_repositories_by_role('read')).
+          to include(repository5)
+      end
+    end
+
+    context 'role: write' do
+      it 'returns the correct number of repositories' do
+        expect(subject.accessible_repositories_by_role('write').count).
+          to eq(2)
+      end
+
+      it 'returns the writable repositories' do
+        expect(subject.accessible_repositories_by_role('write')).
+          to include(repository2, repository3)
+      end
+    end
+
+    context 'role: admin' do
+      it 'returns the correct number of repositories' do
+        expect(subject.accessible_repositories_by_role('admin').count).
+          to eq(1)
+      end
+
+      it 'returns the administrable repositories' do
+        expect(subject.accessible_repositories_by_role('admin')).
+          to include(repository4)
+      end
+    end
+
+    context 'include_owner: true' do
+      it 'returns the correct number of repositories' do
+        expect(
+          subject.accessible_repositories_by_role('admin',
+                                                  include_owner: true).count
+        ).to eq(2)
+      end
+
+      it 'returns the administrable or owned repositories' do
+        expect(
+          subject.accessible_repositories_by_role('admin',
+                                                  include_owner: true)
+        ).to include(repository4, repository1)
+      end
+    end
+
+    context 'multiple roles' do
+      it 'returns the correct number of repositories' do
+        expect(
+          subject.accessible_repositories_by_role(%w(admin write)).count
+        ).to eq(3)
+      end
+
+      it 'returns the administrable or writable repositories' do
+        expect(
+          subject.accessible_repositories_by_role(%w(admin write))
+        ).to include(repository2, repository3, repository4)
+      end
+    end
+  end
 end

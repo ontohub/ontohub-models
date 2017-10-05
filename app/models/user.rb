@@ -106,10 +106,15 @@ class User < OrganizationalUnit
       or(Sequel[:repositories][:owner_id] => id)
   end), class: Repository
 
-  def accessible_repositories_by_role(role)
-    accessible_repositories_dataset.
+  def accessible_repositories_by_role(role, include_owner: false)
+    dataset = accessible_repositories_dataset.
       where(Sequel[:organization_memberships][:role] => role).
       or(Sequel[:repository_memberships][:role] => role)
+    if include_owner
+      dataset.or(Sequel[:repositories][:owner_id] => id)
+    else
+      dataset
+    end
   end
 
   def validate
