@@ -106,6 +106,12 @@ class User < OrganizationalUnit
       or(Sequel[:repositories][:owner_id] => id)
   end), class: Repository
 
+  def accessible_repositories_by_role(role)
+    accessible_repositories_dataset.
+      where(Sequel[:organization_memberships][:role] => role).
+      or(Sequel[:repository_memberships][:role] => role)
+  end
+
   def validate
     validates_includes %w(admin user), :role
     validates_format(Devise.email_regexp, :email)
