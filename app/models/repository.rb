@@ -18,6 +18,8 @@ class Repository < Sequel::Model
   one_to_many :file_versions
   plugin :association_dependencies, file_versions: :destroy
 
+  one_to_many :url_mappings
+
   def validate
     validates_length_range (3..100), :name
     validates_presence :owner
