@@ -122,5 +122,14 @@ RSpec.describe Repository, type: :model do
       it_behaves_like('it has a', :owner, OrganizationalUnit)
       it_behaves_like('restricting the deletion of the association', :owner)
     end
+
+    context 'url_mappings' do
+      let!(:unrelated) { create(:url_mapping) }
+      let!(:url_mappings) { create_list(:url_mapping, 3, repository: subject) }
+
+      it 'has the url_mappings' do
+        expect(subject.url_mappings).to eq(url_mappings)
+      end
+    end
   end
 end

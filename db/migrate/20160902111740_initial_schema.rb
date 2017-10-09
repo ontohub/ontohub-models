@@ -135,6 +135,20 @@ Sequel.migration do
       column :updated_at, DateTime, null: false # This is set by a trigger
     end
 
+    create_table :url_mappings do
+      primary_key :id
+      foreign_key :repository_id, :repositories,
+                  null: false, index: true, on_delete: :cascade
+      column :number, Integer, null: false # This is set by a trigger
+      column :source, String, null: false
+      column :target, String, null: false
+
+      column :created_at, DateTime, null: false # This is set by a trigger
+      column :updated_at, DateTime, null: false # This is set by a trigger
+    end
+
+    create_trigger_to_set_number(:url_mappings, :repository_id)
+
     create_enum :repository_role,
       %w(admin write read)
 
