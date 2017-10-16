@@ -161,6 +161,10 @@ Sequel.migration do
       column :role, :repository_role, null: false, default: 'read'
     end
 
+    create_enum :evaluation_state_type,
+      %w(not_yet_enqueued enqueued processing
+         finished_successfully finished_unsuccessfully)
+
     create_table :file_versions do
       primary_key :id, type: :bigserial
 
@@ -169,6 +173,10 @@ Sequel.migration do
 
       column :commit_sha, String, null: false
       column :path, String, null: false
+
+      column :evaluation_state, :evaluation_state_type,
+        null: false,
+        default: 'not_yet_enqueued'
 
       column :created_at, DateTime, null: false # This is set by a trigger
       column :updated_at, DateTime, null: false # This is set by a trigger
@@ -452,10 +460,6 @@ Sequel.migration do
       column :name, String, null: false
       column :text, String, null: false
     end
-
-    create_enum :evaluation_state_type,
-      %w(not_yet_enqueued enqueued processing
-         finished_successfully finished_unsuccessfully)
 
     REASONING_STATUSES ||= %w(OPN ERR UNK RSO THM CSA CSAS).freeze
     create_enum :reasoning_status_on_conjecture_type,
