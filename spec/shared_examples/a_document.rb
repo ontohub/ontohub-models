@@ -34,5 +34,21 @@ RSpec.shared_examples 'a document' do
         end
       end
     end
+
+    context 'importing/imported documents' do
+      let!(:as_source) { create(:document_link, source: subject) }
+      let!(:as_target) { create(:document_link, target: subject) }
+      let!(:unrelated) { create(:document_link) }
+
+      it 'contains finds the imported document' do
+        expect(subject.imports.map(&:id)).
+          to match_array([as_source.target.id])
+      end
+
+      it 'contains finds the importing document' do
+        expect(subject.imported_by.map(&:id)).
+          to match_array([as_target.source.id])
+      end
+    end
   end
 end
