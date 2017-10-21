@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :document do
     association :file_version
     kind { [Library, NativeDocument].sample.to_s }

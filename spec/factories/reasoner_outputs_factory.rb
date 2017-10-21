@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :reasoner_output do
     association :reasoning_attempt
     association :reasoner

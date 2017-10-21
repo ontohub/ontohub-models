@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :sine_symbol_premise_trigger do
     association :sine_premise_selection
     association :symbol

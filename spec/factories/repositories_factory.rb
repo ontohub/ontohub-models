@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :repository do
     association :owner, factory: :user
     name { generate :repository_name }

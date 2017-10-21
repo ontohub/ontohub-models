@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :user do
     name { generate(:username) } # name is only used for registration
     display_name { Faker::Name.name }

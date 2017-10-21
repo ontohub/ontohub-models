@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :diagnosis, class: Debug do
     association :file_version
     association :file_range
