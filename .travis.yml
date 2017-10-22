@@ -20,4 +20,4 @@ before_script:
   - RAILS_ENV=test bin/rails db:recreate
 
 script:
-  - bundle exec rake
+  - bundle exec rspec --format progress
