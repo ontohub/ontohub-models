@@ -4,7 +4,7 @@ FactoryBot.define do
   factory :diagnosis, class: Debug do
     association :file_version
     association :file_range
-    kind { [Error, Warn, Hint, Debug].sample.to_s }
+    kind { Debug.to_s }
     text { Faker::Lorem.sentence }
 
     factory :error, class: Error do

@@ -4,7 +4,7 @@ FactoryBot.define do
   factory :sentence, class: Axiom do
     association :oms
     association :file_range
-    kind { [Axiom, OpenConjecture, CounterTheorem, Theorem].sample.to_s }
+    kind { Axiom.to_s }
     name { Faker::Lorem.word }
     text { Faker::Lorem.sentence }
     loc_id { name }
@@ -17,8 +17,8 @@ FactoryBot.define do
       kind { Axiom.to_s }
     end
 
-    factory :conjecture, class: Conjecture do
-      kind { [OpenConjecture, CounterTheorem, Theorem].map(&:to_s).sample }
+    factory :conjecture, class: OpenConjecture do
+      kind { OpenConjecture.to_s }
       evaluation_state { 'not_yet_enqueued' }
       reasoning_status { 'OPN' }
 
