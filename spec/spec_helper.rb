@@ -8,6 +8,7 @@ Dir.glob('spec/shared_examples/**/*.rb').each do |file|
 end
 
 require 'rspec'
+require 'fuubar'
 require 'database_cleaner'
 require 'factory_bot_rails'
 
@@ -67,4 +68,8 @@ RSpec.configure do |config|
 
   # Allow to find all factories
   config.include FactoryBot::Syntax::Methods
+
+  config.fuubar_progress_bar_options = {format: '[%B] %c/%C',
+                                        progress_mark: '#',
+                                        remainder_mark: '-'}
 end
