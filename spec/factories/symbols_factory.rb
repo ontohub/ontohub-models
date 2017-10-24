@@ -1,7 +1,7 @@
 
 # frozen_string_literal: true
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :symbol, class: OMSSymbol do
     association :oms, factory: :oms
     association :file_range

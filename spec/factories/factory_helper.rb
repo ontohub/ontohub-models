@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'faker'
-FactoryGirl.define do
+FactoryBot.define do
   to_create(&:save)
 
   sequence(:filepath) do |n|

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :premise_selection, class: ManualPremiseSelection do
     association :reasoner_configuration
 

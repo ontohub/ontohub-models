@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :mapping do
     association :source, factory: :oms
     association :target, factory: :oms

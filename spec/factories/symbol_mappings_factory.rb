@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :symbol_mapping do
     association :signature_morphism
     association :source, factory: :symbol

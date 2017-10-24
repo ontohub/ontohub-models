@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :public_key do
     association :user, factory: :user
     name { Faker::Cat.unique.name }

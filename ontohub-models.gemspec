@@ -48,7 +48,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rspec', '~> 3.6.0'
   s.add_development_dependency 'rspec-rails', '~> 3.6.0'
   s.add_development_dependency 'database_cleaner', '~> 1.6.1'
-  s.add_development_dependency 'factory_girl_rails', '~> 4.8.0'
+  s.add_development_dependency 'factory_bot_rails', '~> 4.8.2'
   s.add_development_dependency 'faker', '~> 1.8.4'
 
   # CI services
