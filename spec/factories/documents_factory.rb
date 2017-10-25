@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  factory :document do
+  factory :document, class: Library do
     association :file_version
-    kind { [Library, NativeDocument].sample.to_s }
+    kind { Library.to_s }
     display_name { Faker::Lorem.words(4, true).join(' ') }
     name { display_name.parameterize }
     location { Faker::Internet.url }
