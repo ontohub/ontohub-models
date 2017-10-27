@@ -22,6 +22,11 @@ RSpec.describe UrlMapping do
       expect(subject.valid?).to be(true)
     end
 
+    it 'is invalid without repository' do
+      subject.repository = nil
+      expect(subject.valid?).to be(false)
+    end
+
     %w(source target).each do |field|
       context field.to_s do
         it "is invalid without #{field}" do

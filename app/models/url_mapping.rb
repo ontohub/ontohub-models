@@ -7,6 +7,7 @@ class UrlMapping < Sequel::Model
   many_to_one :repository
 
   def validate
+    validates_presence :repository
     validates_presence :source
     validates_presence :target
     super
