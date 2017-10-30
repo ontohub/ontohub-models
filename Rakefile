@@ -30,5 +30,5 @@ begin
   RSpec::Core::RakeTask.new(:spec)
   task default: :spec
 rescue LoadError
-  $stderr.puts 'RSpec not available. Not running specs.'
+  warn 'RSpec not available. Not running specs.'
 end

@@ -5,7 +5,11 @@ namespace :db do
   task :recreate do
     begin
       Rake::Task['db:drop'].invoke
-    rescue Sequel::DatabaseConnectionError => e
+      # rubocop:disable Lint/HandleExceptions
+      # If the database does not yet exist, we don't want to fail.
+      # We cannot check the error message because of different locales.
+    rescue Sequel::DatabaseConnectionError
+      # rubocop:enable Lint/HandleExceptions
     end
     Rake::Task['db:create'].invoke
     Rake::Task['db:migrate'].invoke

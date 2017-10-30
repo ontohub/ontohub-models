@@ -1,8 +1,9 @@
 Metrics/BlockLength:
   Exclude:
-    - 'ontohub-models.gemspec'
+    - 'app/graphql/**/*'
     - 'spec/**/*'
     - 'db/migrate/*'
+    - '*.gemspec'
 
 Layout/AlignParameters:
   Enabled: false
@@ -13,8 +14,23 @@ Layout/DotPosition:
 Layout/MultilineMethodCallIndentation:
   EnforcedStyle: indented
 
+Style/PercentLiteralDelimiters:
+  PreferredDelimiters:
+    default: ()
+    '%i': '()'
+    '%I': '()'
+    '%r': '{}'
+    '%w': '()'
+    '%W': '()'
+
 Layout/SpaceInsideHashLiteralBraces:
   EnforcedStyle: no_space
+
+Style/DoubleNegation:
+  Enabled: false
+
+Style/NumericLiterals:
+  Enabled: false
 
 Style/SymbolArray:
   Exclude:
