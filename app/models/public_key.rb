@@ -10,7 +10,7 @@ class PublicKey < Sequel::Model
   end
 
   def validate
-    validates_presence [:key, :name, :user]
+    validates_presence %i(key name user)
 
     if new? && PublicKey.find(user_id: user_id, name: name)
       errors.add(:name, 'is already taken')

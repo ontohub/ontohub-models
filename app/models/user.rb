@@ -1,7 +1,12 @@
 # frozen_string_literal: true
 
 # The class representing an actual user
+# rubocop:disable Metrics/ClassLength
+# This class cannot be shortened by moving the associations into an
+# ActiveSupport::Concern because then, Sequel cannot define the association
+# methods.
 class User < OrganizationalUnit
+  # rubocop:enable Metrics/ClassLength
   # Devise workaround: This allows the user to be authenticated by a :name
   # parameter, that is actually the slug. The public API expects to receive
   # the slug as :name while devise expects the slug as :slug.
@@ -106,7 +111,9 @@ class User < OrganizationalUnit
       or(Sequel[:repositories][:owner_id] => id)
   end), class: Repository
 
+  # rubocop:disable Metrics/MethodLength
   def validate
+    # rubocop:enable Metrics/MethodLength
     validates_includes %w(admin user), :role
     validates_format(Devise.email_regexp, :email)
     validates_unique(:email)

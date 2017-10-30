@@ -36,7 +36,7 @@ class Repository < Sequel::Model
       repository_membership.role = role
       repository_membership.save
     else
-      RepositoryMembership.new(member: member, repository: self, role: role).save
+      RepositoryMembership.create(member: member, repository: self, role: role)
     end
   end
 
