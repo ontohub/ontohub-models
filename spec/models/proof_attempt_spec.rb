@@ -3,10 +3,11 @@
 require 'rails_helper'
 
 RSpec.describe ProofAttempt, type: :model do
+  subject { build(:proof_attempt) }
   it_behaves_like 'having a number', :proof_attempt, :conjecture
 
   context 'superclass' do
-    subject { build(:proof_attempt) }
+    subject { create(:proof_attempt) }
     it_behaves_like 'a reasoning_attempt', :proof_attempt
 
     context 'conjecture' do
