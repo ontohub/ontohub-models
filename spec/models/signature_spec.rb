@@ -11,6 +11,11 @@ RSpec.describe Signature do
       it_behaves_like('being deleted with the association', :language)
     end
 
+    context 'language' do
+      it_behaves_like('it has a', :language, Language)
+      it_behaves_like('being deleted with the association', :language)
+    end
+
     context 'oms' do
       let(:oms1) { create(:oms, signature: subject) }
       let(:oms2) { create(:oms, signature: subject) }
