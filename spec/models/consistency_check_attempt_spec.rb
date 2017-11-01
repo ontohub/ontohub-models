@@ -3,10 +3,11 @@
 require 'rails_helper'
 
 RSpec.describe ConsistencyCheckAttempt, type: :model do
-  it_behaves_like 'having a number', :consistency_check_attempt, :conjecture
+  subject { build(:consistency_check_attempt) }
+  it_behaves_like 'having a number', :consistency_check_attempt, :oms
 
   context 'superclass' do
-    subject { build(:consistency_check_attempt) }
+    subject { create(:consistency_check_attempt) }
     it_behaves_like 'a reasoning_attempt', :consistency_check_attempt
 
     context 'oms' do
