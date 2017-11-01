@@ -158,5 +158,15 @@ RSpec.describe OMS do
           to match_array([attempt1, attempt2])
       end
     end
+
+    it_behaves_like 'having many',
+      :consistency_check_attempts, :consistency_check_attempt
+
+    it_behaves_like 'having many', :sentences, :axiom
+    it_behaves_like 'having many', :axioms, :axiom
+    it_behaves_like 'having many', :conjectures, :open_conjecture
+    it_behaves_like 'having many', :open_conjectures, :open_conjecture
+    it_behaves_like 'having many', :theorems, :theorem
+    it_behaves_like 'having many', :counter_theorems, :counter_theorem
   end
 end
