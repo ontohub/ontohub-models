@@ -15,12 +15,12 @@ RSpec.describe ReasonerConfiguration do
 
     context 'reasoning_attempts' do
       let!(:unrelated) do
-        (1..2).map { create(:reasoning_attempt) }
+        (1..2).map { create(:proof_attempt) }
       end
 
       let!(:related) do
         (1..2).map do
-          create(:reasoning_attempt, reasoner_configuration: subject)
+          create(:proof_attempt, reasoner_configuration: subject)
         end
       end
 

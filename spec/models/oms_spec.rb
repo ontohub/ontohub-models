@@ -146,5 +146,16 @@ RSpec.describe OMS do
     end
 
     it_behaves_like 'having a file_range', :name_file_range
+
+    context 'consistency_check_attempts' do
+      let!(:attempt1) { create(:consistency_check_attempt, oms: subject) }
+      let!(:attempt2) { create(:consistency_check_attempt, oms: subject) }
+      let!(:unrelated) { create(:consistency_check_attempt) }
+
+      it 'contains the consistency_check_attempts' do
+        expect(subject.consistency_check_attempts).
+          to match_array([attempt1, attempt2])
+      end
+    end
   end
 end

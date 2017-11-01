@@ -600,15 +600,12 @@ Sequel.migration do
     # ReasoningAttempt is using Single Table Inheritance
     create_table :reasoning_attempts do
       primary_key :id
-      foreign_key :conjecture_id, :conjectures,
-                  type: :bigint, null: true, on_delete: :cascade
       foreign_key :reasoner_configuration_id, :reasoner_configurations,
                   null: false, on_delete: :cascade
       # There is no used reasoner until reasoning has begun.
       foreign_key :used_reasoner_id, :reasoners,
                   null: true, on_delete: :set_null
       column :kind, :reasoning_attempt_kind_type, null: false
-      column :number, Integer, null: false # This is set by a trigger
       column :time_taken, Integer, null: true
       column :evaluation_state, :evaluation_state_type,
              null: false, default: 'not_yet_enqueued'
@@ -618,7 +615,26 @@ Sequel.migration do
       column :created_at, DateTime, null: false # This is set by a trigger
       column :updated_at, DateTime, null: false # This is set by a trigger
     end
-    create_trigger_to_set_number(:reasoning_attempts, :conjecture_id)
+
+    create_table :proof_attempts do
+      primary_key :id
+      foreign_key [:id], :reasoning_attempts,
+                  null: false, unique: true, on_delete: :cascade
+      foreign_key :conjecture_id, :conjectures,
+                  type: :bigint, null: true, on_delete: :cascade
+      column :number, Integer, null: false # This is set by a trigger
+    end
+    create_trigger_to_set_number(:proof_attempts, :conjecture_id)
+
+    create_table :consistency_check_attempts do
+      primary_key :id
+      foreign_key [:id], :reasoning_attempts,
+                  null: false, unique: true, on_delete: :cascade
+      foreign_key :oms_id, :oms,
+                  type: :bigint, null: true, on_delete: :cascade
+      column :number, Integer, null: false # This is set by a trigger
+    end
+    create_trigger_to_set_number(:consistency_check_attempts, :oms_id)
 
     create_table :generated_axioms do
       primary_key :id

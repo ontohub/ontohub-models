@@ -13,6 +13,7 @@ class OMS < LocIdBase
   many_to_one :free_normal_form_signature_morphism, class: SignatureMorphism
   many_to_one :cons_status
   many_to_one :name_file_range, class: FileRange
+  one_to_many :consistency_check_attempts
 
   one_to_many :mappings_by_source, dataset: (proc do |reflection|
     reflection.associated_dataset.where(source_id: id)
