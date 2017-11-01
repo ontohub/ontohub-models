@@ -11,6 +11,16 @@ RSpec.describe Signature do
       it_behaves_like('being deleted with the association', :language)
     end
 
+    context 'oms' do
+      let(:oms1) { create(:oms, signature: subject) }
+      let(:oms2) { create(:oms, signature: subject) }
+      let(:unrelated) { create(:oms) }
+
+      it 'contains the oms' do
+        expect(subject.oms).to match_array([oms1, oms2])
+      end
+    end
+
     context 'symbols' do
       # Make sure that there are unrelated objects that are not selected in the
       # association.
