@@ -26,10 +26,10 @@ RSpec.describe Mapping do
       it_behaves_like('being deleted with the association', :signature_morphism)
     end
 
-    context 'cons_status' do
-      it_behaves_like('it has a', :cons_status, ConsStatus)
+    context 'conservativity_status' do
+      it_behaves_like('it has a', :conservativity_status, ConservativityStatus)
       it_behaves_like('being nullified with deletion of the association',
-                      :cons_status)
+                      :conservativity_status)
     end
 
     context 'freeness_parameter_oms' do

@@ -5,7 +5,7 @@ FactoryBot.define do
     association :source, factory: :oms
     association :target, factory: :oms
     association :signature_morphism
-    association :cons_status
+    association :conservativity_status
     association :freeness_parameter_oms, factory: :oms
     association :freeness_parameter_language, factory: :language
     display_name { rand }

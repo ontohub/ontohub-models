@@ -303,7 +303,7 @@ Sequel.migration do
       column :as_json, String, null: false
     end
 
-    create_table :cons_statuses do
+    create_table :conservativity_statuses do
       primary_key :id
       column :required, String, null: false
       column :proved, String, null: false
@@ -386,7 +386,7 @@ Sequel.migration do
                   type: :bigint, null: true, on_delete: :set_null
       foreign_key :free_normal_form_signature_morphism_id, :signature_morphisms,
                   null: true, on_delete: :set_null
-      foreign_key :cons_status_id, :cons_statuses,
+      foreign_key :conservativity_status_id, :conservativity_statuses,
                   null: false, on_delete: :cascade
 
       foreign_key :name_file_range_id, :file_ranges,
@@ -431,9 +431,9 @@ Sequel.migration do
                   type: :bigint, null: false, on_delete: :cascade
       foreign_key :signature_morphism_id, :signature_morphisms,
                   null: false, on_delete: :cascade
-      # cons_status_id is only available on local_* and global_*
+      # conservativity_status_id is only available on local_* and global_*
       # and cannot be null on these types
-      foreign_key :cons_status_id, :cons_statuses,
+      foreign_key :conservativity_status_id, :conservativity_statuses,
                   null: true, on_delete: :set_null
       # freeness_parameter_*_id only available on
       # free_def, cofree_def, np_free_def, minimize_def

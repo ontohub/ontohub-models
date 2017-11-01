@@ -116,9 +116,10 @@ RSpec.describe OMS do
       end
     end
 
-    context 'cons_status' do
-      it_behaves_like('it has a', :cons_status, ConsStatus)
-      it_behaves_like('being deleted with the association', :cons_status)
+    context 'conservativity_status' do
+      it_behaves_like('it has a', :conservativity_status, ConservativityStatus)
+      it_behaves_like('being deleted with the association',
+                      :conservativity_status)
     end
 
     context 'mappings' do

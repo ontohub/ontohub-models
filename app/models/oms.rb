@@ -11,7 +11,7 @@ class OMS < LocIdBase
   many_to_one :normal_form_signature_morphism, class: SignatureMorphism
   many_to_one :free_normal_form, class: OMS
   many_to_one :free_normal_form_signature_morphism, class: SignatureMorphism
-  many_to_one :cons_status
+  many_to_one :conservativity_status
   many_to_one :name_file_range, class: FileRange
   one_to_many :consistency_check_attempts
 

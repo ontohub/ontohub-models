@@ -7,7 +7,7 @@ FactoryBot.define do
     association :logic
     association :serialization
     association :signature
-    association :cons_status
+    association :conservativity_status
     association :name_file_range, factory: :file_range
 
     display_name { Faker::Lorem.words(2 + rand(2)).join(' ') }
