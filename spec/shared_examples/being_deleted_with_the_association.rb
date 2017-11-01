@@ -13,7 +13,7 @@ RSpec.shared_examples('being deleted with the association') do |association, pri
     primary_key ||= {id: subject.id}
 
     expect { subject.public_send(association).delete }.
-      to change { subject.class.find(primary_key) }.
+      to change { subject.class.first(primary_key) }.
       to(nil)
   end
 end
