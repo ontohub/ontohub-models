@@ -148,14 +148,12 @@ RSpec.describe OMS do
 
     it_behaves_like 'having a file_range', :name_file_range
 
-    context 'consistency_check_attempts' do
-      let!(:attempt1) { create(:consistency_check_attempt, oms: subject) }
-      let!(:attempt2) { create(:consistency_check_attempt, oms: subject) }
-      let!(:unrelated) { create(:consistency_check_attempt) }
+    shared_examples 'having many' do |association, factory|
+      let!(:related) { create_list(factory, 2, oms: subject) }
+      let!(:unrelated) { create_list(factory, 2) }
 
-      it 'contains the consistency_check_attempts' do
-        expect(subject.consistency_check_attempts).
-          to match_array([attempt1, attempt2])
+      it 'contains the related objects' do
+        expect(subject.public_send(association)).to match_array(related)
       end
     end
 
