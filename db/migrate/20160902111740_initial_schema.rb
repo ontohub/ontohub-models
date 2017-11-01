@@ -568,8 +568,8 @@ Sequel.migration do
       foreign_key [:id], :premise_selections,
                   null: false, unique: true, on_delete: :cascade
       column :depth_limit, Integer, null: true
-      column :tolerance, Float, null: true
-      column :axiom_number_limit, Integer, null: true
+      column :tolerance, Float, null: false
+      column :premise_number_limit, Integer, null: true
     end
 
     create_table :sine_symbol_premise_triggers do

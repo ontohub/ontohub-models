@@ -12,7 +12,7 @@ FactoryBot.define do
       kind { SinePremiseSelection.to_s }
       depth_limit { rand(5) }
       tolerance { 1 + rand }
-      axiom_number_limit { rand(100) }
+      premise_number_limit { rand(100) }
     end
   end
 end
