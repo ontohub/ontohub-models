@@ -41,4 +41,9 @@ RSpec.describe Logic do
       end
     end
   end
+
+  context 'methods' do
+    subject { create(:logic) }
+    it_behaves_like 'an object that has a slug set externally'
+  end
 end

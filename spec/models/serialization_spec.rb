@@ -16,4 +16,9 @@ RSpec.describe Serialization do
       it_behaves_like('being deleted with the association', :language)
     end
   end
+
+  context 'methods' do
+    subject { create(:serialization) }
+    it_behaves_like 'an object that has a slug set externally'
+  end
 end

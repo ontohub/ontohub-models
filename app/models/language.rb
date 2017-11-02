@@ -20,4 +20,8 @@ class Language < Sequel::Model
       where(Sequel[:language_mappings][:target_id] => id).
       or(Sequel[:language_mappings][:source_id] => id)
   end), class: LanguageMapping
+
+  def to_param
+    slug
+  end
 end
