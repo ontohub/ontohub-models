@@ -19,4 +19,8 @@ FactoryBot.define do
   sequence(:loc_id_number) do |n|
     n
   end
+
+  sequence(:slug_number) do |n|
+    n
+  end
 end

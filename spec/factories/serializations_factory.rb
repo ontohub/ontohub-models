@@ -4,6 +4,6 @@ FactoryBot.define do
   factory :serialization do
     association :language
     name { Faker::Lorem.words(4, true).join(' ') }
-    slug { name.parameterize }
+    slug { "#{name.parameterize}-#{generate(:slug_number)}" }
   end
 end
