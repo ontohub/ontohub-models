@@ -15,4 +15,8 @@ FactoryBot.define do
   sequence(:repository_name) do |n|
     "#{Faker::Commerce.product_name}#{n}"
   end
+
+  sequence(:loc_id_number) do |n|
+    n
+  end
 end

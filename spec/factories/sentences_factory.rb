@@ -5,9 +5,9 @@ FactoryBot.define do
     association :oms
     association :file_range
     kind { Axiom.to_s }
-    name { Faker::Lorem.words(4, true).join(' ') }
+    name { Faker::Lorem.words(2, true).join(' ') }
     text { Faker::Lorem.sentence }
-    loc_id { name }
+    loc_id { "#{name}-#{generate(:loc_id_number)}" }
 
     after(:build) do |sentence|
       sentence.file_version = sentence.oms.file_version

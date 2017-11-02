@@ -11,7 +11,7 @@ FactoryBot.define do
       freeness_parameter_language { nil }
     end
     display_name { rand }
-    name { rand }
+    name { generate(:loc_id_number) }
     loc_id { name }
     origin do
       %w(see_target see_source test dg_link_verif dg_implies_link
