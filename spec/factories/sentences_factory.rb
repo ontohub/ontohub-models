@@ -5,7 +5,7 @@ FactoryBot.define do
     association :oms
     association :file_range
     kind { Axiom.to_s }
-    name { Faker::Lorem.word }
+    name { Faker::Lorem.words(4, true).join(' ') }
     text { Faker::Lorem.sentence }
     loc_id { name }
 
