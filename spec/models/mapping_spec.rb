@@ -33,12 +33,16 @@ RSpec.describe Mapping do
     end
 
     context 'freeness_parameter_oms' do
+      subject { create(:mapping, freeness_parameter_oms: create(:oms)) }
       it_behaves_like('it has a', :freeness_parameter_oms, OMS)
       it_behaves_like('being nullified with deletion of the association',
                       :freeness_parameter_oms)
     end
 
     context 'freeness_parameter_language' do
+      subject do
+        create(:mapping, freeness_parameter_language: create(:language))
+      end
       it_behaves_like('it has a', :freeness_parameter_language, Language)
       it_behaves_like('being nullified with deletion of the association',
                       :freeness_parameter_language)
