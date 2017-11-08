@@ -7,5 +7,15 @@ FactoryBot.define do
     description { Faker::Lorem.sentence }
     public_access { false }
     content_type { %w(ontology specification model mathematical).sample }
+    remote_adress { nil }
+    remote_type { nil }
+    trait :fork do
+      remote_adress { Faker::Internet.url.git }
+      remote_type { 'fork' }
+    end
+    trait :mirror do
+      remote_adress { Faker::Internet.url.git }
+      remote_type { 'mirror' }
+    end
   end
 end

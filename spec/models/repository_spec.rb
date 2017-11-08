@@ -44,6 +44,28 @@ RSpec.describe Repository, type: :model do
         expect(subject.valid?).to be(false)
       end
     end
+
+    context 'mirror or fork' do
+      shared examples 'subject validation' do
+        expect(subject.valid?).to be(expectation_subject_valid)
+      end
+      context 'remote type is valid' do
+        context 'remote adress is valid' do
+          it_behaves_like 'subject validation' {}
+        end
+
+        context 'remote type is not valid' do
+
+        end
+      end
+
+      context 'remote type is not valid' do
+        it_behaves_like 'subject validation'
+        context 'remote adress is not valid' do
+
+        end
+      end
+    end
   end
 
   context 'compatibility' do
