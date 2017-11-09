@@ -38,4 +38,9 @@ RSpec.describe Language do
       end
     end
   end
+
+  context 'methods' do
+    subject { create(:language) }
+    it_behaves_like 'an object that has a slug set externally'
+  end
 end

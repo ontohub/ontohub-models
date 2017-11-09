@@ -7,7 +7,7 @@ FactoryBot.define do
     association :target, factory: :logic
 
     name { Faker::Lorem.words(4, true).join(' ') }
-    slug { name.parameterize }
+    slug { "#{name.parameterize}-#{generate(:slug_number)}" }
     is_inclusion { Faker::Boolean.boolean }
     has_model_expansion { Faker::Boolean.boolean }
     is_weakly_amalgamable { Faker::Boolean.boolean }

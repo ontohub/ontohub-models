@@ -3,7 +3,7 @@
 # The Signature is a collection of OMSSymbols as JSON
 class Signature < Sequel::Model
   many_to_one :language
-  one_to_one :oms, class: OMS
+  one_to_many :oms, class: OMS
   many_to_many :symbols, class: OMSSymbol, join_table: :signature_symbols
 
   many_to_many :non_imported_symbols, dataset: (proc do |reflection|

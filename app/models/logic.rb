@@ -20,4 +20,8 @@ class Logic < Sequel::Model
       where(Sequel[:logic_mappings][:target_id] => id).
       or(Sequel[:logic_mappings][:source_id] => id)
   end), class: LogicMapping
+
+  def to_param
+    slug
+  end
 end

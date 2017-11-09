@@ -6,7 +6,7 @@ require 'rails_helper'
 RSpec.describe Reasoner do
   subject { create(:reasoner) }
 
-  it 'is a Reasoner' do
-    expect(subject).to be_a(Reasoner)
+  context 'methods' do
+    it_behaves_like 'an object that has a slug set externally'
   end
 end

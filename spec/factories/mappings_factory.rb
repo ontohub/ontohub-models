@@ -5,11 +5,13 @@ FactoryBot.define do
     association :source, factory: :oms
     association :target, factory: :oms
     association :signature_morphism
-    association :cons_status
-    association :freeness_parameter_oms, factory: :oms
-    association :freeness_parameter_language, factory: :language
+    association :conservativity_status
+    transient do
+      freeness_parameter_oms { nil }
+      freeness_parameter_language { nil }
+    end
     display_name { rand }
-    name { rand }
+    name { generate(:loc_id_number) }
     loc_id { name }
     origin do
       %w(see_target see_source test dg_link_verif dg_implies_link
@@ -34,8 +36,16 @@ FactoryBot.define do
 
     pending { Faker::Boolean.boolean }
 
-    after(:build) do |mapping|
+    after(:build) do |mapping, evaluator|
       mapping.file_version = mapping.source.file_version
+
+      if evaluator.freeness_parameter_oms
+        mapping.freeness_parameter_oms = evaluator.freeness_parameter_oms
+      end
+      if evaluator.freeness_parameter_language
+        mapping.freeness_parameter_language =
+          evaluator.freeness_parameter_language
+      end
     end
   end
 end

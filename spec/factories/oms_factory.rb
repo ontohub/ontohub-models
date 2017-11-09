@@ -7,7 +7,7 @@ FactoryBot.define do
     association :logic
     association :serialization
     association :signature
-    association :cons_status
+    association :conservativity_status
     association :name_file_range, factory: :file_range
 
     display_name { Faker::Lorem.words(2 + rand(2)).join(' ') }
@@ -25,7 +25,7 @@ FactoryBot.define do
     end
     label_has_hiding { Faker::Boolean.boolean }
     label_has_free { Faker::Boolean.boolean }
-    loc_id { display_name }
+    loc_id { "#{display_name}-#{generate(:loc_id_number)}" }
 
     after(:build) do |oms|
       oms.file_version = oms.document.file_version

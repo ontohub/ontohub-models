@@ -303,7 +303,7 @@ Sequel.migration do
       column :as_json, String, null: false
     end
 
-    create_table :cons_statuses do
+    create_table :conservativity_statuses do
       primary_key :id
       column :required, String, null: false
       column :proved, String, null: false
@@ -362,9 +362,9 @@ Sequel.migration do
       %w(dg_empty dg_basic dg_basic_spec dg_extension dg_logic_coercion
          dg_translation dg_union dg_intersect dg_extract dg_restriction
          dg_reveal_translation free cofree np_free minimize dg_local dg_closed
-         dg_logic_qual dg_data dg_formal_params dg_imports dg_inst dg_fit_spec
-         dg_fit_view dg_proof dg_normal_form dg_integrated_scc dg_flattening
-         dg_alignment dg_test)
+         dg_logic_qual dg_data dg_formal_params dg_verification_generic
+         dg_imports dg_inst dg_fit_spec dg_fit_view dg_proof dg_normal_form
+         dg_integrated_scc dg_flattening dg_alignment dg_test)
 
     # OMS is a LocIdBase
     create_table :oms do
@@ -386,7 +386,7 @@ Sequel.migration do
                   type: :bigint, null: true, on_delete: :set_null
       foreign_key :free_normal_form_signature_morphism_id, :signature_morphisms,
                   null: true, on_delete: :set_null
-      foreign_key :cons_status_id, :cons_statuses,
+      foreign_key :conservativity_status_id, :conservativity_statuses,
                   null: false, on_delete: :cascade
 
       foreign_key :name_file_range_id, :file_ranges,
@@ -431,9 +431,9 @@ Sequel.migration do
                   type: :bigint, null: false, on_delete: :cascade
       foreign_key :signature_morphism_id, :signature_morphisms,
                   null: false, on_delete: :cascade
-      # cons_status_id is only available on local_* and global_*
+      # conservativity_status_id is only available on local_* and global_*
       # and cannot be null on these types
-      foreign_key :cons_status_id, :cons_statuses,
+      foreign_key :conservativity_status_id, :conservativity_statuses,
                   null: true, on_delete: :set_null
       # freeness_parameter_*_id only available on
       # free_def, cofree_def, np_free_def, minimize_def
@@ -568,8 +568,8 @@ Sequel.migration do
       foreign_key [:id], :premise_selections,
                   null: false, unique: true, on_delete: :cascade
       column :depth_limit, Integer, null: true
-      column :tolerance, Float, null: true
-      column :axiom_number_limit, Integer, null: true
+      column :tolerance, Float, null: false
+      column :premise_number_limit, Integer, null: true
     end
 
     create_table :sine_symbol_premise_triggers do
@@ -600,15 +600,12 @@ Sequel.migration do
     # ReasoningAttempt is using Single Table Inheritance
     create_table :reasoning_attempts do
       primary_key :id
-      foreign_key :conjecture_id, :conjectures,
-                  type: :bigint, null: true, on_delete: :cascade
       foreign_key :reasoner_configuration_id, :reasoner_configurations,
                   null: false, on_delete: :cascade
       # There is no used reasoner until reasoning has begun.
       foreign_key :used_reasoner_id, :reasoners,
                   null: true, on_delete: :set_null
       column :kind, :reasoning_attempt_kind_type, null: false
-      column :number, Integer, null: false # This is set by a trigger
       column :time_taken, Integer, null: true
       column :evaluation_state, :evaluation_state_type,
              null: false, default: 'not_yet_enqueued'
@@ -618,7 +615,26 @@ Sequel.migration do
       column :created_at, DateTime, null: false # This is set by a trigger
       column :updated_at, DateTime, null: false # This is set by a trigger
     end
-    create_trigger_to_set_number(:reasoning_attempts, :conjecture_id)
+
+    create_table :proof_attempts do
+      primary_key :id
+      foreign_key [:id], :reasoning_attempts,
+                  null: false, unique: true, on_delete: :cascade
+      foreign_key :conjecture_id, :conjectures,
+                  type: :bigint, null: true, on_delete: :cascade
+      column :number, Integer, null: false # This is set by a trigger
+    end
+    create_trigger_to_set_number(:proof_attempts, :conjecture_id)
+
+    create_table :consistency_check_attempts do
+      primary_key :id
+      foreign_key [:id], :reasoning_attempts,
+                  null: false, unique: true, on_delete: :cascade
+      foreign_key :oms_id, :oms,
+                  type: :bigint, null: true, on_delete: :cascade
+      column :number, Integer, null: false # This is set by a trigger
+    end
+    create_trigger_to_set_number(:consistency_check_attempts, :oms_id)
 
     create_table :generated_axioms do
       primary_key :id

@@ -116,9 +116,10 @@ RSpec.describe OMS do
       end
     end
 
-    context 'cons_status' do
-      it_behaves_like('it has a', :cons_status, ConsStatus)
-      it_behaves_like('being deleted with the association', :cons_status)
+    context 'conservativity_status' do
+      it_behaves_like('it has a', :conservativity_status, ConservativityStatus)
+      it_behaves_like('being deleted with the association',
+                      :conservativity_status)
     end
 
     context 'mappings' do
@@ -146,5 +147,24 @@ RSpec.describe OMS do
     end
 
     it_behaves_like 'having a file_range', :name_file_range
+
+    shared_examples 'having many' do |association, factory|
+      let!(:related) { create_list(factory, 2, oms: subject) }
+      let!(:unrelated) { create_list(factory, 2) }
+
+      it 'contains the related objects' do
+        expect(subject.public_send(association)).to match_array(related)
+      end
+    end
+
+    it_behaves_like 'having many',
+      :consistency_check_attempts, :consistency_check_attempt
+
+    it_behaves_like 'having many', :sentences, :axiom
+    it_behaves_like 'having many', :axioms, :axiom
+    it_behaves_like 'having many', :conjectures, :open_conjecture
+    it_behaves_like 'having many', :open_conjectures, :open_conjecture
+    it_behaves_like 'having many', :theorems, :theorem
+    it_behaves_like 'having many', :counter_theorems, :counter_theorem
   end
 end
