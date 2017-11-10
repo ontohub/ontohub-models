@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.shared_examples 'a reasoning_attempt' do |factory|
+RSpec.shared_examples 'a reasoning_attempt' do
   context 'associations' do
     before { subject.save }
 
