@@ -135,6 +135,15 @@ Sequel.migration do
       column :updated_at, DateTime, null: false # This is set by a trigger
     end
 
+    create_table :api_keys do
+      primary_key :id
+      column :key, String, null: false, unique: true
+      column :comment, String, null: true
+
+      column :created_at, DateTime, null: false # This is set by a trigger
+      column :updated_at, DateTime, null: false # This is set by a trigger
+    end
+
     create_table :url_mappings do
       primary_key :id
       foreign_key :repository_id, :repositories,
