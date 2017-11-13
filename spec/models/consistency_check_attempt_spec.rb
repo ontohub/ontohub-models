@@ -8,7 +8,7 @@ RSpec.describe ConsistencyCheckAttempt, type: :model do
 
   context 'superclass' do
     subject { create(:consistency_check_attempt) }
-    it_behaves_like 'a reasoning_attempt', :consistency_check_attempt
+    it_behaves_like 'a reasoning_attempt'
 
     context 'oms' do
       it_behaves_like('it has a', :oms, OMS)

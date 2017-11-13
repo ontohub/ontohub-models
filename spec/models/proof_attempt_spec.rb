@@ -8,7 +8,7 @@ RSpec.describe ProofAttempt, type: :model do
 
   context 'superclass' do
     subject { create(:proof_attempt) }
-    it_behaves_like 'a reasoning_attempt', :proof_attempt
+    it_behaves_like 'a reasoning_attempt'
 
     context 'conjecture' do
       it_behaves_like('it has a', :conjecture, Conjecture)
