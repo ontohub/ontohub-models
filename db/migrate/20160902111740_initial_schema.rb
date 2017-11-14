@@ -31,7 +31,7 @@ Sequel.migration do
       # Kind of record - for class table inheritance
       column :kind, :organizational_unit_kind_type, null: false
 
-      column :slug, String, null: false, unique: true
+      column :slug, String, collate: '"C"', null: false, unique: true
 
       column :display_name, String, null: true
 
@@ -122,7 +122,7 @@ Sequel.migration do
 
     create_table :repositories do
       primary_key :id
-      column :slug, String, null: false, unique: true
+      column :slug, String, collate: '"C"', null: false, unique: true
       foreign_key :owner_id, :organizational_units,
                   null: false, index: true, on_delete: :restrict
 
@@ -212,7 +212,7 @@ Sequel.migration do
                   type: :bigint, null: false, on_delete: :cascade
       # Kind of record - for class table inheritance
       column :kind, :loc_id_base_kind_type, null: false
-      column :loc_id, String, null: false
+      column :loc_id, String, collate: '"C"', null: false
 
       column :created_at, DateTime, null: false # This is set by a trigger
       column :updated_at, DateTime, null: false # This is set by a trigger
@@ -233,7 +233,7 @@ Sequel.migration do
 
     create_table :languages do
       primary_key :id
-      column :slug, String, null: false, unique: true
+      column :slug, String, collate: '"C"', null: false, unique: true
       column :name, String, null: false
       column :description, String, null: false
       column :standardization_status, String, null: false
@@ -247,7 +247,7 @@ Sequel.migration do
       primary_key :id
       foreign_key :language_id, :languages,
                   null: false, on_delete: :cascade
-      column :slug, String, null: false
+      column :slug, String, collate: '"C"', null: false
       column :name, String, null: false
 
       column :created_at, DateTime, null: false # This is set by a trigger
@@ -259,7 +259,7 @@ Sequel.migration do
     create_table :serializations do
       primary_key :id
       foreign_key :language_id, :languages, null: false, on_delete: :cascade
-      column :slug, String, null: false, unique: true
+      column :slug, String, collate: '"C"', null: false, unique: true
       column :name, String, null: false
 
       column :created_at, DateTime, null: false # This is set by a trigger
@@ -279,7 +279,7 @@ Sequel.migration do
 
     create_table :logic_mappings do
       primary_key :id
-      column :slug, String, null: false, unique: true
+      column :slug, String, collate: '"C"', null: false, unique: true
 
       foreign_key :language_mapping_id, :language_mappings,
                   null: false, on_delete: :cascade
@@ -535,7 +535,7 @@ Sequel.migration do
 
     create_table :reasoners do
       primary_key :id
-      column :slug, String, null: false, unique: true
+      column :slug, String, collate: '"C"', null: false, unique: true
       column :display_name, String, null: false, unique: true
     end
 
