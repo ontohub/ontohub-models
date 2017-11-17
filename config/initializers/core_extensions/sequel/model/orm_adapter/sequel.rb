@@ -8,7 +8,7 @@ class Sequel::Model
   class OrmAdapter < ::OrmAdapter::Base
     def get(id)
       column = Sequel[klass.table_name][klass.primary_key]
-      klass.find(wrap_key(column => id))
+      klass.first(wrap_key(column => id))
     end
   end
   # :nocov:

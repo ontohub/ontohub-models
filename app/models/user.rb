@@ -132,7 +132,7 @@ class User < OrganizationalUnit
   # plugin, but this method is not used very often, so the plugin would be
   # overhead.
   def email_was
-    self.class.find(id: id).email
+    self.class.first(id: id).email
   end
 
   # Devise Trackable requires these two attributes to be defined, but we do not

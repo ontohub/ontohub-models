@@ -103,13 +103,13 @@ RSpec.describe Repository, type: :model do
 
       it 'changes role of existent member' do
         subject.add_member(member, 'write')
-        expect(RepositoryMembership.find(member: member, repository: subject).
+        expect(RepositoryMembership.first(member: member, repository: subject).
           role).to match('write')
       end
 
       it 'removes member' do
         subject.remove_member(member)
-        expect(RepositoryMembership.find(member: member, repository: subject)).
+        expect(RepositoryMembership.first(member: member, repository: subject)).
           to be_falsy
       end
     end
