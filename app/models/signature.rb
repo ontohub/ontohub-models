@@ -41,7 +41,7 @@ class Signature < Sequel::Model
   end
 
   def remove_symbol(symbol)
-    SignatureSymbol.find(signature_id: id,
-                         symbol_id: symbol.id).destroy
+    SignatureSymbol.first(signature_id: id,
+                          symbol_id: symbol.id).destroy
   end
 end

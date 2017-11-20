@@ -112,7 +112,7 @@ RSpec.describe Signature do
           end
 
           it 'marks the symbol correctly' do
-            expect(SignatureSymbol.find(signature: subject, symbol: symbol).
+            expect(SignatureSymbol.first(signature: subject, symbol: symbol).
                      imported).
               to be(imported)
           end
@@ -128,7 +128,7 @@ RSpec.describe Signature do
       end
 
       it 'removes the association row' do
-        expect(SignatureSymbol.find(signature: subject, symbol: symbol)).
+        expect(SignatureSymbol.first(signature: subject, symbol: symbol)).
           to be(nil)
       end
     end

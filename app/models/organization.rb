@@ -20,6 +20,6 @@ class Organization < OrganizationalUnit
   end
 
   def remove_member(member)
-    OrganizationMembership.find(member: member, organization: self).destroy
+    OrganizationMembership.first(member: member, organization: self).destroy
   end
 end
