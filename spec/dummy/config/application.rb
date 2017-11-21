@@ -16,6 +16,9 @@ require 'ontohub-models'
 
 module Dummy
   class Application < Rails::Application
+    # Do not dump the schema in the dummy application.
+    config.sequel.schema_dump = false
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
