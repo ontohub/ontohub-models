@@ -42,6 +42,8 @@ Sequel.migration do
                      after: true)
     end
 
+    extension :pg_enum
+
     create_enum :organizational_unit_kind_type,
       %w(User Organization)
 
