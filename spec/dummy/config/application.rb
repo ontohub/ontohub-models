@@ -27,6 +27,13 @@ module Dummy
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
+
+    # Sequel 5 and sequel-rails always try connect to the database, even if it
+    # does not exist AND it should be created by the currently running rake
+    # task. This is a workaround:
+    tasks_without_connection = %w(db:drop db:create db:recreate)
+    config.sequel.skip_connect =
+      defined?(Rake) &&
+      (Rake.application.top_level_tasks & tasks_without_connection).any?
   end
 end
-
