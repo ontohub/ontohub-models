@@ -32,7 +32,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'rails', '~> 5.1.4'
   s.add_dependency 'sequel', '~> 4.49.0'
   s.add_dependency 'sequel-devise', '~> 0.0.11'
-  s.add_dependency 'sequel-rails', '~> 0.9.17'
+  s.add_dependency 'sequel-rails', '>= 0.9.17', '< 1.1.0'
   s.add_dependency 'sequel_pg', '~> 1.7.1'
   s.add_dependency 'sequel_postgresql_triggers', '~> 1.3.0'
 
