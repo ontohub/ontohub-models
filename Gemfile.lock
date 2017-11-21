@@ -175,7 +175,7 @@ GEM
       thor (>= 0.18.1, < 2.0)
     rainbow (2.2.2)
       rake
-    rake (12.1.0)
+    rake (12.3.0)
     responders (2.4.0)
       actionpack (>= 4.2.0, < 5.3)
       railties (>= 4.2.0, < 5.3)
@@ -260,7 +260,7 @@ DEPENDENCIES
   pry-byebug (~> 3.5.0)
   pry-rescue (~> 1.4.4)
   pry-stack_explorer (~> 0.4.9.2)
-  rake (~> 12.1.0)
+  rake (~> 12.3.0)
   rspec (~> 3.6.0)
   rspec-rails (~> 3.6.0)
   rubocop (~> 0.51.0)
