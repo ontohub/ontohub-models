@@ -34,6 +34,26 @@ class Signature < Sequel::Model
       or(Sequel[:signature_morphisms][:source_id] => id)
   end), class: SignatureMorphism
 
+  # Equivalent to oms.map { |oms| oms.repository }
+  one_to_many :repositories, dataset: (proc do |reflection|
+    reflection.associated_dataset.
+      graph(:file_versions,
+            {Sequel[:file_versions][:repository_id] =>
+               Sequel[:repositories][:id]},
+            join_type: :inner, select: false).
+      graph(:loc_id_bases,
+            {Sequel[:documents][:file_version_id] =>
+               Sequel[:file_versions][:id]},
+            table_alias: :documents, join_type: :inner, select: false).
+      graph(:oms,
+            {Sequel[:oms][:document_id] => Sequel[:documents][:id]},
+            join_type: :inner, select: false).
+      graph(:signatures,
+            {Sequel[:oms][:signature_id] => Sequel[:signatures][:id]},
+            join_type: :inner, select: false).
+      where(Sequel[:signatures][:id] => id)
+  end), class: Repository
+
   def add_symbol(symbol, imported)
     SignatureSymbol.new(signature_id: id,
                         symbol_id: symbol.id,
