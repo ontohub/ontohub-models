@@ -26,6 +26,9 @@ class Repository < Sequel::Model
     validates_presence :public_access
     validates_includes %w(ontology model specification mathematical),
       :content_type
+    validates_presence :remote_type if remote_address.present?
+    validates_presence :remote_address if remote_type.present?
+    validates_includes %(fork mirror), :remote_type unless remote_type.nil?
     super
   end
 

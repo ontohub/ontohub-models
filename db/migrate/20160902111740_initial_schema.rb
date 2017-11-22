@@ -120,6 +120,9 @@ Sequel.migration do
     create_enum :repository_content_type,
       %w(ontology model specification mathematical)
 
+    create_enum :repository_remote_type_type,
+      %w(fork mirror)
+
     create_table :repositories do
       primary_key :id
       column :slug, String, collate: '"C"', null: false, unique: true
@@ -130,6 +133,9 @@ Sequel.migration do
       column :description, :text, null: true
       column :public_access, TrueClass, null: false
       column :content_type, :repository_content_type, null: false
+      column :remote_address, String, null: true
+      column :remote_type, :repository_remote_type_type, null: true
+      column :synchronized_at, DateTime, null: true
 
       column :created_at, DateTime, null: false # This is set by a trigger
       column :updated_at, DateTime, null: false # This is set by a trigger
