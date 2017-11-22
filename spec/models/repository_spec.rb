@@ -46,39 +46,39 @@ RSpec.describe Repository, type: :model do
     end
 
     context 'mirror or fork' do
-      context 'remote type is valid' do
-        %w(fork mirror).each do |remote_type|
+      %w(fork mirror).each do |remote_type|
+        context "with remote_type #{remote_type}" do
           before { subject.remote_type = remote_type }
 
-          context 'remote address is valid' do
+          context 'remote_address' do
             before { subject.remote_address = "#{Faker::Internet.url}.git" }
-            it "is valid with #{remote_type} remote type" do
+            it 'is valid' do
               expect(subject.valid?).to be(true)
             end
           end
 
-          context 'remote address is not valid' do
+          context 'without remote_address' do
             before { subject.remote_address = nil }
-            it "is not valid with #{remote_type} remote type" do
+            it 'is invalid' do
               expect(subject.valid?).to be(false)
             end
           end
         end
       end
 
-      context 'remote type is not valid' do
+      context 'without remote_type' do
         before { subject.remote_type = nil }
 
-        context 'remote address is valid' do
+        context 'with remote_address' do
           before { subject.remote_address = "#{Faker::Internet.url}.git" }
-          it 'is not valid with nil remote type' do
+          it 'is invalid' do
             expect(subject.valid?).to be(false)
           end
         end
 
-        context 'remote address is not valid' do
+        context 'without remote_address' do
           before { subject.remote_address = nil }
-          it 'is not valid with nil remote type' do
+          it 'is valid' do
             expect(subject.valid?).to be(true)
           end
         end
