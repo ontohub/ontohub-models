@@ -5,4 +5,8 @@ class ReasonerConfiguration < Sequel::Model
   many_to_one :configured_reasoner, class: Reasoner
   one_to_many :reasoning_attempts
   one_to_many :premise_selections
+
+  def repositories
+    reasoning_attempts.map(&:repository).uniq
+  end
 end

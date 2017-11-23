@@ -13,6 +13,22 @@ RSpec.describe ReasonerConfiguration do
                       :configured_reasoner)
     end
 
+    context 'repositories' do
+      let!(:unrelated) do
+        (1..2).map { create(:proof_attempt).repository }
+      end
+
+      let!(:related) do
+        (1..2).map do
+          create(:proof_attempt, reasoner_configuration: subject).repository
+        end
+      end
+
+      it 'has the reasoning_attempts' do
+        expect(subject.repositories).to match_array(related)
+      end
+    end
+
     context 'reasoning_attempts' do
       let!(:unrelated) do
         (1..2).map { create(:proof_attempt) }
