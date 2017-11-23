@@ -3,4 +3,6 @@
 # The GeneratedAxiom represents an axiom that only exists in a proof
 class GeneratedAxiom < Sequel::Model
   many_to_one :reasoning_attempt
+
+  delegate :repository, to: :reasoning_attempt
 end
