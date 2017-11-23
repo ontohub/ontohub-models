@@ -11,6 +11,11 @@ RSpec.describe OMS do
   context 'associations' do
     subject { create(:oms) }
 
+    context 'repository' do
+      it_behaves_like('it has a', :repository, Repository)
+      it_behaves_like('being deleted with the association', :repository)
+    end
+
     context 'document' do
       it_behaves_like('it has a', :document, Document)
       it_behaves_like('being deleted with the association', :document)
