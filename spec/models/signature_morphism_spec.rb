@@ -38,5 +38,19 @@ RSpec.describe SignatureMorphism do
         expect(subject.symbol_mappings).to match_array([related])
       end
     end
+
+    context 'repositories' do
+      let!(:repository1) { create(:oms, signature: subject.source).repository }
+      let!(:repository2) { create(:oms, signature: subject.source).repository }
+      let!(:repository3) { create(:oms, signature: subject.target).repository }
+      let!(:repository4) { create(:oms, signature: subject.target).repository }
+      let!(:unrelated_repository) { create(:repository) }
+      let!(:unrelated_signature_morphism) { create(:signature_morphism) }
+
+      it 'contains the repositories' do
+        expect(subject.repositories).
+          to match_array([repository1, repository2, repository3, repository4])
+      end
+    end
   end
 end

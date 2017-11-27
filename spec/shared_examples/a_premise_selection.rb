@@ -13,6 +13,24 @@ RSpec.shared_examples 'a premise_selection' do
                       :reasoner_configuration)
     end
 
+    context 'repositories' do
+      let!(:unrelated) do
+        (1..2).map { create(:proof_attempt).repository }
+      end
+
+      let!(:related) do
+        (1..2).map do
+          create(:proof_attempt,
+                 reasoner_configuration: subject.reasoner_configuration).
+            repository
+        end
+      end
+
+      it 'has the reasoning_attempts' do
+        expect(subject.repositories).to match_array(related)
+      end
+    end
+
     context 'selected_premises' do
       let!(:unrelated) do
         (1..2).map { create(:sentence) }

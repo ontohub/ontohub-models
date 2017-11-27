@@ -23,6 +23,25 @@ Sequel.migration do
                      each_row: true)
     end
 
+    # rubocop:disable Metrics/MethodLength
+    def create_trigger_to_delete_parent(child_table, parent_table)
+      # rubocop:enable Metrics/MethodLength
+      function = <<~SQL
+        BEGIN
+          DELETE FROM #{parent_table} WHERE id = OLD.id;
+          RETURN OLD;
+        END;
+      SQL
+      function_name =
+        :"on_delete_from_#{child_table}_also_delete_from_#{parent_table}"
+      create_function(function_name, function,
+                      language: :plpgsql, returns: :trigger)
+      create_trigger(child_table, :trg_delete_from_parent, function_name,
+                     events: :delete,
+                     each_row: true,
+                     after: true)
+    end
+
     create_enum :organizational_unit_kind_type,
       %w(User Organization)
 
@@ -640,6 +659,7 @@ Sequel.migration do
       column :number, Integer, null: false # This is set by a trigger
     end
     create_trigger_to_set_number(:proof_attempts, :conjecture_id)
+    create_trigger_to_delete_parent(:proof_attempts, :reasoning_attempts)
 
     create_table :consistency_check_attempts do
       primary_key :id
@@ -650,6 +670,8 @@ Sequel.migration do
       column :number, Integer, null: false # This is set by a trigger
     end
     create_trigger_to_set_number(:consistency_check_attempts, :oms_id)
+    create_trigger_to_delete_parent(:consistency_check_attempts,
+                                    :reasoning_attempts)
 
     create_table :generated_axioms do
       primary_key :id

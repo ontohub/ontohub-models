@@ -15,4 +15,13 @@ RSpec.describe ProofAttempt, type: :model do
       it_behaves_like('being deleted with the association', :conjecture)
     end
   end
+
+  context 'associations' do
+    subject { create(:proof_attempt) }
+
+    context 'repository' do
+      it_behaves_like('it has a', :repository, Repository)
+      it_behaves_like('being deleted with the association', :repository)
+    end
+  end
 end

@@ -10,5 +10,10 @@ RSpec.describe GeneratedAxiom do
       it_behaves_like('it has a', :reasoning_attempt, ReasoningAttempt)
       it_behaves_like('being deleted with the association', :reasoning_attempt)
     end
+
+    context 'repository' do
+      it_behaves_like('it has a', :repository, Repository)
+      it_behaves_like('being deleted with the association', :repository)
+    end
   end
 end

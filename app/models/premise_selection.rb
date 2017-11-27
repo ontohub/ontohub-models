@@ -9,4 +9,6 @@ class PremiseSelection < Sequel::Model
                                    left_key: :premise_selection_id,
                                    right_key: :premise_id,
                                    class: Sentence
+
+  delegate :repositories, to: :reasoner_configuration
 end

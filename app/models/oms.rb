@@ -33,4 +33,21 @@ class OMS < LocIdBase
   one_to_many :mappings, dataset: (proc do |reflection|
     reflection.associated_dataset.where(source_id: id).or(target_id: id)
   end), class: Mapping
+
+  # Equivalent to file_version.repository
+  one_to_one :repository, dataset: (proc do |reflection|
+    reflection.associated_dataset.
+      graph(:file_versions,
+            {Sequel[:file_versions][:repository_id] =>
+               Sequel[:repositories][:id]},
+            join_type: :inner, select: false).
+      graph(:loc_id_bases,
+            {Sequel[:documents][:file_version_id] =>
+               Sequel[:file_versions][:id]},
+            table_alias: :documents, join_type: :inner, select: false).
+      graph(:oms,
+            {Sequel[:oms][:document_id] => Sequel[:documents][:id]},
+            join_type: :inner, select: false).
+      where(Sequel[:oms][:id] => id)
+  end), class: Repository
 end

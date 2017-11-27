@@ -94,6 +94,16 @@ RSpec.describe Signature do
         end
       end
     end
+
+    context 'repositories' do
+      let!(:repository1) { create(:oms, signature: subject).repository }
+      let!(:repository2) { create(:oms, signature: subject).repository }
+      let!(:unrelated) { create(:repository) }
+
+      it 'contains the repositories' do
+        expect(subject.repositories).to match_array([repository1, repository2])
+      end
+    end
   end
 
   context 'methods' do
