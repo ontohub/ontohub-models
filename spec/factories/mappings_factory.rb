@@ -28,10 +28,10 @@ FactoryBot.define do
          hiding_def
          free_def cofree_def np_free_def minimize_def
          hiding_open hiding_proved
-         hiding_free_open hiding_cofree_open
-         hiding_np_free_open hiding_minimize_open
-         hiding_free_proved hiding_cofree_proved
-         hiding_np_free_proved hiding_minimize_proved).sample
+         free_open cofree_open
+         np_free_open minimize_open
+         free_proved cofree_proved
+         np_free_proved minimize_proved).sample
     end
 
     pending { Faker::Boolean.boolean }
