@@ -30,15 +30,15 @@ Gem::Specification.new do |s|
   s.add_dependency 'chewy', '~> 0.10.1'
   s.add_dependency 'devise', '~> 4.3.0'
   s.add_dependency 'rails', '~> 5.1.4'
-  s.add_dependency 'sequel', '~> 4.49.0'
+  s.add_dependency 'sequel', '~> 5.2.0'
   s.add_dependency 'sequel-devise', '~> 0.0.11'
-  s.add_dependency 'sequel-rails', '~> 0.9.17'
-  s.add_dependency 'sequel_pg', '~> 1.7.1'
+  s.add_dependency 'sequel-rails', '~> 1.0.0'
+  s.add_dependency 'sequel_pg', '~> 1.8.0'
   s.add_dependency 'sequel_postgresql_triggers', '~> 1.3.0'
 
   # General Development
   s.add_development_dependency 'bundler', '~> 1.11'
-  s.add_development_dependency 'rake', '~> 12.1.0'
+  s.add_development_dependency 'rake', '~> 12.3.0'
 
   s.add_development_dependency 'pry-byebug', '~> 3.5.0'
   s.add_development_dependency 'pry-rescue', '~> 1.4.4'
@@ -49,11 +49,10 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'factory_bot_rails', '~> 4.8.2'
   s.add_development_dependency 'faker', '~> 1.8.4'
   s.add_development_dependency 'fuubar', '~> 2.2.0'
-  s.add_development_dependency 'rspec', '~> 3.6.0'
-  s.add_development_dependency 'rspec-rails', '~> 3.6.0'
+  s.add_development_dependency 'rspec', '~> 3.7.0'
+  s.add_development_dependency 'rspec-rails', '~> 3.7.2'
 
   # CI services
-  s.add_development_dependency 'codecov', '~> 0.1.10'
   s.add_development_dependency 'rubocop', '~> 0.51.0'
 
   # We want to have these in the production environment as well in case we need
