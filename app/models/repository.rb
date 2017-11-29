@@ -27,7 +27,7 @@ class Repository < Sequel::Model
     # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
     validates_length_range (3..100), :name
     if SLUG_BLACKLIST.include?(slug.split('/', 2).last)
-      errors.add(:name, "can not be '#{name}'")
+      errors.add(:name, "cannot be '#{name}'")
     end
     validates_presence :owner
     validates_presence :public_access
