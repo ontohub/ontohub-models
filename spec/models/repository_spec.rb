@@ -11,6 +11,11 @@ RSpec.describe Repository, type: :model do
         expect(subject.valid?).to be(false)
       end
 
+      it 'is invalid with a blacklisted name' do
+        subject.name = Repository::SLUG_BLACKLIST.sample
+        expect(subject.valid?).to be(false)
+      end
+
       it 'is invalid with a name which is to short' do
         subject.name = 'fo'
         expect(subject.valid?).to be(false)

@@ -2,6 +2,8 @@
 
 # The Repository model groups libraries and exposes the basic git functinoality.
 class Repository < Sequel::Model
+  SLUG_BLACKLIST = %w(repositories organizations members settings).freeze
+
   plugin :validation_helpers
 
   include Slug
@@ -20,8 +22,13 @@ class Repository < Sequel::Model
 
   one_to_many :url_mappings
 
+  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
   def validate
+    # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
     validates_length_range (3..100), :name
+    if SLUG_BLACKLIST.include?(slug.split('/', 2).last)
+      errors.add(:name, "cannot be '#{name}'")
+    end
     validates_presence :owner
     validates_presence :public_access
     validates_includes %w(ontology model specification mathematical),

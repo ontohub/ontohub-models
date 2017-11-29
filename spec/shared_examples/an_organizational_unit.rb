@@ -26,6 +26,11 @@ RSpec.shared_examples 'an organizational unit' do |factory|
           expect(subject).not_to be_valid
         end
 
+        it 'with a blacklisted name is invalid' do
+          subject.name = OrganizationalUnit::SLUG_BLACKLIST.sample
+          expect(subject).not_to be_valid
+        end
+
         it 'with too short of a name is invalid' do
           subject.name = 'a' * 2
           expect(subject).not_to be_valid
@@ -56,6 +61,11 @@ RSpec.shared_examples 'an organizational unit' do |factory|
 
         it 'with no name is valid' do
           subject.name = nil
+          expect(subject).to be_valid
+        end
+
+        it 'with a blacklisted name is valid' do
+          subject.name = OrganizationalUnit::SLUG_BLACKLIST.sample
           expect(subject).to be_valid
         end
 
