@@ -2,6 +2,8 @@
 
 # Superclass of Organization and User
 class OrganizationalUnit < Sequel::Model
+  SLUG_BLACKLIST = %w(new settings).freeze
+
   plugin :validation_helpers
   plugin :class_table_inheritance, key: :kind, alias: :organizational_units
 
@@ -18,6 +20,7 @@ class OrganizationalUnit < Sequel::Model
   def validate
     if new?
       validates_length_range (3..100), :name
+      errors.add(:name, "can not be '#{name}'") if SLUG_BLACKLIST.include?(slug)
       validates_format(Slug::DEFAULT_SLUG_FORMAT, :name,
                        message: 'must start and end with a lower case letter '\
                                 'or number, and only contain lower case '\
