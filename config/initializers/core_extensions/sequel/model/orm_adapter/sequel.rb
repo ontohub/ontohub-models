@@ -2,6 +2,7 @@
 
 # rubocop:disable Style/ClassAndModuleChildren
 class Sequel::Model
+  # rubocop:enable Style/ClassAndModuleChildren
   # This is monkey-patching the get method to allow for class table inheritance.
   # orm_adapter-sequel's development is stale.
   # :nocov:

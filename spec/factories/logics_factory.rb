@@ -3,7 +3,7 @@
 FactoryBot.define do
   factory :logic do
     association :language
-    name { Faker::Lorem.words(rand(4) + 1).join(' ') }
+    name { Faker::Lorem.words(rand(1..5)).join(' ') }
     slug { "#{name.parameterize}-#{generate(:slug_number)}" }
   end
 end

@@ -20,6 +20,7 @@ module OntohubModels
         Sequel::Model.db.extension :pg_enum
       # rubocop:disable HandleExceptions
       rescue Sequel::DatabaseConnectionError
+        # rubocop:enable HandleExceptions
         # If we are in rake db:create, we don't want the extension to be loaded.
         # See https://github.com/TalentBox/sequel-rails/issues/102
       end

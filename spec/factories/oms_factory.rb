@@ -10,7 +10,7 @@ FactoryBot.define do
     association :conservativity_status
     association :name_file_range, factory: :file_range
 
-    display_name { Faker::Lorem.words(2 + rand(2)).join(' ') }
+    display_name { Faker::Lorem.words(rand(2..4)).join(' ') }
     name { Faker::Internet.url('example.com', display_name) }
     name_extension { 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').sample }
     name_extension_index { rand(10) }
