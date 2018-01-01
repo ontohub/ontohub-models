@@ -28,7 +28,7 @@ Gem::Specification.new do |s|
 
   # Runtime dependencies
   s.add_dependency 'chewy', '~> 0.10.1'
-  s.add_dependency 'devise', '~> 4.3.0'
+  s.add_dependency 'devise', '>= 4.3', '< 4.5'
   s.add_dependency 'rails', '~> 5.1.4'
   s.add_dependency 'sequel', '>= 5.2', '< 5.4'
   s.add_dependency 'sequel-devise', '~> 0.0.11'
