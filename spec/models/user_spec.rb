@@ -20,16 +20,16 @@ RSpec.describe User, type: :model do
 
   context 'mailer' do
     before do
-      stub_const('Devise::Mailer', double('Devise::Mailer'))
       allow(Devise::Mailer).
-        to receive(:test_message).
+        to receive(:confirmation_instructions).
         and_return(OpenStruct.new(deliver_later: :ok))
     end
 
     subject { create :user }
 
     it 'calls the mailer asynchronously' do
-      expect(subject.send_devise_notification(:test_message)).to eq(:ok)
+      expect(subject.send_devise_notification(:confirmation_instructions)).
+        to eq(:ok)
     end
   end
 
