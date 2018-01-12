@@ -8,6 +8,24 @@ RSpec.describe Mapping do
     it_behaves_like 'a loc_id_base'
   end
 
+  context 'validations' do
+    subject { build(:mapping) }
+
+    it 'is valid' do
+      expect(subject).to be_valid
+    end
+
+    it 'is invalid if the origin is bad' do
+      subject.origin = 'bad'
+      expect(subject.valid?).to be(false)
+    end
+
+    it 'is invalid if the type is bad' do
+      subject.type = 'bad'
+      expect(subject.valid?).to be(false)
+    end
+  end
+
   context 'associations' do
     subject { create(:mapping) }
 

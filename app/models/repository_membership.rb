@@ -2,12 +2,14 @@
 
 # The class representing an Repository Membership
 class RepositoryMembership < Sequel::Model
+  ROLES = %w(admin write read).freeze
+
   plugin :validation_helpers
 
-  many_to_one :repository
   many_to_one :member, class: User
+  many_to_one :repository
 
   def validate
-    validates_includes %w(admin write read), :role
+    validates_includes ROLES, :role
   end
 end

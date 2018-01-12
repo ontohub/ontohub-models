@@ -2,6 +2,16 @@
 
 # The OMS model
 class OMS < LocIdBase
+  ORIGINS = %w(dg_empty dg_basic dg_basic_spec dg_extension dg_logic_coercion
+               dg_translation dg_union dg_intersect dg_extract dg_restriction
+               dg_reveal_translation free cofree np_free minimize dg_local
+               dg_closed dg_logic_qual dg_data dg_formal_params
+               dg_verification_generic dg_imports dg_inst dg_fit_spec
+               dg_fit_view dg_proof dg_normal_form dg_integrated_scc
+               dg_flattening dg_alignment dg_test).freeze
+
+  plugin :validation_helpers
+
   many_to_one :document
   many_to_one :language
   many_to_one :logic
@@ -50,4 +60,9 @@ class OMS < LocIdBase
             join_type: :inner, select: false).
       where(Sequel[:oms][:id] => id)
   end), class: Repository
+
+  def validate
+    validates_includes ORIGINS, :origin
+    super
+  end
 end
