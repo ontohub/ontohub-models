@@ -8,6 +8,18 @@ RSpec.describe OMS do
     it_behaves_like 'a loc_id_base'
   end
 
+  context 'validations' do
+    subject { build(:oms) }
+    it 'is valid' do
+      expect(subject).to be_valid
+    end
+
+    it 'is invalid if the origin is bad' do
+      subject.origin = 'bad'
+      expect(subject.valid?).to be(false)
+    end
+  end
+
   context 'associations' do
     subject { create(:oms) }
 

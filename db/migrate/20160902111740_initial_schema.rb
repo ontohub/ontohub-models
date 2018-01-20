@@ -42,15 +42,23 @@ Sequel.migration do
                      after: true)
     end
 
-    extension :pg_enum
+    # Enums are disabled because the Haskell SQL library "persistent", which
+    # Hets uses, cannot read enumeration types from the database. As soon as
+    # https://github.com/yesodweb/persistent/issues/264 is fixed, enums can be
+    # used again. Until then, every enum is replaced by a String with collation
+    # "C".  If more models that could use enums are added, add the accompanying
+    # enums as well, but comment them out and leave a note about the enum type.
+    # extension :pg_enum
 
-    create_enum :organizational_unit_kind_type,
-      %w(User Organization)
+    # create_enum :organizational_unit_kind_type,
+    #   %w(User Organization)
 
     create_table :organizational_units do
       primary_key :id
       # Kind of record - for class table inheritance
-      column :kind, :organizational_unit_kind_type, null: false
+      # This is actually a :organizational_unit_kind_type, but replaced by
+      # String for compatibility reasons.
+      column :kind, String, collate: '"C"', null: false
 
       column :slug, String, collate: '"C"', null: false, unique: true
 
@@ -61,8 +69,8 @@ Sequel.migration do
     end
 
     # User is an OrganizationalUnit
-    create_enum :global_role,
-      %w(admin user)
+    # create_enum :global_role,
+    #   %w(admin user)
 
     create_table :users do
       primary_key :id
@@ -100,7 +108,9 @@ Sequel.migration do
       # column :current_sign_in_ip, String
       # column :last_sign_in_ip, String
 
-      column :role, :global_role, null: false, default: 'user'
+      # This is actually a :global_role, but replaced by String for
+      # compatibility reasons.
+      column :role, String, collate: '"C"', null: false, default: 'user'
     end
 
     create_table :public_keys do
@@ -126,8 +136,8 @@ Sequel.migration do
       column :description, String, null: false
     end
 
-    create_enum :organization_role,
-      %w(admin write read)
+    # create_enum :organization_role,
+    #   %w(admin write read)
 
     create_table :organization_memberships do
       primary_key [:organization_id, :member_id]
@@ -135,14 +145,16 @@ Sequel.migration do
                   null: false, index: true, on_delete: :cascade
       foreign_key :member_id, :users,
                   null: false, index: true, on_delete: :cascade
-      column :role, :organization_role, null: false, default: 'read'
+      # This is actually a :organization_role, but replaced by String for
+      # compatibility reasons.
+      column :role, String, collate: '"C"', null: false, default: 'read'
     end
 
-    create_enum :repository_content_type,
-      %w(ontology model specification mathematical)
+    # create_enum :repository_content_type,
+    #   %w(ontology model specification mathematical)
 
-    create_enum :repository_remote_type_type,
-      %w(fork mirror)
+    # create_enum :repository_remote_type_type,
+    #   %w(fork mirror)
 
     create_table :repositories do
       primary_key :id
@@ -153,9 +165,13 @@ Sequel.migration do
       column :name, String, null: false
       column :description, :text, null: true
       column :public_access, TrueClass, null: false
-      column :content_type, :repository_content_type, null: false
+      # This is actually a :repository_content_type, but replaced by String for
+      # compatibility reasons.
+      column :content_type, String, collate: '"C"', null: false
       column :remote_address, String, null: true
-      column :remote_type, :repository_remote_type_type, null: true
+      # This is actually a repository_remote_type_type, but replaced by String
+      # for compatibility reasons.
+      column :remote_type, String, collate: '"C"', null: true
       column :synchronized_at, DateTime, null: true
 
       column :created_at, DateTime, null: false # This is set by a trigger
@@ -185,8 +201,8 @@ Sequel.migration do
 
     create_trigger_to_set_number(:url_mappings, :repository_id)
 
-    create_enum :repository_role,
-      %w(admin write read)
+    # create_enum :repository_role,
+    #   %w(admin write read)
 
     create_table :repository_memberships do
       primary_key [:repository_id, :member_id]
@@ -194,12 +210,14 @@ Sequel.migration do
                   null: false, index: true, on_delete: :cascade
       foreign_key :member_id, :users,
                   null: false, index: true, on_delete: :cascade
-      column :role, :repository_role, null: false, default: 'read'
+      # This is actually a :repository_role, but replaced by String for
+      # compatibility reasons.
+      column :role, String, collate: '"C"', null: false, default: 'read'
     end
 
-    create_enum :evaluation_state_type,
-      %w(not_yet_enqueued enqueued processing
-         finished_successfully finished_unsuccessfully)
+    # create_enum :evaluation_state_type,
+    #   %w(not_yet_enqueued enqueued processing
+    #      finished_successfully finished_unsuccessfully)
 
     create_table :file_versions do
       primary_key :id, type: :bigserial
@@ -210,7 +228,9 @@ Sequel.migration do
       column :commit_sha, String, null: false
       column :path, String, null: false
 
-      column :evaluation_state, :evaluation_state_type,
+      # This is actually a :evaluation_state_type, but replaced by String for
+      # compatibility reasons.
+      column :evaluation_state, String, collate: '"C"',
         null: false,
         default: 'not_yet_enqueued'
 
@@ -227,9 +247,9 @@ Sequel.migration do
       column :queried_sha, String, null: false, index: true
     end
 
-    create_enum :loc_id_base_kind_type,
-      %w(NativeDocument Library OMS Mapping OpenConjecture Theorem
-         CounterTheorem Axiom Symbol)
+    # create_enum :loc_id_base_kind_type,
+    #   %w(NativeDocument Library OMS Mapping OpenConjecture Theorem
+    #      CounterTheorem Axiom Symbol)
 
     create_table :loc_id_bases do
       # We use bigint/bigserial for the id because there will be many symbols
@@ -238,7 +258,9 @@ Sequel.migration do
       foreign_key :file_version_id, :file_versions,
                   type: :bigint, null: false, on_delete: :cascade
       # Kind of record - for class table inheritance
-      column :kind, :loc_id_base_kind_type, null: false
+      # This is actually a :loc_id_base_kind_type, but replaced by String for
+      # compatibility reasons.
+      column :kind, String, collate: '"C"', null: false
       column :loc_id, String, collate: '"C"', null: false
 
       column :created_at, DateTime, null: false # This is set by a trigger
@@ -376,8 +398,8 @@ Sequel.migration do
       column :end_column, Integer, null: true
     end
 
-    create_enum :diagnosis_kind_type,
-      %w(Error Warn Hint Debug)
+    # create_enum :diagnosis_kind_type,
+    #   %w(Error Warn Hint Debug)
 
     create_table :diagnoses do
       primary_key :id
@@ -386,7 +408,9 @@ Sequel.migration do
       foreign_key :file_range_id, :file_ranges,
                   type: :bigint, null: true, on_delete: :set_null
       column :number, Integer, null: false # This is set by a trigger
-      column :kind, :diagnosis_kind_type, null: false
+      # This is actually a :diagnosis_kind_type, but replaced by String for
+      # compatibility reasons.
+      column :kind, String, collate: '"C"', null: false
       column :text, String, null: false
 
       index [:file_version_id, :number], null: false, unique: true
@@ -394,13 +418,13 @@ Sequel.migration do
 
     create_trigger_to_set_number(:diagnoses, :file_version_id)
 
-    create_enum :oms_origin_type,
-      %w(dg_empty dg_basic dg_basic_spec dg_extension dg_logic_coercion
-         dg_translation dg_union dg_intersect dg_extract dg_restriction
-         dg_reveal_translation free cofree np_free minimize dg_local dg_closed
-         dg_logic_qual dg_data dg_formal_params dg_verification_generic
-         dg_imports dg_inst dg_fit_spec dg_fit_view dg_proof dg_normal_form
-         dg_integrated_scc dg_flattening dg_alignment dg_test)
+    # create_enum :oms_origin_type,
+    #   %w(dg_empty dg_basic dg_basic_spec dg_extension dg_logic_coercion
+    #      dg_translation dg_union dg_intersect dg_extract dg_restriction
+    #      dg_reveal_translation free cofree np_free minimize dg_local dg_closed
+    #      dg_logic_qual dg_data dg_formal_params dg_verification_generic
+    #      dg_imports dg_inst dg_fit_spec dg_fit_view dg_proof dg_normal_form
+    #      dg_integrated_scc dg_flattening dg_alignment dg_test)
 
     # OMS is a LocIdBase
     create_table :oms do
@@ -433,27 +457,29 @@ Sequel.migration do
       column :name_extension_index, Integer, null: false
       # The description is *not* managed by Hets
       column :description, String, null: true
-      column :origin, :oms_origin_type, null: false
+      # This is actually a :oms_origin_type, but replaced by String for
+      # compatibility reasons.
+      column :origin, String, collate: '"C"', null: false
       column :label_has_hiding, TrueClass, null: false
       column :label_has_free, TrueClass, null: false
     end
 
-    create_enum :mapping_origin_type,
-      %w(see_target see_source test dg_link_verif dg_implies_link
-         dg_link_extension dg_link_translation dg_link_closed_lenv
-         dg_link_imports dg_link_intersect dg_link_morph dg_link_inst
-         dg_link_inst_arg dg_link_view dg_link_align dg_link_fit_view
-         dg_link_fit_view_imp dg_link_proof dg_link_flattening_union
-         dg_link_flattening_rename dg_link_refinement)
+    # create_enum :mapping_origin_type,
+    #   %w(see_target see_source test dg_link_verif dg_implies_link
+    #      dg_link_extension dg_link_translation dg_link_closed_lenv
+    #      dg_link_imports dg_link_intersect dg_link_morph dg_link_inst
+    #      dg_link_inst_arg dg_link_view dg_link_align dg_link_fit_view
+    #      dg_link_fit_view_imp dg_link_proof dg_link_flattening_union
+    #      dg_link_flattening_rename dg_link_refinement)
 
-    create_enum :mapping_type_type,
-      %w(local_def local_thm_open local_thm_proved
-         global_def global_thm_open global_thm_proved
-         hiding_def
-         free_def cofree_def np_free_def minimize_def
-         hiding_open hiding_proved
-         free_open cofree_open np_free_open minimize_open
-         free_proved cofree_proved np_free_proved minimize_proved)
+    # create_enum :mapping_type_type,
+    #   %w(local_def local_thm_open local_thm_proved
+    #      global_def global_thm_open global_thm_proved
+    #      hiding_def
+    #      free_def cofree_def np_free_def minimize_def
+    #      hiding_open hiding_proved
+    #      free_open cofree_open np_free_open minimize_open
+    #      free_proved cofree_proved np_free_proved minimize_proved)
 
     create_table :mappings do
       primary_key :id, type: :bigserial
@@ -478,8 +504,12 @@ Sequel.migration do
                   null: true, on_delete: :set_null
       column :display_name, String, null: false
       column :name, String, null: false
-      column :origin, :mapping_origin_type
-      column :type, :mapping_type_type, null: false
+      # This is actually a :mapping_origin_type, but it is replaced by a String
+      # for compatibility reasons.
+      column :origin, String, collate: '"C"'
+      # This is actually a :mapping_type_type, but it is replaced by a String
+      # for compatibility reasons.
+      column :type, String, collate: '"C"', null: false
       column :pending, TrueClass, null: false
     end
 
@@ -495,9 +525,9 @@ Sequel.migration do
       column :text, String, null: false
     end
 
-    REASONING_STATUSES ||= %w(OPN ERR UNK RSO THM CSA CSAS).freeze
-    create_enum :reasoning_status_on_conjecture_type,
-      [*REASONING_STATUSES, 'CONTR']
+    # REASONING_STATUSES ||= %w(OPN ERR UNK RSO THM CSA CSAS).freeze
+    # create_enum :reasoning_status_on_conjecture_type,
+    #   [*REASONING_STATUSES, 'CONTR']
 
     create_table :axioms do
       primary_key :id, type: :bigserial
@@ -510,10 +540,14 @@ Sequel.migration do
       primary_key :id, type: :bigserial
       foreign_key [:id], :sentences,
                   null: false, unique: true, on_delete: :cascade
-      column :evaluation_state, :evaluation_state_type,
+      # This is actually a :evaluation_state_type, but replaced by String for
+      # compatibility reasons.
+      column :evaluation_state, String, collate: '"C"',
         null: false,
         default: 'not_yet_enqueued'
-      column :reasoning_status, :reasoning_status_on_conjecture_type,
+      # This is actually a :reasoning_status_on_conjecture_type, but it is
+      # replaced by a String for compatibility reasons.
+      column :reasoning_status, String, collate: '"C"',
         null: false,
         default: 'OPN'
     end
@@ -571,14 +605,16 @@ Sequel.migration do
       column :time_limit, Integer, null: true
     end
 
-    create_enum :premise_selection_kind_type,
-      %w(ManualPremiseSelection SinePremiseSelection)
+    # create_enum :premise_selection_kind_type,
+    #   %w(ManualPremiseSelection SinePremiseSelection)
 
     create_table :premise_selections do
       primary_key :id
       foreign_key :reasoner_configuration_id, :reasoner_configurations,
                   null: false, on_delete: :cascade
-      column :kind, :premise_selection_kind_type, null: false
+      # This is actually a :premise_selection_kind_type, but it is replaced by
+      # a String for compatibility reasons.
+      column :kind, String, collate: '"C"', null: false
     end
 
     create_table :premise_selected_sentences do
@@ -626,10 +662,10 @@ Sequel.migration do
       column :commonness, Integer, null: false
     end
 
-    create_enum :reasoning_attempt_kind_type,
-      %w(ProofAttempt ConsistencyCheckAttempt)
+    # create_enum :reasoning_attempt_kind_type,
+    #   %w(ProofAttempt ConsistencyCheckAttempt)
 
-    create_enum :reasoning_status_on_reasoning_attempt_type, REASONING_STATUSES
+    # create_enum :reasoning_status_on_reasoning_attempt_type, REASONING_STATUSES
 
     # ReasoningAttempt is using Single Table Inheritance
     create_table :reasoning_attempts do
@@ -639,11 +675,17 @@ Sequel.migration do
       # There is no used reasoner until reasoning has begun.
       foreign_key :used_reasoner_id, :reasoners,
                   null: true, on_delete: :set_null
-      column :kind, :reasoning_attempt_kind_type, null: false
+      # This is actually a :reasoning_attempt_kind_type, but it is replaced by
+      # a String for compatibility reasons.
+      column :kind, String, collate: '"C"', null: false
       column :time_taken, Integer, null: true
-      column :evaluation_state, :evaluation_state_type,
+      # This is actually a :evaluation_state_type, but replaced by String for
+      # compatibility reasons.
+      column :evaluation_state, String, collate: '"C"',
              null: false, default: 'not_yet_enqueued'
-      column :reasoning_status, :reasoning_status_on_reasoning_attempt_type,
+      # This is actually a :reasoning_status_on_reasoning_attempt_type, but it
+      # is replaced by a String for compatibility reasons.
+      column :reasoning_status, String, collate: '"C"',
              null: false, default: 'OPN'
 
       column :created_at, DateTime, null: false # This is set by a trigger

@@ -373,13 +373,6 @@ RSpec.describe User, type: :model do
         end
       end
 
-      context 'query by invalid role' do
-        it 'raises a database error' do
-          expect { subject.organizations_by_role('invalid').to_a }.
-            to raise_error(Sequel::DatabaseError)
-        end
-      end
-
       context 'query by role: read' do
         it 'does not return the organization' do
           expect(subject.organizations_by_role('read').to_a).

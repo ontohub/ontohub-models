@@ -3,6 +3,8 @@
 # The Repository model groups libraries and exposes the basic git functinoality.
 class Repository < Sequel::Model
   SLUG_BLACKLIST = %w(repositories organizations members settings).freeze
+  CONTENT_TYPES = %w(ontology model specification mathematical).freeze
+  REMOTE_TYPES = %(fork mirror).freeze
 
   plugin :validation_helpers
 
@@ -31,11 +33,10 @@ class Repository < Sequel::Model
     end
     validates_presence :owner
     validates_presence :public_access
-    validates_includes %w(ontology model specification mathematical),
-      :content_type
+    validates_includes CONTENT_TYPES, :content_type
     validates_presence :remote_type if remote_address.present?
     validates_presence :remote_address if remote_type.present?
-    validates_includes %(fork mirror), :remote_type unless remote_type.nil?
+    validates_includes REMOTE_TYPES, :remote_type unless remote_type.nil?
     super
   end
 

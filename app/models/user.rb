@@ -16,6 +16,8 @@ class User < OrganizationalUnit
     super(conditions)
   end
 
+  GLOBAL_ROLES = %w(admin user).freeze
+
   plugin :devise
   devise :database_authenticatable, :registerable, :confirmable, :recoverable,
     :lockable, :trackable
@@ -114,7 +116,7 @@ class User < OrganizationalUnit
   # rubocop:disable Metrics/MethodLength
   def validate
     # rubocop:enable Metrics/MethodLength
-    validates_includes %w(admin user), :role
+    validates_includes GLOBAL_ROLES, :role
     validates_format(Devise.email_regexp, :email)
     validates_unique(:email)
     validates_presence(:password) if new?

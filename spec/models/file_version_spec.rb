@@ -33,6 +33,16 @@ RSpec.describe FileVersion, type: :model do
       subject.repository = nil
       expect(subject.valid?).to be(false)
     end
+
+    it 'is valid if the evaluation_state is nil' do
+      subject.evaluation_state = nil
+      expect(subject.valid?).to be(true)
+    end
+
+    it 'is invalid if the evaluation_state is bad' do
+      subject.evaluation_state = 'bad'
+      expect(subject.valid?).to be(false)
+    end
   end
 
   context 'compatibility' do
