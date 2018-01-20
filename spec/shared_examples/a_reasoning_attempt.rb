@@ -29,6 +29,12 @@ RSpec.shared_examples 'a reasoning_attempt' do
                       :reasoner_configuration)
     end
 
+    context 'used_logic_mapping' do
+      it_behaves_like('it has a', :used_logic_mapping, LogicMapping)
+      it_behaves_like('being nullified with deletion of the association',
+                      :used_logic_mapping)
+    end
+
     context 'used_reasoner' do
       it_behaves_like('it has a', :used_reasoner, Reasoner)
       it_behaves_like('being nullified with deletion of the association',

@@ -3,6 +3,7 @@
 FactoryBot.define do
   factory :reasoning_attempt__this_factory_is_abstract, class: ProofAttempt do
     association :reasoner_configuration
+    association :used_logic_mapping, factory: :logic_mapping
     association :used_reasoner, factory: :reasoner
     kind { ProofAttempt.to_s }
     time_taken { rand(120) }

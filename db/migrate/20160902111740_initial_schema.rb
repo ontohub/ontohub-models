@@ -684,6 +684,9 @@ Sequel.migration do
       primary_key :id
       foreign_key :reasoner_configuration_id, :reasoner_configurations,
                   null: false, on_delete: :cascade
+      # There is no used logic_mapping until reasoning has begun.
+      foreign_key :used_logic_mapping_id, :logic_mappings,
+                  null: true, on_delete: :set_null
       # There is no used reasoner until reasoning has begun.
       foreign_key :used_reasoner_id, :reasoners,
                   null: true, on_delete: :set_null
