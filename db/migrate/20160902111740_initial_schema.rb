@@ -603,10 +603,17 @@ Sequel.migration do
       column :imported, TrueClass, null: false
     end
 
+    # create_enum :reasoner_kind_type,
+    #   %w(Prover ConsistencyChecker)
+
     create_table :reasoners do
       primary_key :id
-      column :slug, String, collate: '"C"', null: false, unique: true
+      column :slug, String, collate: '"C"', null: false
+      # This is actually a :reasoner_kind_type, but it is replaced by
+      # a String for compatibility reasons.
+      column :kind, String, collate: '"C"', null: false
       column :display_name, String, null: false, unique: true
+      index [:slug, :kind], null: false, unique: true
     end
 
     create_table :reasoner_configurations do
