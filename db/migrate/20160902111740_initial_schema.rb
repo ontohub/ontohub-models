@@ -230,20 +230,29 @@ Sequel.migration do
     #   %w(not_yet_enqueued enqueued processing
     #      finished_successfully finished_unsuccessfully)
 
+    create_table :actions do
+      primary_key :id, type: :bigserial
+      # This is actually a :evaluation_state_type, but replaced by String for
+      # compatibility reasons.
+      column :evaluation_state, String, collate: '"C"',
+        null: false,
+        default: 'not_yet_enqueued'
+      column :message, String, null: true
+
+      column :created_at, DateTime, null: false # This is set by a trigger
+      column :updated_at, DateTime, null: false # This is set by a trigger
+    end
+
     create_table :file_versions do
       primary_key :id, type: :bigserial
 
       foreign_key :repository_id, :repositories,
                   null: false, index: true, on_delete: :cascade
 
+      foreign_key :action_id, :actions, null: false, on_delete: :restrict
+
       column :commit_sha, String, null: false
       column :path, String, null: false
-
-      # This is actually a :evaluation_state_type, but replaced by String for
-      # compatibility reasons.
-      column :evaluation_state, String, collate: '"C"',
-                                        null: false,
-                                        default: 'not_yet_enqueued'
 
       column :created_at, DateTime, null: false # This is set by a trigger
       column :updated_at, DateTime, null: false # This is set by a trigger
@@ -551,11 +560,7 @@ Sequel.migration do
       primary_key :id, type: :bigserial
       foreign_key [:id], :sentences,
                   null: false, unique: true, on_delete: :cascade
-      # This is actually a :evaluation_state_type, but replaced by String for
-      # compatibility reasons.
-      column :evaluation_state, String, collate: '"C"',
-                                        null: false,
-                                        default: 'not_yet_enqueued'
+      foreign_key :action_id, :actions, null: false, on_delete: :restrict
       # This is actually a :reasoning_status_on_conjecture_type, but it is
       # replaced by a String for compatibility reasons.
       column :reasoning_status, String, collate: '"C"',
@@ -633,6 +638,7 @@ Sequel.migration do
       # This is actually a :premise_selection_kind_type, but it is replaced by
       # a String for compatibility reasons.
       column :kind, String, collate: '"C"', null: false
+      column :time_taken, Integer, null: true
     end
 
     create_table :premise_selected_sentences do
@@ -697,14 +703,11 @@ Sequel.migration do
       # There is no used reasoner until reasoning has begun.
       foreign_key :used_reasoner_id, :reasoners,
                   null: true, on_delete: :set_null
+      foreign_key :action_id, :actions, null: false, on_delete: :restrict
       # This is actually a :reasoning_attempt_kind_type, but it is replaced by
       # a String for compatibility reasons.
       column :kind, String, collate: '"C"', null: false
       column :time_taken, Integer, null: true
-      # This is actually a :evaluation_state_type, but replaced by String for
-      # compatibility reasons.
-      column :evaluation_state, String, collate: '"C"',
-                                        null: false, default: 'not_yet_enqueued'
       # This is actually a :reasoning_status_on_reasoning_attempt_type, but it
       # is replaced by a String for compatibility reasons.
       column :reasoning_status, String, collate: '"C"',

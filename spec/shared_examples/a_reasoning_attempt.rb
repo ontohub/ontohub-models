@@ -8,11 +8,6 @@ RSpec.shared_examples 'a reasoning_attempt' do
       expect(subject).to be_valid
     end
 
-    it 'is invalid if the evaluation_state is bad' do
-      subject.evaluation_state = 'bad'
-      expect(subject.valid?).to be(false)
-    end
-
     it 'is invalid if the reasoning_status is bad' do
       subject.reasoning_status = 'bad'
       expect(subject.valid?).to be(false)
@@ -21,6 +16,11 @@ RSpec.shared_examples 'a reasoning_attempt' do
 
   context 'associations' do
     before { subject.save }
+
+    context 'action' do
+      it_behaves_like('it has a', :action, Action)
+      it_behaves_like('restricting the deletion of the association', :action)
+    end
 
     context 'reasoner_configuration' do
       it_behaves_like('it has a', :reasoner_configuration,

@@ -34,14 +34,9 @@ RSpec.describe FileVersion, type: :model do
       expect(subject.valid?).to be(false)
     end
 
-    it 'is valid if the evaluation_state is nil' do
-      subject.evaluation_state = nil
+    it 'is valid if it has an action' do
+      subject.action = create(:action)
       expect(subject.valid?).to be(true)
-    end
-
-    it 'is invalid if the evaluation_state is bad' do
-      subject.evaluation_state = 'bad'
-      expect(subject.valid?).to be(false)
     end
   end
 
@@ -61,6 +56,34 @@ RSpec.describe FileVersion, type: :model do
 
     it 'has a repository' do
       expect(subject.repository).to be_a(Repository)
+    end
+  end
+
+  context 'associations' do
+    subject { create(:file_version) }
+
+    context 'action' do
+      it_behaves_like('it has a', :action, Action)
+      it_behaves_like('restricting the deletion of the association', :action)
+    end
+
+    context 'diagnoses' do
+      let!(:unrelated) do
+        (1..2).map { create(:diagnosis) }
+      end
+
+      let!(:related) do
+        (1..2).map { create(:diagnosis, file_version: subject) }
+      end
+
+      it 'has the diagnoses' do
+        expect(subject.diagnoses).to match_array(related)
+      end
+    end
+
+    context 'repository' do
+      it_behaves_like('it has a', :repository, Repository)
+      it_behaves_like('being deleted with the association', :repository)
     end
   end
 end
