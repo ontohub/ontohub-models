@@ -628,64 +628,6 @@ Sequel.migration do
       column :time_limit, Integer, null: true
     end
 
-    # create_enum :premise_selection_kind_type,
-    #   %w(ManualPremiseSelection SinePremiseSelection)
-
-    create_table :premise_selections do
-      primary_key :id
-      foreign_key :reasoner_configuration_id, :reasoner_configurations,
-                  null: false, on_delete: :cascade
-      # This is actually a :premise_selection_kind_type, but it is replaced by
-      # a String for compatibility reasons.
-      column :kind, String, collate: '"C"', null: false
-      column :time_taken, Integer, null: true
-    end
-
-    create_table :premise_selected_sentences do
-      primary_key [:premise_id, :premise_selection_id]
-      foreign_key :premise_id, :sentences,
-                  type: :bigint, null: false, index: true, on_delete: :cascade
-      foreign_key :premise_selection_id, :premise_selections,
-                  null: false, index: true, on_delete: :cascade
-    end
-
-    # ManualPremiseSelection is a PremiseSelection
-    create_table :manual_premise_selections do
-      primary_key :id
-      foreign_key [:id], :premise_selections,
-                  null: false, unique: true, on_delete: :cascade
-    end
-
-    # SinePremiseSelection is a PremiseSelection
-    create_table :sine_premise_selections do
-      primary_key :id
-      foreign_key [:id], :premise_selections,
-                  null: false, unique: true, on_delete: :cascade
-      column :depth_limit, Integer, null: true
-      column :tolerance, Float, null: false
-      column :premise_number_limit, Integer, null: true
-    end
-
-    create_table :sine_symbol_premise_triggers do
-      primary_key :id
-      foreign_key :sine_premise_selection_id, :sine_premise_selections,
-                  null: false, on_delete: :cascade
-      foreign_key :premise_id, :sentences,
-                  type: :bigint, null: false, on_delete: :cascade
-      foreign_key :symbol_id, :symbols,
-                  type: :bigint, null: false, on_delete: :cascade
-      column :min_tolerance, Float, null: false
-    end
-
-    create_table :sine_symbol_commonnesses do
-      primary_key :id
-      foreign_key :sine_premise_selection_id, :sine_premise_selections,
-                  null: false, on_delete: :cascade
-      foreign_key :symbol_id, :symbols,
-                  type: :bigint, null: false, on_delete: :cascade
-      column :commonness, Integer, null: false
-    end
-
     # create_enum :reasoning_attempt_kind_type,
     #   %w(ProofAttempt ConsistencyCheckAttempt)
 
@@ -759,6 +701,66 @@ Sequel.migration do
 
       column :created_at, DateTime, null: false # This is set by a trigger
       column :updated_at, DateTime, null: false # This is set by a trigger
+    end
+
+    # create_enum :premise_selection_kind_type,
+    #   %w(ManualPremiseSelection SinePremiseSelection)
+
+    create_table :premise_selections do
+      primary_key :id
+      foreign_key :reasoner_configuration_id, :reasoner_configurations,
+                  null: false, on_delete: :cascade
+      foreign_key :proof_attempt_id, :proof_attempts,
+                  null: false, on_delete: :cascade
+      # This is actually a :premise_selection_kind_type, but it is replaced by
+      # a String for compatibility reasons.
+      column :kind, String, collate: '"C"', null: false
+      column :time_taken, Integer, null: true
+    end
+
+    create_table :premise_selected_sentences do
+      primary_key [:premise_id, :premise_selection_id]
+      foreign_key :premise_id, :sentences,
+                  type: :bigint, null: false, index: true, on_delete: :cascade
+      foreign_key :premise_selection_id, :premise_selections,
+                  null: false, index: true, on_delete: :cascade
+    end
+
+    # ManualPremiseSelection is a PremiseSelection
+    create_table :manual_premise_selections do
+      primary_key :id
+      foreign_key [:id], :premise_selections,
+                  null: false, unique: true, on_delete: :cascade
+    end
+
+    # SinePremiseSelection is a PremiseSelection
+    create_table :sine_premise_selections do
+      primary_key :id
+      foreign_key [:id], :premise_selections,
+                  null: false, unique: true, on_delete: :cascade
+      column :depth_limit, Integer, null: true
+      column :tolerance, Float, null: false
+      column :premise_number_limit, Integer, null: true
+    end
+
+    create_table :sine_symbol_premise_triggers do
+      primary_key :id
+      foreign_key :sine_premise_selection_id, :sine_premise_selections,
+                  null: false, on_delete: :cascade
+      foreign_key :premise_id, :sentences,
+                  type: :bigint, null: false, on_delete: :cascade
+      foreign_key :symbol_id, :symbols,
+                  type: :bigint, null: false, on_delete: :cascade
+      column :min_tolerance, Float, null: false
+    end
+
+    create_table :sine_symbol_commonnesses do
+      primary_key :id
+      foreign_key :sine_premise_selection_id, :sine_premise_selections,
+                  null: false, on_delete: :cascade
+      foreign_key :symbol_id, :symbols,
+                  type: :bigint, null: false, on_delete: :cascade
+      column :commonness, Integer, null: false
     end
 
     # ##################################################################### #
