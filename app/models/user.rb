@@ -79,7 +79,6 @@ class User < OrganizationalUnit
       graph(:organizations, {id: :owner_id}, select: false).
       graph(:organization_memberships, {organization_id: :id}, select: false).
       graph(:users, {id: :member_id}, select: false).
-
       graph(:repository_memberships,
             {repository_id: Sequel[:repositories][:id]},
             select: false).
@@ -99,7 +98,6 @@ class User < OrganizationalUnit
       graph(:organizations, {id: :owner_id}, select: false).
       graph(:organization_memberships, {organization_id: :id}, select: false).
       graph(:users, {id: :member_id}, select: false).
-
       graph(:repository_memberships,
             {repository_id: Sequel[:repositories][:id]},
             select: false).
