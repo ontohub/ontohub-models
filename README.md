@@ -1,7 +1,6 @@
 [![Build Status](https://travis-ci.org/ontohub/ontohub-models.svg?branch=master)](https://travis-ci.org/ontohub/ontohub-models)
 [![codecov](https://codecov.io/gh/ontohub/ontohub-models/branch/master/graph/badge.svg)](https://codecov.io/gh/ontohub/ontohub-models)
 [![Code Climate](https://codeclimate.com/github/ontohub/ontohub-models/badges/gpa.svg)](https://codeclimate.com/github/ontohub/ontohub-models)
-[![Dependency Status](https://gemnasium.com/badges/github.com/ontohub/ontohub-models.svg)](https://gemnasium.com/github.com/ontohub/ontohub-models)
 [![GitHub issues](https://img.shields.io/github/issues/ontohub/ontohub-models.svg?maxAge=2592000)](https://waffle.io/ontohub/ontohub-backend?source=ontohub%2Fontohub-models)
 
 # ontohub-models
