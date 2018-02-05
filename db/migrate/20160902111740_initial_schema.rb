@@ -180,8 +180,15 @@ Sequel.migration do
       column :updated_at, DateTime, null: false # This is set by a trigger
     end
 
+    # create_enum :api_key_kind_type,
+    #   %w(HetsApiKey)
+
     create_table :api_keys do
       primary_key :id
+      # Kind of record - for class table inheritance
+      # This is actually a :api_key_kind_type, but replaced by String for
+      # compatibility reasons.
+      column :kind, String, collate: '"C"', null: false
       column :key, String, null: false, unique: true
       column :comment, String, null: true
 
