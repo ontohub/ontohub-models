@@ -9,5 +9,9 @@ FactoryBot.define do
     factory :hets_api_key, class: HetsApiKey do
       kind { HetsApiKey.to_s }
     end
+
+    factory :git_shell_api_key, class: GitShellApiKey do
+      kind { GitShellApiKey.to_s }
+    end
   end
 end
