@@ -16,6 +16,7 @@ Sequel.migration do
         END;
       SQL
       function_name = :"#{table}_next_number"
+      drop_function(function_name, cascade: true, if_exists: true)
       create_function(function_name, function,
                       language: :plpgsql, returns: :trigger)
       create_trigger(table, :trg_set_number, function_name,
@@ -34,6 +35,7 @@ Sequel.migration do
       SQL
       function_name =
         :"on_delete_from_#{child_table}_also_delete_from_#{parent_table}"
+      drop_function(function_name, cascade: true, if_exists: true)
       create_function(function_name, function,
                       language: :plpgsql, returns: :trigger)
       create_trigger(child_table, :trg_delete_from_parent, function_name,
