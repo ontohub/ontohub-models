@@ -4,7 +4,7 @@
 class Repository < Sequel::Model
   SLUG_BLACKLIST = %w(repositories organizations members settings).freeze
   CONTENT_TYPES = %w(ontology model specification mathematical).freeze
-  REMOTE_TYPES = %(fork mirror).freeze
+  REMOTE_TYPES = %(fork mirror)
 
   plugin :validation_helpers
 
