@@ -233,8 +233,8 @@ Sequel.migration do
       # This is actually a :evaluation_state_type, but replaced by String for
       # compatibility reasons.
       column :evaluation_state, String, collate: '"C"',
-        null: false,
-        default: 'not_yet_enqueued'
+                                        null: false,
+                                        default: 'not_yet_enqueued'
 
       column :created_at, DateTime, null: false # This is set by a trigger
       column :updated_at, DateTime, null: false # This is set by a trigger
@@ -545,13 +545,13 @@ Sequel.migration do
       # This is actually a :evaluation_state_type, but replaced by String for
       # compatibility reasons.
       column :evaluation_state, String, collate: '"C"',
-        null: false,
-        default: 'not_yet_enqueued'
+                                        null: false,
+                                        default: 'not_yet_enqueued'
       # This is actually a :reasoning_status_on_conjecture_type, but it is
       # replaced by a String for compatibility reasons.
       column :reasoning_status, String, collate: '"C"',
-        null: false,
-        default: 'OPN'
+                                        null: false,
+                                        default: 'OPN'
     end
 
     # Symbol is a LocIdBase
@@ -667,7 +667,8 @@ Sequel.migration do
     # create_enum :reasoning_attempt_kind_type,
     #   %w(ProofAttempt ConsistencyCheckAttempt)
 
-    # create_enum :reasoning_status_on_reasoning_attempt_type, REASONING_STATUSES
+    # create_enum :reasoning_status_on_reasoning_attempt_type,
+    #   REASONING_STATUSES
 
     # ReasoningAttempt is using Single Table Inheritance
     create_table :reasoning_attempts do
@@ -684,11 +685,11 @@ Sequel.migration do
       # This is actually a :evaluation_state_type, but replaced by String for
       # compatibility reasons.
       column :evaluation_state, String, collate: '"C"',
-             null: false, default: 'not_yet_enqueued'
+                                        null: false, default: 'not_yet_enqueued'
       # This is actually a :reasoning_status_on_reasoning_attempt_type, but it
       # is replaced by a String for compatibility reasons.
       column :reasoning_status, String, collate: '"C"',
-             null: false, default: 'OPN'
+                                        null: false, default: 'OPN'
 
       column :created_at, DateTime, null: false # This is set by a trigger
       column :updated_at, DateTime, null: false # This is set by a trigger
