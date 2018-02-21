@@ -180,13 +180,22 @@ Sequel.migration do
       column :updated_at, DateTime, null: false # This is set by a trigger
     end
 
+    # create_enum :api_key_kind_type,
+    #   %w(GitShellApiKey HetsApiKey)
+
     create_table :api_keys do
       primary_key :id
-      column :key, String, null: false, unique: true
+      # Kind of record - for class table inheritance
+      # This is actually a :api_key_kind_type, but replaced by String for
+      # compatibility reasons.
+      column :kind, String, collate: '"C"', null: false
+      column :key, String, null: false
       column :comment, String, null: true
 
       column :created_at, DateTime, null: false # This is set by a trigger
       column :updated_at, DateTime, null: false # This is set by a trigger
+
+      index [:kind, :key], null: false, unique: true
     end
 
     create_table :url_mappings do

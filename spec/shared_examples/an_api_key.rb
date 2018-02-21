@@ -2,16 +2,15 @@
 
 require 'rails_helper'
 
-RSpec.describe ApiKey do
+RSpec.shared_examples 'an ApiKey' do
   context 'timestamps' do
-    subject { build(:api_key) }
     it_behaves_like 'an object with timestamps'
   end
 
   context '.generate' do
     let(:secret) { Faker::Crypto.md5 }
     let(:length) { 10 }
-    let(:key) { ApiKey.generate(secret, length) }
+    let(:key) { described_class.generate(secret, length) }
 
     it 'contains an encoded and a raw key' do
       expect(key).to match(encoded: be_present, raw: be_present)
@@ -35,18 +34,18 @@ RSpec.describe ApiKey do
   context '.verify' do
     let(:secret) { Faker::Crypto.md5 }
     let(:length) { 10 }
-    let(:key) { ApiKey.generate(secret, length) }
-    let!(:api_key) { create(:api_key, key: key[:encoded]) }
+    let(:key) { described_class.generate(secret, length) }
+    let!(:api_key) { create(factory, key: key[:encoded]) }
 
     shared_examples 'it is invalid' do
       it 'does not verify' do
-        expect(ApiKey.verify(user_secret, user_key)).to be(nil)
+        expect(described_class.verify(user_secret, user_key)).to be(nil)
       end
     end
 
     shared_examples 'it is valid' do
       it 'validates' do
-        expect(ApiKey.verify(user_secret, user_key)).to eq(api_key)
+        expect(described_class.verify(user_secret, user_key)).to eq(api_key)
       end
     end
 

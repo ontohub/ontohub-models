@@ -5,6 +5,8 @@ class ApiKey < Sequel::Model
   DIGEST = 'SHA256'
   SALT = 'Ontohub API Key'
 
+  plugin :single_table_inheritance, :kind
+
   plugin :devise
   devise
 
@@ -27,13 +29,13 @@ class ApiKey < Sequel::Model
     end
 
     def digest(secret, raw_key)
-      OpenSSL::HMAC.hexdigest(DIGEST, key(secret), raw_key)
+      OpenSSL::HMAC.hexdigest(self::DIGEST, key(secret), raw_key)
     end
 
     protected
 
     def key(secret)
-      generator(secret).generate_key(SALT)
+      generator(secret).generate_key(self::SALT)
     end
 
     def generator(secret)
