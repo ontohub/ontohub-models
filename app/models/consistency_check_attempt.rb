@@ -2,6 +2,8 @@
 
 # The ConsistencyCheckAttempt model
 class ConsistencyCheckAttempt < ReasoningAttempt
+  CONSISTENCY_STATUSES = %w(Open Timeout Error Consistent Inconsistent)
+
   many_to_one :oms, class: OMS
 
   # Equivalent to oms.repository
@@ -17,4 +19,9 @@ class ConsistencyCheckAttempt < ReasoningAttempt
             join_type: :inner, select: false).
       where(Sequel[:loc_id_bases][:id] => oms_id)
   end), class: Repository
+
+  def validate
+    validates_includes CONSISTENCY_STATUSES, :consistency_status
+    super
+  end
 end

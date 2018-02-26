@@ -3,17 +3,6 @@
 require 'rails_helper'
 
 RSpec.shared_examples 'a reasoning_attempt' do
-  context 'validations' do
-    it 'is valid' do
-      expect(subject).to be_valid
-    end
-
-    it 'is invalid if the reasoning_status is bad' do
-      subject.reasoning_status = 'bad'
-      expect(subject.valid?).to be(false)
-    end
-  end
-
   context 'associations' do
     before { subject.save }
 
@@ -29,10 +18,10 @@ RSpec.shared_examples 'a reasoning_attempt' do
                       :reasoner_configuration)
     end
 
-    context 'used_logic_mapping' do
-      it_behaves_like('it has a', :used_logic_mapping, LogicMapping)
+    context 'used_logic_translation' do
+      it_behaves_like('it has a', :used_logic_translation, LogicTranslation)
       it_behaves_like('being nullified with deletion of the association',
-                      :used_logic_mapping)
+                      :used_logic_translation)
     end
 
     context 'used_reasoner' do

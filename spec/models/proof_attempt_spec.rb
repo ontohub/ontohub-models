@@ -6,6 +6,17 @@ RSpec.describe ProofAttempt, type: :model do
   subject { build(:proof_attempt) }
   it_behaves_like 'having a number', :proof_attempt, :conjecture
 
+  context 'validations' do
+    it 'is valid' do
+      expect(subject).to be_valid
+    end
+
+    it 'is invalid if the proof_status is bad' do
+      subject.proof_status = 'CONTR'
+      expect(subject.valid?).to be(false)
+    end
+  end
+
   context 'superclass' do
     subject { create(:proof_attempt) }
     it_behaves_like 'a reasoning_attempt'

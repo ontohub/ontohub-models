@@ -2,6 +2,7 @@
 
 FactoryBot.define do
   factory :oms, class: OMS do
+    association :action
     association :document
     association :language
     association :logic
@@ -10,6 +11,7 @@ FactoryBot.define do
     association :conservativity_status
     association :name_file_range, factory: :file_range
 
+    consistency_status { 'Open' }
     display_name { Faker::Lorem.words(rand(2..4)).join(' ') }
     name { Faker::Internet.url('example.com', display_name) }
     name_extension { 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').sample }

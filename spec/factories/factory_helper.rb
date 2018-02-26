@@ -4,6 +4,10 @@ require 'faker'
 FactoryBot.define do
   to_create(&:save)
 
+  sequence(:logic_translation_step_number) do |n|
+    n
+  end
+
   sequence(:filepath) do |n|
     "#{n}_#{Faker::File.file_name(nil, nil, 'txt')}"
   end

@@ -2,7 +2,7 @@
 
 # The Conjecture model
 class Conjecture < Sentence
-  REASONING_STATUSES ||= %w(OPN ERR UNK RSO THM CSA CSAS CONTR).freeze
+  PROOF_STATUSES ||= %w(OPN ERR UNK RSO THM CSA CSAS CONTR).freeze
 
   plugin :validation_helpers
 
@@ -11,7 +11,7 @@ class Conjecture < Sentence
 
   def validate
     validates_presence :action
-    validates_includes REASONING_STATUSES, :reasoning_status
+    validates_includes PROOF_STATUSES, :proof_status
     super
   end
 end

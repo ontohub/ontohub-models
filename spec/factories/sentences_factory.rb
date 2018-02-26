@@ -20,7 +20,7 @@ FactoryBot.define do
     factory :conjecture, class: OpenConjecture do
       association :action
       kind { OpenConjecture.to_s }
-      reasoning_status { 'OPN' }
+      proof_status { 'OPN' }
 
       factory :open_conjecture, class: OpenConjecture do
         kind { OpenConjecture.to_s }

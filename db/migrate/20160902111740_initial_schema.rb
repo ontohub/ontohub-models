@@ -235,8 +235,8 @@ Sequel.migration do
       # This is actually a :evaluation_state_type, but replaced by String for
       # compatibility reasons.
       column :evaluation_state, String, collate: '"C"',
-        null: false,
-        default: 'not_yet_enqueued'
+             null: false,
+             default: 'not_yet_enqueued'
       column :message, String, null: true
 
       column :created_at, DateTime, null: false # This is set by a trigger
@@ -366,6 +366,44 @@ Sequel.migration do
       index [:source_id, :target_id], null: false
     end
 
+    create_table :logic_inclusions do
+      primary_key :id
+      column :slug, String, collate: '"C"', null: false, unique: true
+      column :name, String, collate: '"C"', null: false, unique: true
+      foreign_key :language_id, :languages, null: false, on_delete: :cascade
+      foreign_key :source_id, :logics, null: false, on_delete: :cascade
+      foreign_key :target_id, :logics, null: false, on_delete: :cascade
+
+      column :created_at, DateTime, null: false # This is set by a trigger
+      column :updated_at, DateTime, null: false # This is set by a trigger
+
+      index [:source_id, :target_id], null: false
+    end
+
+    create_table :logic_translations do
+      primary_key :id
+      column :slug, String, collate: '"C"', null: false, unique: true
+      column :name, String, collate: '"C"', null: false, unique: true
+
+      column :created_at, DateTime, null: false # This is set by a trigger
+      column :updated_at, DateTime, null: false # This is set by a trigger
+    end
+
+    create_table :logic_translation_steps do
+      primary_key :id
+      foreign_key :logic_translation_id, :logic_translations,
+                  null: false, on_delete: :cascade
+      # This is *NOT* set by a trigger, but by Hets:
+      column :number, Integer, null: false
+      # Exactly one of these two fields is not null:
+      foreign_key :logic_mapping_id, :logic_mappings,
+                  null: true, on_delete: :cascade
+      foreign_key :logic_inclusion_id, :logic_inclusions,
+                  null: true, on_delete: :cascade
+
+      index [:logic_translation_id, :number], unique: true
+    end
+
     create_table :signatures do
       primary_key :id
       foreign_key :language_id, :languages, null: false, on_delete: :cascade
@@ -446,6 +484,10 @@ Sequel.migration do
     #      dg_imports dg_inst dg_fit_spec dg_fit_view dg_proof dg_normal_form
     #      dg_integrated_scc dg_flattening dg_alignment dg_test)
 
+    # CONSISTENCY_STAUSES = %w(Open Timeout Error Consistent Inconsistent)
+    # create_enum :consistency_status_on_oms_type,
+    #   [*CONSISTENCY_STAUSES, 'Contradictory']
+
     # OMS is a LocIdBase
     create_table :oms do
       primary_key :id, type: :bigserial
@@ -471,6 +513,10 @@ Sequel.migration do
 
       foreign_key :name_file_range_id, :file_ranges,
                   type: :bigint, null: true, on_delete: :set_null
+      foreign_key :action_id, :actions, null: false, on_delete: :restrict
+      # This is actually a :consistency_status_on_oms_type, but replaced by
+      # String for compatibility reasons.
+      column :consistency_status, String, collate: '"C"', null: false
       column :display_name, String, null: false
       column :name, String, null: false
       column :name_extension, String, null: false
@@ -545,9 +591,9 @@ Sequel.migration do
       column :text, String, null: false
     end
 
-    # REASONING_STATUSES ||= %w(OPN ERR UNK RSO THM CSA CSAS).freeze
-    # create_enum :reasoning_status_on_conjecture_type,
-    #   [*REASONING_STATUSES, 'CONTR']
+    # PROOF_STATUSES ||= %w(OPN ERR UNK RSO THM CSA CSAS).freeze
+    # create_enum :proof_status_on_conjecture_type,
+    #   [*PROOF_STATUSES, 'CONTR']
 
     create_table :axioms do
       primary_key :id, type: :bigserial
@@ -561,11 +607,11 @@ Sequel.migration do
       foreign_key [:id], :sentences,
                   null: false, unique: true, on_delete: :cascade
       foreign_key :action_id, :actions, null: false, on_delete: :restrict
-      # This is actually a :reasoning_status_on_conjecture_type, but it is
+      # This is actually a :proof_status_on_conjecture_type, but it is
       # replaced by a String for compatibility reasons.
-      column :reasoning_status, String, collate: '"C"',
-                                        null: false,
-                                        default: 'OPN'
+      column :proof_status, String, collate: '"C"',
+        null: false,
+        default: 'OPN'
     end
 
     # Symbol is a LocIdBase
@@ -631,16 +677,13 @@ Sequel.migration do
     # create_enum :reasoning_attempt_kind_type,
     #   %w(ProofAttempt ConsistencyCheckAttempt)
 
-    # create_enum :reasoning_status_on_reasoning_attempt_type,
-    #   REASONING_STATUSES
-
     # ReasoningAttempt is using Single Table Inheritance
     create_table :reasoning_attempts do
       primary_key :id
       foreign_key :reasoner_configuration_id, :reasoner_configurations,
                   null: false, on_delete: :cascade
       # There is no used logic_mapping until reasoning has begun.
-      foreign_key :used_logic_mapping_id, :logic_mappings,
+      foreign_key :used_logic_translation_id, :logic_translations,
                   null: true, on_delete: :set_null
       # There is no used reasoner until reasoning has begun.
       foreign_key :used_reasoner_id, :reasoners,
@@ -650,14 +693,12 @@ Sequel.migration do
       # a String for compatibility reasons.
       column :kind, String, collate: '"C"', null: false
       column :time_taken, Integer, null: true
-      # This is actually a :reasoning_status_on_reasoning_attempt_type, but it
-      # is replaced by a String for compatibility reasons.
-      column :reasoning_status, String, collate: '"C"',
-                                        null: false, default: 'OPN'
 
       column :created_at, DateTime, null: false # This is set by a trigger
       column :updated_at, DateTime, null: false # This is set by a trigger
     end
+
+    # create_enum :proof_status_on_proof_attempt_type, PROOF_STATUSES
 
     create_table :proof_attempts do
       primary_key :id
@@ -665,10 +706,16 @@ Sequel.migration do
                   null: false, unique: true, on_delete: :cascade
       foreign_key :conjecture_id, :conjectures,
                   type: :bigint, null: true, on_delete: :cascade
+      # This is actually a :proof_status_on_proof_attempt_type, but it
+      # is replaced by a String for compatibility reasons.
+      column :proof_status, String, collate: '"C"', null: false, default: 'OPN'
       column :number, Integer, null: false # This is set by a trigger
     end
     create_trigger_to_set_number(:proof_attempts, :conjecture_id)
     create_trigger_to_delete_parent(:proof_attempts, :reasoning_attempts)
+
+    # create_enum :consistency_status_on_consistency_check_type,
+    #   CONSISTENCY_STAUSES
 
     create_table :consistency_check_attempts do
       primary_key :id
@@ -676,6 +723,9 @@ Sequel.migration do
                   null: false, unique: true, on_delete: :cascade
       foreign_key :oms_id, :oms,
                   type: :bigint, null: true, on_delete: :cascade
+      # This is actually a :consistency_status_on_consistency_check_type, but
+      # replaced by String for compatibility reasons.
+      column :consistency_status, String, collate: '"C"', null: false
       column :number, Integer, null: false # This is set by a trigger
     end
     create_trigger_to_set_number(:consistency_check_attempts, :oms_id)
