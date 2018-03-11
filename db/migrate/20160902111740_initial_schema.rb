@@ -234,7 +234,8 @@ Sequel.migration do
       primary_key :id, type: :bigserial
       # This is actually a :evaluation_state_type, but replaced by String for
       # compatibility reasons.
-      column :evaluation_state, String, collate: '"C"',
+      column :evaluation_state, String,
+             collate: '"C"',
              null: false,
              default: 'not_yet_enqueued'
       column :message, String, null: true
@@ -609,7 +610,8 @@ Sequel.migration do
       foreign_key :action_id, :actions, null: false, on_delete: :restrict
       # This is actually a :proof_status_on_conjecture_type, but it is
       # replaced by a String for compatibility reasons.
-      column :proof_status, String, collate: '"C"',
+      column :proof_status, String,
+        collate: '"C"',
         null: false,
         default: 'OPN'
     end

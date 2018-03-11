@@ -2,7 +2,7 @@
 
 # The ConsistencyCheckAttempt model
 class ConsistencyCheckAttempt < ReasoningAttempt
-  CONSISTENCY_STATUSES = %w(Open Timeout Error Consistent Inconsistent)
+  CONSISTENCY_STATUSES = %w(Open Timeout Error Consistent Inconsistent).freeze
 
   many_to_one :oms, class: OMS
 

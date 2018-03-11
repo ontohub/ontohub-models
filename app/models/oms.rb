@@ -2,8 +2,9 @@
 
 # The OMS model
 class OMS < LocIdBase
-  CONSISTENCY_STATUSES = %w(Contradictory) +
-    ConsistencyCheckAttempt::CONSISTENCY_STATUSES
+  CONSISTENCY_STATUSES =
+    (%w(Contradictory) +
+     ConsistencyCheckAttempt::CONSISTENCY_STATUSES).freeze
 
   ORIGINS = %w(dg_empty dg_basic dg_basic_spec dg_extension dg_logic_coercion
                dg_translation dg_union dg_intersect dg_extract dg_restriction
