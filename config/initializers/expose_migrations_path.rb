@@ -8,8 +8,8 @@ module SequelRails
   class Migrations
     class << self
       def migrations_dir
-        File.join(Gem::Specification.find_by_name('ontohub-models').gem_dir,
-                  'db/migrate')
+        root_path = Gem::Specification.find_by_name('ontohub-models').gem_dir
+        Pathname.new(root_path).join('db/migrate')
       end
     end
   end
