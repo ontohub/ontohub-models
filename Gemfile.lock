@@ -3,7 +3,7 @@ PATH
   specs:
     ontohub-models (0.1.0)
       awesome_print (~> 1.8.0)
-      chewy (~> 0.10.1)
+      chewy (>= 0.10.1, < 5.1.0)
       devise (>= 4.3, < 4.5)
       pry (~> 0.11.0)
       rails (~> 5.1.4)
@@ -61,7 +61,7 @@ GEM
       debug_inspector (>= 0.0.1)
     builder (3.2.3)
     byebug (10.0.0)
-    chewy (0.10.1)
+    chewy (5.0.0)
       activesupport (>= 4.0)
       elasticsearch (>= 2.0.0)
       elasticsearch-dsl
