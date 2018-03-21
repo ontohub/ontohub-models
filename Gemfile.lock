@@ -110,7 +110,7 @@ GEM
       concurrent-ruby (~> 1.0)
     interception (0.5)
     json (2.1.0)
-    loofah (2.2.0)
+    loofah (2.2.1)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     mail (2.7.0)
