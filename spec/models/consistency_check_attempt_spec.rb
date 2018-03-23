@@ -6,6 +6,17 @@ RSpec.describe ConsistencyCheckAttempt, type: :model do
   subject { build(:consistency_check_attempt) }
   it_behaves_like 'having a number', :consistency_check_attempt, :oms
 
+  context 'validations' do
+    it 'is valid' do
+      expect(subject).to be_valid
+    end
+
+    it 'is invalid if the consistency_status is bad' do
+      subject.consistency_status = 'Contradictory'
+      expect(subject.valid?).to be(false)
+    end
+  end
+
   context 'superclass' do
     subject { create(:consistency_check_attempt) }
     it_behaves_like 'a reasoning_attempt'

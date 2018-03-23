@@ -2,6 +2,7 @@
 
 FactoryBot.define do
   factory :premise_selection, class: ManualPremiseSelection do
+    association :proof_attempt
     association :reasoner_configuration
 
     factory :manual_premise_selection, class: ManualPremiseSelection do

@@ -6,6 +6,12 @@ RSpec.shared_examples 'a premise_selection' do
   context 'associations' do
     before { subject.save }
 
+    context 'proof_attempt' do
+      it_behaves_like('it has a', :proof_attempt, ProofAttempt)
+      it_behaves_like('being deleted with the association',
+                      :proof_attempt)
+    end
+
     context 'reasoner_configuration' do
       it_behaves_like('it has a', :reasoner_configuration,
                       ReasonerConfiguration)

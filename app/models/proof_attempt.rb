@@ -2,6 +2,8 @@
 
 # The ProofAttempt model
 class ProofAttempt < ReasoningAttempt
+  PROOF_STATUSES ||= %w(OPN ERR UNK RSO THM CSA CSAS).freeze
+
   many_to_one :conjecture, class: Conjecture
 
   # Equivalent to conjecture.repository
@@ -17,4 +19,9 @@ class ProofAttempt < ReasoningAttempt
             join_type: :inner, select: false).
       where(Sequel[:loc_id_bases][:id] => conjecture_id)
   end), class: Repository
+
+  def validate
+    validates_includes PROOF_STATUSES, :proof_status
+    super
+  end
 end

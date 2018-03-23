@@ -2,10 +2,10 @@
 
 FactoryBot.define do
   factory :file_version do
+    association :action
     association :repository
     commit_sha { Faker::Crypto.sha1 }
     path { generate(:filepath) }
-    evaluation_state { 'not_yet_enqueued' }
 
     after(:create) do |file_version|
       FileVersionParent.create(queried_sha: file_version.commit_sha,

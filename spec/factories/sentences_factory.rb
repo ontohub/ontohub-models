@@ -18,9 +18,9 @@ FactoryBot.define do
     end
 
     factory :conjecture, class: OpenConjecture do
+      association :action
       kind { OpenConjecture.to_s }
-      evaluation_state { 'not_yet_enqueued' }
-      reasoning_status { 'OPN' }
+      proof_status { 'OPN' }
 
       factory :open_conjecture, class: OpenConjecture do
         kind { OpenConjecture.to_s }

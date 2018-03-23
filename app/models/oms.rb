@@ -2,6 +2,10 @@
 
 # The OMS model
 class OMS < LocIdBase
+  CONSISTENCY_STATUSES =
+    (%w(Contradictory) +
+     ConsistencyCheckAttempt::CONSISTENCY_STATUSES).freeze
+
   ORIGINS = %w(dg_empty dg_basic dg_basic_spec dg_extension dg_logic_coercion
                dg_translation dg_union dg_intersect dg_extract dg_restriction
                dg_reveal_translation free cofree np_free minimize dg_local
@@ -12,6 +16,7 @@ class OMS < LocIdBase
 
   plugin :validation_helpers
 
+  many_to_one :action
   many_to_one :document
   many_to_one :language
   many_to_one :logic
@@ -63,6 +68,7 @@ class OMS < LocIdBase
 
   def validate
     validates_includes ORIGINS, :origin
+    validates_includes CONSISTENCY_STATUSES, :consistency_status
     super
   end
 end

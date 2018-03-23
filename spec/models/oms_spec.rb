@@ -18,6 +18,11 @@ RSpec.describe OMS do
       subject.origin = 'bad'
       expect(subject.valid?).to be(false)
     end
+
+    it 'is invalid if the consistency_status is bad' do
+      subject.consistency_status = 'bad'
+      expect(subject.valid?).to be(false)
+    end
   end
 
   context 'associations' do
