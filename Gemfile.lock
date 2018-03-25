@@ -110,7 +110,7 @@ GEM
       concurrent-ruby (~> 1.0)
     interception (0.5)
     json (2.1.0)
-    loofah (2.2.1)
+    loofah (2.2.2)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     mail (2.7.0)
@@ -164,8 +164,8 @@ GEM
     rails-dom-testing (2.0.3)
       activesupport (>= 4.2.0)
       nokogiri (>= 1.6)
-    rails-html-sanitizer (1.0.3)
-      loofah (~> 2.0)
+    rails-html-sanitizer (1.0.4)
+      loofah (~> 2.2, >= 2.2.2)
     railties (5.1.5)
       actionpack (= 5.1.5)
       activesupport (= 5.1.5)
@@ -207,7 +207,7 @@ GEM
       unicode-display_width (~> 1.0, >= 1.0.1)
     ruby-progressbar (1.9.0)
     sequel (5.6.0)
-    sequel-devise (0.0.12)
+    sequel-devise (0.0.13)
       devise
       orm_adapter-sequel
       sequel (>= 3.11.0)
