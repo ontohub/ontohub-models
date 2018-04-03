@@ -16,6 +16,9 @@ addons:
 notifications:
   email: false
 
+before_install:
+  - gem install bundler
+
 before_script:
   - RAILS_ENV=test bin/rails db:recreate
 
