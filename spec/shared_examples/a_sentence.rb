@@ -16,6 +16,17 @@ RSpec.shared_examples 'a sentence' do
       it_behaves_like('being deleted with the association', :oms)
     end
 
+    context 'original_sentence' do
+      before do
+        subject.original_sentence_id = create(:sentence).id
+        subject.save
+      end
+
+      it_behaves_like('it has a', :original_sentence, Sentence)
+      it_behaves_like('being nullified with deletion of the association',
+                      :original_sentence)
+    end
+
     it_behaves_like 'having a file_range'
 
     context 'symbols' do
