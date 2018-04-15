@@ -734,6 +734,14 @@ Sequel.migration do
     create_trigger_to_delete_parent(:consistency_check_attempts,
                                     :reasoning_attempts)
 
+    create_table :proof_attempts_used_sentences do
+      primary_key :id
+      foreign_key :proof_attempt_id, :proof_attempts,
+                  type: :bigint, null: false, on_delete: :cascade
+      foreign_key :sentence_id, :sentences,
+                  type: :bigint, null: false, on_delete: :cascade
+    end
+
     create_table :generated_axioms do
       primary_key :id
       foreign_key :reasoning_attempt_id, :reasoning_attempts,

@@ -34,5 +34,23 @@ RSpec.describe ProofAttempt, type: :model do
       it_behaves_like('it has a', :repository, Repository)
       it_behaves_like('being deleted with the association', :repository)
     end
+
+    context 'used_sentences' do
+      let!(:unrelated) do
+        (1..2).map { create(:sentence) }
+      end
+
+      let!(:related) do
+        sentences = (1..2).map { create(:sentence) }
+        sentences.each do |sentence|
+          subject.add_used_sentence(sentence)
+        end
+        sentences
+      end
+
+      it 'has the used_sentences' do
+        expect(subject.used_sentences).to match_array(related)
+      end
+    end
   end
 end
