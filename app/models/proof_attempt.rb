@@ -6,6 +6,11 @@ class ProofAttempt < ReasoningAttempt
 
   many_to_one :conjecture, class: Conjecture
 
+  many_to_many :used_sentences, join_table: :proof_attempts_used_sentences,
+                                left_key: :proof_attempt_id,
+                                right_key: :sentence_id,
+                                class: Sentence
+
   # Equivalent to conjecture.repository
   one_to_one :repository, dataset: (proc do |reflection|
     reflection.associated_dataset.
