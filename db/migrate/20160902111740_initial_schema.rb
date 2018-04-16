@@ -588,6 +588,8 @@ Sequel.migration do
       foreign_key :oms_id, :oms, type: :bigint, null: false, on_delete: :cascade
       foreign_key :file_range_id, :file_ranges,
                   type: :bigint, null: true, on_delete: :set_null
+      foreign_key :original_sentence_id, :sentences,
+                  type: :bigint, null: true, on_delete: :set_null
       column :name, String, null: false
       column :text, String, null: false
     end

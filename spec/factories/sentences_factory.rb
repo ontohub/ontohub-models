@@ -34,5 +34,9 @@ FactoryBot.define do
         kind { Theorem.to_s }
       end
     end
+
+    trait :with_original_sentence do
+      association :original_sentence
+    end
   end
 end
