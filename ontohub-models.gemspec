@@ -45,7 +45,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'pry-stack_explorer', '~> 0.4.9.2'
 
   # Testing
-  s.add_development_dependency 'database_cleaner', '~> 1.6.1'
+  s.add_development_dependency 'database_cleaner', '~> 1.7.0'
   s.add_development_dependency 'factory_bot_rails', '~> 4.8.2'
   s.add_development_dependency 'faker', '~> 1.8.4'
   s.add_development_dependency 'fuubar', '~> 2.3.0'
