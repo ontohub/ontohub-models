@@ -96,10 +96,10 @@ GEM
       faraday
       multi_json
     erubi (1.7.1)
-    factory_bot (4.8.2)
+    factory_bot (4.10.0)
       activesupport (>= 3.0.0)
-    factory_bot_rails (4.8.2)
-      factory_bot (~> 4.8.2)
+    factory_bot_rails (4.10.0)
+      factory_bot (~> 4.10.0)
       railties (>= 3.0.0)
     faker (1.8.7)
       i18n (>= 0.7)
@@ -153,7 +153,7 @@ GEM
     pry-stack_explorer (0.4.9.2)
       binding_of_caller (>= 0.7)
       pry (>= 0.9.11)
-    rack (2.0.4)
+    rack (2.0.5)
     rack-test (1.0.0)
       rack (>= 1.0, < 3)
     rails (5.2.0)
@@ -260,7 +260,7 @@ DEPENDENCIES
   bundler (~> 1.11)
   codecov (~> 0.1.10)
   database_cleaner (~> 1.7.0)
-  factory_bot_rails (~> 4.8.2)
+  factory_bot_rails (~> 4.10.0)
   faker (~> 1.8.4)
   fuubar (~> 2.3.0)
   ontohub-models!
