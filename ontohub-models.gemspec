@@ -33,7 +33,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'sequel', '>= 5.2', '< 5.10'
   s.add_dependency 'sequel-devise', '~> 0.0.11'
   s.add_dependency 'sequel-rails', '~> 1.0.0'
-  s.add_dependency 'sequel_pg', '>= 1.8', '< 1.10'
+  s.add_dependency 'sequel_pg', '>= 1.8', '< 1.11'
   s.add_dependency 'sequel_postgresql_triggers', '>= 1.3', '< 1.5'
 
   # General Development
