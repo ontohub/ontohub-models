@@ -8,5 +8,5 @@ source 'https://rubygems.org'
 gemspec
 
 group :test do
-  gem 'codecov', '~> 0.1.10', require: false
+  gem 'codecov', '~> 0.1.12', require: false
 end
