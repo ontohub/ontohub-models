@@ -105,7 +105,7 @@ GEM
       i18n (>= 0.7)
     faraday (0.15.2)
       multipart-post (>= 1.2, < 3)
-    fuubar (2.3.1)
+    fuubar (2.3.2)
       rspec-core (~> 3.0)
       ruby-progressbar (~> 1.4)
     globalid (0.4.1)
@@ -215,7 +215,7 @@ GEM
       rainbow (>= 2.2.2, < 4.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (~> 1.0, >= 1.0.1)
-    ruby-progressbar (1.9.0)
+    ruby-progressbar (1.10.0)
     sequel (5.9.0)
     sequel-devise (0.0.13)
       devise
