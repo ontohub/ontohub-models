@@ -58,5 +58,5 @@ Gem::Specification.new do |s|
   # We want to have these in the production environment as well in case we need
   # to debug the application:
   s.add_dependency 'awesome_print', '~> 1.8.0'
-  s.add_dependency 'pry', '~> 0.11.0'
+  s.add_dependency 'pry', '>= 0.11', '< 0.13'
 end
