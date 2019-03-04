@@ -10,7 +10,7 @@ PATH
       sequel (>= 5.2, < 5.18)
       sequel-devise (~> 0.0.11)
       sequel-rails (~> 1.0.0)
-      sequel_pg (>= 1.8, < 1.12)
+      sequel_pg (>= 1.8, < 1.13)
       sequel_postgresql_triggers (>= 1.3, < 1.6)
 
 GEM
@@ -228,7 +228,7 @@ GEM
       activemodel (>= 4.0.0)
       railties (>= 4.0.0)
       sequel (>= 3.28, < 6.0)
-    sequel_pg (1.11.0)
+    sequel_pg (1.12.0)
       pg (>= 0.18.0)
       sequel (>= 4.38.0)
     sequel_postgresql_triggers (1.5.0)
