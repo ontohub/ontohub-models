@@ -53,7 +53,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rspec-rails', '~> 3.7.2'
 
   # CI services
-  s.add_development_dependency 'rubocop', '~> 0.65.0'
+  s.add_development_dependency 'rubocop', '~> 0.72.0'
 
   # We want to have these in the production environment as well in case we need
   # to debug the application:
