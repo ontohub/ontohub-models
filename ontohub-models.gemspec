@@ -48,7 +48,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'database_cleaner', '~> 1.7.0'
   s.add_development_dependency 'factory_bot_rails', '~> 4.10.0'
   s.add_development_dependency 'faker', '~> 1.9.1'
-  s.add_development_dependency 'fuubar', '~> 2.3.0'
+  s.add_development_dependency 'fuubar', '~> 2.4.1'
   s.add_development_dependency 'rspec', '~> 3.7.0'
   s.add_development_dependency 'rspec-rails', '~> 3.7.2'
 

@@ -105,7 +105,7 @@ GEM
       i18n (>= 0.7)
     faraday (0.15.4)
       multipart-post (>= 1.2, < 3)
-    fuubar (2.3.2)
+    fuubar (2.4.1)
       rspec-core (~> 3.0)
       ruby-progressbar (~> 1.4)
     globalid (0.4.2)
@@ -217,7 +217,7 @@ GEM
       rainbow (>= 2.2.2, < 4.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (~> 1.4.0)
-    ruby-progressbar (1.10.0)
+    ruby-progressbar (1.10.1)
     sequel (5.17.0)
     sequel-devise (0.0.13)
       devise
@@ -266,7 +266,7 @@ DEPENDENCIES
   database_cleaner (~> 1.7.0)
   factory_bot_rails (~> 4.10.0)
   faker (~> 1.9.1)
-  fuubar (~> 2.3.0)
+  fuubar (~> 2.4.1)
   ontohub-models!
   pry-byebug (~> 3.7.0)
   pry-rescue (~> 1.5.0)
