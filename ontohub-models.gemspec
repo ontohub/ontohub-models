@@ -46,7 +46,7 @@ Gem::Specification.new do |s|
 
   # Testing
   s.add_development_dependency 'database_cleaner', '~> 1.7.0'
-  s.add_development_dependency 'factory_bot_rails', '~> 4.10.0'
+  s.add_development_dependency 'factory_bot_rails', '~> 5.1.1'
   s.add_development_dependency 'faker', '~> 1.9.1'
   s.add_development_dependency 'fuubar', '~> 2.3.0'
   s.add_development_dependency 'rspec', '~> 3.7.0'
