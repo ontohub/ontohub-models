@@ -38,7 +38,7 @@ Gem::Specification.new do |s|
 
   # General Development
   s.add_development_dependency 'bundler', '~> 1.11'
-  s.add_development_dependency 'rake', '~> 12.3.0'
+  s.add_development_dependency 'rake', '~> 13.0.1'
 
   s.add_development_dependency 'pry-byebug', '~> 3.7.0'
   s.add_development_dependency 'pry-rescue', '~> 1.5.0'
